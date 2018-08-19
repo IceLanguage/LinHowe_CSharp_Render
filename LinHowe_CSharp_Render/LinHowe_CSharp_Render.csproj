@@ -47,7 +47,9 @@
   <ItemGroup>
     <Compile Include="Math\Color.cs" />
     <Compile Include="Math\Matrix4x4.cs" />
+    <Compile Include="Math\Mesh.cs" />
     <Compile Include="Math\Vector3.cs" />
+    <Compile Include="Math\Vertex.cs" />
     <Compile Include="RenderForm.cs">
       <SubType>Form</SubType>
     </Compile>

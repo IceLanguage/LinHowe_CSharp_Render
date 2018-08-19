@@ -6,14 +6,16 @@ using System.Threading.Tasks;
 
 namespace LinHowe_CSharp_Render.Math
 {
+    /// <summary>
+    /// 3d向量
+    /// </summary>
     struct Vector3
     {
         public float x;
         public float y;
         public float z;
         public float w;
-
-        static Vector3 zero = new Vector3(0, 0, 0);
+        public readonly static Vector3 zero = new Vector3(0, 0, 0);
         public Vector3(float x, float y, float z, float w)
         {
             this.x = x;

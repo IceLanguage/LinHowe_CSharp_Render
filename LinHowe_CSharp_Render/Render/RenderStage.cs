@@ -11,6 +11,10 @@ namespace LinHowe_CSharp_Render.Render
     /// </summary>
     abstract class RenderStage
     {
+        public virtual RenderStage ChangeState()
+        {
+            return null;
+        }
     }
 
     /// <summary>
@@ -18,6 +22,10 @@ namespace LinHowe_CSharp_Render.Render
     /// </summary>
     partial class ApplicationStage : RenderStage
     {
+        public override RenderStage ChangeState()
+        {
+            return new GeometricStage();
+        }
     }
 
     /// <summary>
@@ -25,7 +33,10 @@ namespace LinHowe_CSharp_Render.Render
     /// </summary>
     partial class GeometricStage :RenderStage
     {
-
+        public override RenderStage ChangeState()
+        {
+            return new RasterizationStage();
+        }
     }
 
     /// <summary>

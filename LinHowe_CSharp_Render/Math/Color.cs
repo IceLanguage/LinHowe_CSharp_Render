@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace LinHowe_CSharp_Render.Math
 {
+    /// <summary>
+    /// 颜色
+    /// </summary>
     struct Color
     {
         private float _r;

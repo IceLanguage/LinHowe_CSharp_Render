@@ -13,11 +13,11 @@ namespace LinHowe_CSharp_Render
 {
     public partial class RenderForm : Form
     {
-        private RenderStage stage;
+        private RenderStage stage = new ApplicationStage();
         public RenderForm()
         {
             InitializeComponent();
-            stage = new ApplicationStage();
+
         }
     }
 }

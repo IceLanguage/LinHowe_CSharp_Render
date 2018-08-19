@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace LinHowe_CSharp_Render.Math
 {
+    /// <summary>
+    /// 4x4矩阵
+    /// </summary>
     class Matrix4x4
     {
         private float[,] _m = new float[4, 4];
