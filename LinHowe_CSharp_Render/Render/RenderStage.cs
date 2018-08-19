@@ -44,6 +44,9 @@ namespace LinHowe_CSharp_Render.Render
     /// </summary>
     partial class RasterizationStage :RenderStage
     {
-
+        public override RenderStage ChangeState()
+        {
+            return new ApplicationStage();
+        }
     }
 }

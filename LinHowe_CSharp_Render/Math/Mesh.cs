@@ -24,7 +24,7 @@ namespace LinHowe_CSharp_Render.Math
             {
                 int pointIndex = indexs[i];
                 Vertices[i].position = pointList[pointIndex];
-                Vertices[i].normal = normals[pointIndex];
+                Vertices[i].normal = normals[i];
             }
         }
     }
