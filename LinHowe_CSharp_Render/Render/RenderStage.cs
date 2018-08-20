@@ -8,34 +8,25 @@ using System.Threading.Tasks;
 
 namespace LinHowe_CSharp_Render.Render
 {
-    
 
+    
     /// <summary>
     /// 渲染阶段
     /// </summary>
     abstract class RenderStage
     { 
-        //模型图元数据
-        public static List<Mesh> _models = new List<Mesh>();
-        public static bool RenderEnd = false;
-        //摄像头
-        protected static Camera _camera;
-
-        public static RenderStage _stage ;
-
-        //模型-世界，世界-视图,投影
-        protected static Matrix4x4 m = new Matrix4x4(), v, p;
 
         public static void Render()
         {
-            if (null == _stage)
+            if (null == Rendering_pipeline. _stage)
             {
-                _stage = ApplicationStage.instance;
-                RenderEnd = false;
+                Rendering_pipeline._models.Clear();
+                Rendering_pipeline._stage = ApplicationStage.instance;
+                Rendering_pipeline.RenderEnd = false;
             }
             else
             {
-                _stage.ChangeState();
+                Rendering_pipeline._stage.ChangeState();
             }
         }
         public virtual void ChangeState()
@@ -52,7 +43,7 @@ namespace LinHowe_CSharp_Render.Render
         public static readonly ApplicationStage instance = new ApplicationStage();
         public override void ChangeState()
         {
-            _stage = GeometricStage.instance;
+            Rendering_pipeline._stage = GeometricStage.instance;
             //Console.WriteLine("进入几何阶段");
         }
         
@@ -76,8 +67,8 @@ namespace LinHowe_CSharp_Render.Render
         public override void ChangeState()
         {
             Draw.Rasterization();
-            _stage = null;
-            RenderEnd = true;
+            Rendering_pipeline._stage = null;
+            Rendering_pipeline.RenderEnd = true;
            
         }
     }

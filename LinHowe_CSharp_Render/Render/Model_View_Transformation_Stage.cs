@@ -11,14 +11,15 @@ namespace LinHowe_CSharp_Render.Render
     partial class Model_View_Transformation_Stage
     {
         public override void ChangeState()
-        {           
-            v = GetView();
-            foreach(Mesh mesh in _models)
+        {
+            Rendering_pipeline.v = GetView();
+            foreach(Mesh mesh in Rendering_pipeline._models)
             {
                 int size = mesh.Vertices.Length;
                 for (int i = 0;i < size;++i)
                 {
-                    SetMVTransform(m, v, ref mesh.Vertices[i]);
+                    SetMVTransform(Rendering_pipeline.m, Rendering_pipeline.v, ref mesh.Vertices[i]);
+                   
                 }
                 
             }
@@ -33,6 +34,7 @@ namespace LinHowe_CSharp_Render.Render
         /// <returns></returns>
         private static Matrix4x4 GetView()
         {
+            Camera _camera = Rendering_pipeline._camera;
             Vector3 pos = _camera.pos;
             Vector3 lookAt = _camera.lookAt;
             Vector3 up = _camera.up;
@@ -40,7 +42,7 @@ namespace LinHowe_CSharp_Render.Render
             //视线方向
             Vector3 dir = lookAt - pos;
             Vector3 right = Vector3.Cross(up, dir);
-            up = Vector3.Cross(right, dir);
+      
             right.Normalize();
             //平移部分
             Matrix4x4 t = new Matrix4x4
@@ -66,7 +68,7 @@ namespace LinHowe_CSharp_Render.Render
         /// </summary>
         private static void SetMVTransform(Matrix4x4 m, Matrix4x4 v, ref Vertex vertex)
         {
-            vertex.position = vertex.position * m * v;
+            vertex.position = vertex.position * m ;
         }
     }
 }

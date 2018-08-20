@@ -27,7 +27,9 @@ namespace LinHowe_CSharp_Render.Math
             for (int i = 0; i < indexs.Length; i++)
             {
                 int pointIndex = indexs[i];
+
                 Vertices[i].position = pointList[pointIndex];
+                Vertices[i].position.w = 1;
                 Vertices[i].normal = normals[i];
             }
         }

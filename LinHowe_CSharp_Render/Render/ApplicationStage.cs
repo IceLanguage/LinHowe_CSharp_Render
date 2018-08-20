@@ -18,7 +18,7 @@ namespace LinHowe_CSharp_Render.Render
         /// <param name="newmesh"></param>
         public void AddMesh(Mesh newmesh)
         {
-            RenderStage._models.Add(newmesh);
+            Rendering_pipeline._models.Add(newmesh);
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace LinHowe_CSharp_Render.Render
         /// <param name="camera"></param>
         public void AddCamera(Camera camera)
         {
-            RenderStage._camera = camera;
+            Rendering_pipeline._camera = camera;
         }
     }
 }

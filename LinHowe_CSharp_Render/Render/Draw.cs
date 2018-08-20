@@ -19,7 +19,7 @@ namespace LinHowe_CSharp_Render.Render
         /// </summary>
         public static void Rasterization()
         {
-            foreach(Mesh mesh in RenderStage._models)
+            foreach(Mesh mesh in Rendering_pipeline._models)
             {
                 for (int i = 0; i + 2 < mesh.Vertices.Length; i += 3)
                 {

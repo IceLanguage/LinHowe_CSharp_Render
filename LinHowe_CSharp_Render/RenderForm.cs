@@ -34,7 +34,7 @@ namespace LinHowe_CSharp_Render
         private void Init()
         {
             RenderStage.Render();
-            RenderStage _stage = RenderStage._stage;
+            RenderStage _stage = Rendering_pipeline._stage;
             ApplicationStage Astage = (ApplicationStage)_stage;
 
             //Init Mesh
@@ -46,15 +46,22 @@ namespace LinHowe_CSharp_Render
             _camera.pos = new Vector3(0, 0, 0, 1);
             _camera.lookAt = new Vector3(0, 0, 1, 1);
             _camera.up = new Vector3(0, 1, 0, 0);
+            _camera.fov = (float)System.Math.PI / 4f;
+            _camera.aspect = this.MaximumSize.Width / (float)this.MaximumSize.Height;
+            _camera.zn = 1f;
+            _camera.zf = 500f;
             Astage.AddCamera(_camera);
+
+            Rendering_pipeline.m = Matrix4x4.GetTranslate(0, 0, 10);
         }
         private void Tick(object sender, EventArgs e)
         {
             lock (Draw._frameBuff)
             {
                 Init();
+
                 //渲染流水线
-                while (!RenderStage.RenderEnd)
+                while (!Rendering_pipeline.RenderEnd)
                     RenderStage.Render();
 
                 if (g == null)

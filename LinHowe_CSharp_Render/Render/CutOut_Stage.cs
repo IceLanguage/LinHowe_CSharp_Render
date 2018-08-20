@@ -11,7 +11,7 @@ namespace LinHowe_CSharp_Render.Render
     {
         public override void ChangeState()
         {
-            foreach (Mesh mesh in _models)
+            foreach (Mesh mesh in Rendering_pipeline._models)
             {
                 int size = mesh.Vertices.Length;
                 for (int i = 0; i < size; ++i)

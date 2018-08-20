@@ -13,15 +13,15 @@ namespace LinHowe_CSharp_Render.Render
 
         public override void ChangeState()
         {
-            p = GetProjection(_camera.fov, _camera.aspect, _camera.zn, _camera.zf);
-            foreach (Mesh mesh in _models)
+            Camera _camera = Rendering_pipeline._camera;
+            Rendering_pipeline.p = GetProjection(_camera.fov, _camera.aspect, _camera.zn, _camera.zf);
+            foreach (Mesh mesh in Rendering_pipeline._models)
             {
                 int size = mesh.Vertices.Length;
                 for (int i = 0; i < size; ++i)
                 {
-                    SetProjectionTransform(p, ref mesh.Vertices[i]);
+                    SetProjectionTransform(Rendering_pipeline.p, ref mesh.Vertices[i]);
                 }
-
             }
             GeometricStage._smallStage = CutOut_Stage.instance;
         }
