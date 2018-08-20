@@ -49,12 +49,20 @@ namespace LinHowe_CSharp_Render
         {
             lock (_draw._frameBuff)
             {
+                //渲染流水线
+                while (!RenderStage.RenderEnd)
+                    _stage.ChangeState();
+                _stage.ChangeState();
 
                 if (g == null)
                 {
                     g = this.CreateGraphics();
                 }
+
+                //清屏
                 g.Clear(System.Drawing.Color.Black);
+
+                //渲染
                 g.DrawImage(_draw._frameBuff, 0, 0);
             }
         }

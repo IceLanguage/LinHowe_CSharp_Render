@@ -47,10 +47,7 @@ namespace LinHowe_CSharp_Render.Render
     partial class Projection_Stage:SmallStage
     {
         public static readonly Projection_Stage instance = new Projection_Stage();
-        public override void ChangeState()
-        {
-            GeometricStage._smallStage = CutOut_Stage.instance;
-        }
+        
     }
 
     /// <summary>

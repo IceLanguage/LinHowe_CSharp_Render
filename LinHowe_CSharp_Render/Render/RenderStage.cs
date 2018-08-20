@@ -17,7 +17,7 @@ namespace LinHowe_CSharp_Render.Render
     { 
         //模型图元数据
         protected static List<Mesh> _models = new List<Mesh>();
-
+        public static bool RenderEnd = false;
         //摄像头
         protected static Camera _camera;
 
@@ -31,6 +31,7 @@ namespace LinHowe_CSharp_Render.Render
             if (null == _stage)
             {
                 _stage = ApplicationStage.instance;
+                RenderEnd = true;
                 //Console.WriteLine("进入应用程序阶段");
             }
                 
@@ -69,6 +70,7 @@ namespace LinHowe_CSharp_Render.Render
         public override void ChangeState()
         {
             _stage = ApplicationStage.instance;
+            RenderEnd = true;
             //Console.WriteLine("进入应用程序阶段");
         }
     }

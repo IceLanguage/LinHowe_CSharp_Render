@@ -11,6 +11,17 @@ namespace LinHowe_CSharp_Render.Math
     /// </summary>
     struct Vertex
     {
+        /// <summary>
+        /// 1/z，用于顶点信息的透视校正
+        /// </summary>
+        public float onePerZ;
+
+        /// <summary>
+        /// 纹理坐标
+        /// </summary>
+        public float u;
+        public float v;
+
         //位置
         public Vector3 position;
 
@@ -20,6 +31,9 @@ namespace LinHowe_CSharp_Render.Math
         //颜色
         public Color color;
 
-        
+        /// <summary>
+        /// 光照颜色
+        /// </summary>
+        public Color lightingColor;
     }
 }
