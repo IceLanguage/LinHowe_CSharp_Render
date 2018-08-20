@@ -7,10 +7,9 @@ namespace LinHowe_CSharp_Render.Test
     /// </summary>
     class CubeData
     {
-        
-        
-
-        //法线
+        /// <summary>
+        /// 法线
+        /// </summary>
         public static Vector3[] norlmas = 
         {
             new Vector3( 0, 0,-1), new Vector3( 0, 0,-1), new Vector3( 0, 0,-1),
@@ -26,20 +25,10 @@ namespace LinHowe_CSharp_Render.Test
             new Vector3( 0, 1, 0), new Vector3( 0, 1, 0), new Vector3( 0, 1, 0),
             new Vector3( 0, 1, 0), new Vector3( 0, 1, 0), new Vector3( 0, 1, 0)
         };
-        //顶点坐标
-        public static Vector3[] pointList =
-        {
-            new Vector3(-1, 1,-1),
-            new Vector3(-1,-1,-1),
-            new Vector3( 1,-1,-1),
-            new Vector3( 1, 1,-1),
 
-            new Vector3(-1, 1, 1),
-            new Vector3(-1,-1, 1),
-            new Vector3( 1,-1, 1),
-            new Vector3( 1, 1, 1)
-        };
-        //三角形顶点索引 12个面
+        /// <summary>
+        /// 三角形顶点索引 12个面
+        /// </summary>
         public static int[] indexs =
         {
             0,1,2,
@@ -55,28 +44,61 @@ namespace LinHowe_CSharp_Render.Test
             3,7,4,
             3,4,0
         };
-        //顶点颜色
-        //public static Color[] vertColors = 
-        //{
-        //    new Color( 0, 1, 0), new Color( 0, 0, 1), new Color( 1, 0, 0),
-        //    new Color( 0, 1, 0), new Color( 1, 0, 0), new Color( 0, 0, 1),
-        //    new Color( 0, 1, 0), new Color( 0, 0, 1), new Color( 1, 0, 0),
-        //    new Color( 0, 1, 0), new Color( 1, 0, 0), new Color( 0, 0, 1),
-        //    new Color( 0, 1, 0), new Color( 0, 0, 1), new Color( 1, 0, 0),
-        //    new Color( 0, 1, 0), new Color( 1, 0, 0), new Color( 0, 0, 1),
-        //    new Color( 0, 1, 0), new Color( 0, 0, 1), new Color( 1, 0, 0),
-        //    new Color( 0, 1, 0), new Color( 1, 0, 0), new Color( 0, 0, 1),
-        //    new Color( 0, 1, 0), new Color( 0, 0, 1), new Color( 1, 0, 0),
-        //    new Color( 0, 1, 0), new Color( 1, 0, 0), new Color( 0, 0, 1),
-        //    new Color( 0, 1, 0), new Color( 0, 0, 1), new Color( 1, 0, 0),
-        //    new Color( 0, 1, 0), new Color( 1, 0, 0), new Color( 0, 0, 1)
-        //};
+
+        /// <summary>
+        /// 顶点坐标
+        /// </summary>
+        public static Vector3[] pointList =
+        {
+            new Vector3(-1, 1,-1),
+            new Vector3(-1,-1,-1),
+            new Vector3( 1,-1,-1),
+            new Vector3( 1, 1,-1),
+
+            new Vector3(-1, 1, 1),
+            new Vector3(-1,-1, 1),
+            new Vector3( 1,-1, 1),
+            new Vector3( 1, 1, 1)
+        };
+
+        /// <summary>
+        /// 顶点颜色
+        /// </summary>
         public static Color[] vertColors =
         {
-            new Color( 0, 1, 0), new Color( 0, 0, 1), new Color( 1, 0, 0),
-            new Color( 1, 1, 0), new Color( 1, 0, 1), new Color( 0, 1, 1),
-            new Color( 0.5f, 1, 0), new Color( 1, 0.5f, 0)
-    
+            new Color( 0, 1, 0), new Color( 0, 0, 1),
+            new Color( 1, 0, 0), new Color( 1, 1, 0),
+            new Color( 1, 0, 1), new Color( 0, 1, 1),
+            new Color( 0.5f, 0.2f, 0), new Color( 1, 0.5f, 0.4f)
+
         };
+
+        //public static Color[] vertColors = {
+        //                                     new Color( 0, 1, 0), new Color( 0, 0, 1), new Color( 1, 0, 0),
+        //                                       new Color( 0, 1, 0), new Color( 1, 0, 0), new Color( 0, 0, 1),
+        //                                       //
+        //                                        new Color( 0, 1, 0), new Color( 0, 0, 1), new Color( 1, 0, 0),
+        //                                       new Color( 0, 1, 0), new Color( 1, 0, 0), new Color( 0, 0, 1),
+        //                                       //
+        //                                        new Color( 0, 1, 0), new Color( 0, 0, 1), new Color( 1, 0, 0),
+        //                                       new Color( 0, 1, 0), new Color( 1, 0, 0), new Color( 0, 0, 1),
+        //                                       //
+        //                                        new Color( 0, 1, 0), new Color( 0, 0, 1), new Color( 1, 0, 0),
+        //                                       new Color( 0, 1, 0), new Color( 1, 0, 0), new Color( 0, 0, 1),
+        //                                       //
+        //                                        new Color( 0, 1, 0), new Color( 0, 0, 1), new Color( 1, 0, 0),
+        //                                       new Color( 0, 1, 0), new Color( 1, 0, 0), new Color( 0, 0, 1),
+        //                                       //
+        //                                        new Color( 0, 1, 0), new Color( 0, 0, 1), new Color( 1, 0, 0),
+        //                                       new Color( 0, 1, 0), new Color( 1, 0, 0), new Color( 0, 0, 1)
+        //                                 };
+        public static Material mat = new Material
+        (
+            new Color(0, 0, 0f),
+            0.3f,
+            new Color(0.3f,0.3f, 0.3f),
+            new Color(1, 1, 1),
+            99
+        );
     }
 }

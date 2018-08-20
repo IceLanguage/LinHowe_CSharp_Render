@@ -14,7 +14,8 @@ namespace LinHowe_CSharp_Render.Math
         private float _r;
         private float _b;
         private float _g;
-
+        public readonly static Color White = new Color(1, 1, 1);
+        public readonly static Color Black = new Color(0, 0, 0);
         public Color(float r, float g, float b)
         {
             this._r = MathHelp.Range(r, 0, 1);
@@ -43,27 +44,33 @@ namespace LinHowe_CSharp_Render.Math
 
         public static Color operator *(float a, Color b)
         {
-            Color c = new Color();
-            c.r = a * b.r;
-            c.g = a * b.g;
-            c.b = a * b.b;
+            Color c = new Color
+            {
+                r = a * b.r,
+                g = a * b.g,
+                b = a * b.b
+            };
             return c;
         }
         public static Color operator *(Color a, float b)
         {
-            Color c = new Color();
-            c.r = a.r * b;
-            c.g = a.g * b;
-            c.b = a.b * b;
+            Color c = new Color
+            {
+                r = a.r * b,
+                g = a.g * b,
+                b = a.b * b
+            };
             return c;
         }
 
         public static Color operator +(Color a, Color b)
         {
-            Color c = new Color();
-            c.r = a.r + b.r;
-            c.g = a.g + b.g;
-            c.b = a.b + b.b;
+            Color c = new Color
+            {
+                r = a.r + b.r,
+                g = a.g + b.g,
+                b = a.b + b.b
+            };
             return c;
         }
 
@@ -77,6 +84,23 @@ namespace LinHowe_CSharp_Render.Math
             float g = this.g * 255;
             float b = this.b * 255;
             return System.Drawing.Color.FromArgb((int)r, (int)g, (int)b);
+        }
+
+        /// <summary>
+        /// 颜色乘法，用于颜色混合，实际叫做Modulate（调制）
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static Color operator *(Color a, Color b)
+        {
+            Color c = new Color
+            {
+                r = a.r * b.r,
+                g = a.g * b.g,
+                b = a.b * b.b
+            };
+            return c;
         }
     }
 }

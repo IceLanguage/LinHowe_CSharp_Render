@@ -46,6 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Math\Color.cs" />
+    <Compile Include="Math\Light.cs" />
+    <Compile Include="Math\Material.cs" />
     <Compile Include="Math\MathHelp.cs" />
     <Compile Include="Math\Matrix4x4.cs" />
     <Compile Include="Math\Mesh.cs" />
@@ -60,7 +62,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Render\ApplicationStage.cs" />
-    <Compile Include="Render\Camera.cs" />
+    <Compile Include="Math\Camera.cs" />
     <Compile Include="Render\CutOut_Stage.cs" />
     <Compile Include="Render\Draw.cs" />
     <Compile Include="Render\GeometricStage.cs" />
@@ -69,6 +71,8 @@
     <Compile Include="Render\Rendering_pipeline.cs" />
     <Compile Include="Render\RenderStage.cs" />
     <Compile Include="Render\Screen_Mapping_Stage.cs" />
+    <Compile Include="Render\VertexShader.cs" />
+    <Compile Include="Render\Vertex_Coloring_Stage.cs" />
     <Compile Include="Test\CubeData.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -79,6 +83,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

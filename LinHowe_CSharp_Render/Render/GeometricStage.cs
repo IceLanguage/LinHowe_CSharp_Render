@@ -35,10 +35,7 @@ namespace LinHowe_CSharp_Render.Render
     partial class Vertex_Coloring_Stage : SmallStage
     {
         public static readonly Vertex_Coloring_Stage instance = new Vertex_Coloring_Stage();
-        public override void ChangeState()
-        {
-            GeometricStage._smallStage = Projection_Stage.instance;
-        }
+        
     }
 
     /// <summary>

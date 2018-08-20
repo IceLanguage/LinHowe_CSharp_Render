@@ -29,5 +29,32 @@ namespace LinHowe_CSharp_Render.Render
         {
             Rendering_pipeline._camera = camera;
         }
+
+        public void AddLight(Light light)
+        {
+            Rendering_pipeline._lights.Add(light);
+        }
+
+        public override void ChangeState()
+        {
+            int count = Rendering_pipeline._models.Count;
+
+            VertexShader.Vertices = new List<Vertex[]>(count);
+            for (int i = 0; i < count; ++i)
+            {
+                int size = Rendering_pipeline._models[i].Vertices.Length;
+                Vertex[] vs = new Vertex[size];
+
+                for (int j = 0; j < size; ++j)
+                {
+                    vs[j] = Rendering_pipeline._models[i].Vertices[j];
+                    vs[j].lightingColor = Color.Black;
+                }
+                VertexShader.Vertices.Add(vs);
+            }
+
+            Rendering_pipeline._stage = GeometricStage.instance;
+            //Console.WriteLine("进入几何阶段");
+        }
     }
 }

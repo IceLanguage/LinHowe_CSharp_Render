@@ -43,7 +43,8 @@ namespace LinHowe_CSharp_Render
                 CubeData.pointList,
                 CubeData.indexs,
                 CubeData.norlmas,
-                CubeData.vertColors);
+                CubeData.vertColors,
+                CubeData.mat);
             Astage.AddMesh(cubeMesh);
 
             //Init Camera
@@ -57,8 +58,16 @@ namespace LinHowe_CSharp_Render
             _camera.zf = 500f;
             Astage.AddCamera(_camera);
 
+            //Init Light
+            Light light = new Light(new Vector3(50, 0, 0), new Math.Color(1, 1, 1));
+            Astage.AddLight(light);
+           
             rot += 0.2f;
-            Rendering_pipeline.m = Matrix4x4.GetRotateX(rot) * Matrix4x4.GetRotateY(rot) * Matrix4x4.GetTranslate(0, 0, 10);
+            Rendering_pipeline.m = 
+                Matrix4x4.GetRotateX(rot) * 
+                Matrix4x4.GetRotateY(rot) *
+                //Matrix4x4.GetRotateZ(rot) *
+                Matrix4x4.GetTranslate(0, 0, 10);
         }
         private void Tick(object sender, EventArgs e)
         {

@@ -14,6 +14,8 @@ namespace LinHowe_CSharp_Render.Render
         {
             Graphics.FromImage(Draw._frameBuff).Clear(System.Drawing.Color.Black);
             Array.Clear(Draw._zBuff, 0, Draw._zBuff.Length);
+            Rendering_pipeline._models.Clear();
+            Rendering_pipeline._lights.Clear();
         }
         public static void Init(int width, int height)
         {
@@ -255,6 +257,7 @@ namespace LinHowe_CSharp_Render.Render
         /// <param name="right">右端点，值已经经过插值</param>
         private static void ScanlineFill(Vertex left, Vertex right, int yIndex)
         {
+
             float dx = right.position.x - left.position.x;
             float step = 1;
             if (dx != 0)
@@ -275,12 +278,16 @@ namespace LinHowe_CSharp_Render.Render
                     float onePreZ = MathHelp.Lerp(left.onePerZ, right.onePerZ, lerpFactor);
                     float w = 1 / onePreZ;
 
-                    if (onePreZ >= _zBuff[yIndex, xIndex])//使用1/z进行深度测试
+                    if (yIndex < 0 || yIndex >= _frameBuff.Height || xIndex < 0 || xIndex >= _frameBuff.Width)
+                        continue;
+
+                    if (onePreZ >= _zBuff[xIndex, yIndex])//使用1/z进行深度测试
                     {
-                        _zBuff[yIndex, xIndex] = onePreZ;
+                        _zBuff[xIndex, yIndex] = onePreZ;
                         //插值顶点颜色
                         Math.Color vertColor = MathHelp.Lerp(left.color, right.color, lerpFactor);
-                        _frameBuff.SetPixel(xIndex, yIndex, vertColor.TransFormToSystemColor());
+                        Math.Color lightColor = MathHelp.Lerp(left.lightingColor, right.lightingColor, lerpFactor);
+                        _frameBuff.SetPixel(xIndex, yIndex, (lightColor * vertColor).TransFormToSystemColor());
                     }
                    
                 }

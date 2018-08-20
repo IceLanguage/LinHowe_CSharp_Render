@@ -20,7 +20,7 @@ namespace LinHowe_CSharp_Render.Render
         {
             if (null == Rendering_pipeline. _stage)
             {
-                Rendering_pipeline._models.Clear();
+                
                 Rendering_pipeline._stage = ApplicationStage.instance;
                 Rendering_pipeline.RenderEnd = false;
             }
@@ -41,11 +41,7 @@ namespace LinHowe_CSharp_Render.Render
     partial class ApplicationStage : RenderStage
     {
         public static readonly ApplicationStage instance = new ApplicationStage();
-        public override void ChangeState()
-        {
-            Rendering_pipeline._stage = GeometricStage.instance;
-            //Console.WriteLine("进入几何阶段");
-        }
+        
         
     }
 

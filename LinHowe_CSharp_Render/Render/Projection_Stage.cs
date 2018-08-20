@@ -40,7 +40,7 @@ namespace LinHowe_CSharp_Render.Render
             vertex.v *= vertex.onePerZ;
 
 
-            vertex.lightingColor *= vertex.onePerZ;
+            //vertex.lightingColor *= vertex.onePerZ;
         }
 
         /// <summary>
