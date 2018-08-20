@@ -14,7 +14,7 @@ namespace LinHowe_CSharp_Render
     public partial class RenderForm : Form
     {
         private RenderStage _stage = new ApplicationStage();
-        private Draw _draw;
+ 
         Graphics g = null;
 
         
@@ -23,7 +23,7 @@ namespace LinHowe_CSharp_Render
             InitializeComponent();
 
             //Init buffer
-            _draw = new Draw(MaximumSize.Width, MaximumSize.Height);
+            Draw.Init(MaximumSize.Width, MaximumSize.Height);
 
             ApplicationStage Astage = (ApplicationStage)_stage;
 
@@ -47,7 +47,7 @@ namespace LinHowe_CSharp_Render
 
         private void Tick(object sender, EventArgs e)
         {
-            lock (_draw._frameBuff)
+            lock (Draw._frameBuff)
             {
                 //渲染流水线
                 while (!RenderStage.RenderEnd)
@@ -63,7 +63,7 @@ namespace LinHowe_CSharp_Render
                 g.Clear(System.Drawing.Color.Black);
 
                 //渲染
-                g.DrawImage(_draw._frameBuff, 0, 0);
+                g.DrawImage(Draw._frameBuff, 0, 0);
             }
         }
 

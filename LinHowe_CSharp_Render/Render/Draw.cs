@@ -4,22 +4,23 @@ using System.Drawing;
 
 namespace LinHowe_CSharp_Render.Render
 {
-    class Draw
+    static class Draw
     {
         //帧缓冲
-        public Bitmap _frameBuff;
+        public static Bitmap _frameBuff;
 
-        public Draw(int width,int height)
+        public static void Init(int width, int height)
         {
             _frameBuff = new Bitmap(width, height);
         }
+        
         
         /// <summary>
         /// 绘制直线，使用bresenham算法
         /// </summary>
         /// <param name="p1"></param>
         /// <param name="p2"></param>
-        private void BresenhamDrawLine(Vertex p1, Vertex p2)
+        private static void BresenhamDrawLine(Vertex p1, Vertex p2)
         {
             int x = (int)(System.Math.Round(p1.position.x, MidpointRounding.AwayFromZero));
             int y = (int)(System.Math.Round(p1.position.y, MidpointRounding.AwayFromZero));

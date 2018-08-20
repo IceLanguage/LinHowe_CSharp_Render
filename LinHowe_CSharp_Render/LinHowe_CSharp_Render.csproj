@@ -65,6 +65,7 @@
     <Compile Include="Render\Model_View_Transformation_Stage.cs" />
     <Compile Include="Render\Projection_Stage.cs" />
     <Compile Include="Render\RenderStage.cs" />
+    <Compile Include="Render\Screen_Mapping_Stage.cs" />
     <Compile Include="Test\CubeData.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

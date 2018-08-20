@@ -69,11 +69,6 @@ namespace LinHowe_CSharp_Render.Render
     {
         public static readonly Screen_Mapping_Stage instance = new Screen_Mapping_Stage();
 
-        public override void ChangeState()
-        {
-            GeometricStage._smallStage = Model_View_Transformation_Stage.instance;
-            _stage = RasterizationStage.instance;
-            Console.WriteLine("进入光栅化阶段");
-        }
+        
     }
 }
