@@ -11,9 +11,17 @@ namespace LinHowe_CSharp_Render.Math
     /// </summary>
     class Matrix4x4
     {
-        private float[,] _m = new float[4, 4];
-
-        public Matrix4x4() { }
+        private readonly float[,] _m = new float[4, 4];
+        public readonly static Matrix4x4 Identity = new Matrix4x4
+            (1,0,0,0,
+             0,1,0,0,
+             0,0,1,0,
+             0,0,0,1);
+        
+        public Matrix4x4()
+        {
+            _m = Identity._m;
+        }
         public Matrix4x4(
             float a1, float a2, float a3, float a4,
             float b1, float b2, float b3, float b4,

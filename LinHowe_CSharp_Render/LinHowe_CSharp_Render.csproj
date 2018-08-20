@@ -58,8 +58,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Render\ApplicationStage.cs" />
     <Compile Include="Render\Camera.cs" />
     <Compile Include="Render\Draw.cs" />
+    <Compile Include="Render\GeometricStage.cs" />
+    <Compile Include="Render\Model_View_Transformation_Stage.cs" />
+    <Compile Include="Render\Projection_Stage.cs" />
     <Compile Include="Render\RenderStage.cs" />
     <Compile Include="Test\CubeData.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">

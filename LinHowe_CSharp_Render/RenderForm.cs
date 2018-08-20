@@ -13,8 +13,7 @@ namespace LinHowe_CSharp_Render
     /// </summary>
     public partial class RenderForm : Form
     {
-        private RenderStage stage = new ApplicationStage();
-        private Camera _camera;
+        private RenderStage _stage = new ApplicationStage();
         private Draw _draw;
         Graphics g = null;
 
@@ -26,13 +25,18 @@ namespace LinHowe_CSharp_Render
             //Init buffer
             _draw = new Draw(MaximumSize.Width, MaximumSize.Height);
 
+            ApplicationStage Astage = (ApplicationStage)_stage;
+
             //Init Mesh
             Mesh cubeMesh = new Mesh(CubeData.pointList, CubeData.indexs, CubeData.norlmas);
+            Astage.AddMesh(cubeMesh);
 
             //Init Camera
+            Camera _camera = new Camera();
             _camera.pos = new Vector3(0, 0, 0, 1);
             _camera.lookAt = new Vector3(0, 0, 1, 1);
             _camera.up = new Vector3(0, 1, 0, 0);
+            Astage.AddCamera(_camera);
 
             System.Timers.Timer mainTimer = new System.Timers.Timer(1000);
             mainTimer.Elapsed += new ElapsedEventHandler(Tick);
