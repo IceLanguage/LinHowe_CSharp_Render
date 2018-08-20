@@ -18,7 +18,7 @@ namespace LinHowe_CSharp_Render.Render
                 int size = mesh.Vertices.Length;
                 for (int i = 0;i < size;++i)
                 {
-                    SetMVTransform(Rendering_pipeline.m, Rendering_pipeline.v, ref mesh.Vertices[i]);
+                    SetMVTransform(Rendering_pipeline.m, Rendering_pipeline.v, ref mesh.Vertices[i].v);
                    
                 }
                 

@@ -16,7 +16,7 @@ namespace LinHowe_CSharp_Render.Render
                 int size = mesh.Vertices.Length;
                 for (int i = 0; i < size; ++i)
                 {
-                    TransformToScreen( ref mesh.Vertices[i]);
+                    TransformToScreen( ref mesh.Vertices[i].v);
                 }
 
             }

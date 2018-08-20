@@ -42,7 +42,6 @@ namespace LinHowe_CSharp_Render.Render
     {
         public static readonly ApplicationStage instance = new ApplicationStage();
         
-        
     }
 
     /// <summary>

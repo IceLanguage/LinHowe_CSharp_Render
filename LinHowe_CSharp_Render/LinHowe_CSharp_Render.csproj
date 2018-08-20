@@ -67,6 +67,7 @@
     <Compile Include="Render\Draw.cs" />
     <Compile Include="Render\GeometricStage.cs" />
     <Compile Include="Render\Model_View_Transformation_Stage.cs" />
+    <Compile Include="Render\PixelShader.cs" />
     <Compile Include="Render\Projection_Stage.cs" />
     <Compile Include="Render\Rendering_pipeline.cs" />
     <Compile Include="Render\RenderStage.cs" />

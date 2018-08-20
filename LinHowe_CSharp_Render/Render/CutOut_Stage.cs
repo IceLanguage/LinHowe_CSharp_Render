@@ -16,7 +16,7 @@ namespace LinHowe_CSharp_Render.Render
                 int size = mesh.Vertices.Length;
                 for (int i = 0; i < size; ++i)
                 {
-                    Vertex v = mesh.Vertices[i];
+                    Vertex v = mesh.Vertices[i].v;
 
                     if (mesh.Cuts[i])
                         continue;

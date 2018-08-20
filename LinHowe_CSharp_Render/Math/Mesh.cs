@@ -18,7 +18,7 @@ namespace LinHowe_CSharp_Render.Math
         /// <summary>
         /// 顶点数组
         /// </summary>
-        public Vertex[] Vertices { get; private set; }
+        public Vertex2[] Vertices { get; private set; }
 
         /// <summary>
         /// 材质
@@ -26,17 +26,13 @@ namespace LinHowe_CSharp_Render.Math
         public Material material { get; private set; }
         public Mesh(Vector3[] pointList, int[] indexs, Vector3[] normals,Color[] colors,Material mat)
         {
-            Vertices = new Vertex[indexs.Length];
+            Vertices = new Vertex2[indexs.Length];
             Cuts = new bool[indexs.Length];
             for (int i = 0; i < indexs.Length; i++)
             {
                 int pointIndex = indexs[i];
-
-                Vertices[i].position = pointList[pointIndex];
-                Vertices[i].position.w = 1;
-                Vertices[i].normal = normals[i];
-                Vertices[i].color = colors[pointIndex];
-                Vertices[i].lightingColor = Color.White;
+                Vertices[i].v = new Vertex(pointList[pointIndex], normals[i], colors[pointIndex]);
+                Vertices[i].save = Vertices[i].v;
             }
             material = mat;
         }

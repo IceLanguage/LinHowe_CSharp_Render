@@ -14,10 +14,12 @@ namespace LinHowe_CSharp_Render.Render
                 int size = mesh.Vertices.Length;
                 for (int j = 0; j < size; ++j)
                 {
-                    VertexShader.Lighting(mesh, Rendering_pipeline._camera.pos, ref VertexShader.Vertices[i][j]);
-                    mesh.Vertices[j].lightingColor = VertexShader.Vertices[i][j].lightingColor;
+                    //VertexShader.Lighting(mesh, Rendering_pipeline._camera.pos, ref VertexShader.Vertices[i][j]);
+                    //mesh.Vertices[j].v.lightingColor = VertexShader.Vertices[i][j].lightingColor;
+                    VertexShader.Lighting(mesh, Rendering_pipeline._camera.pos, ref mesh.Vertices[j].save);
+                    mesh.Vertices[j].v.lightingColor = mesh.Vertices[j].save.lightingColor;
                 }
-                
+
             }
             GeometricStage._smallStage = Projection_Stage.instance;
         }

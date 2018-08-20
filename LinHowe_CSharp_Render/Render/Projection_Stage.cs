@@ -20,7 +20,7 @@ namespace LinHowe_CSharp_Render.Render
                 int size = mesh.Vertices.Length;
                 for (int i = 0; i < size; ++i)
                 {
-                    SetProjectionTransform(Rendering_pipeline.p, ref mesh.Vertices[i]);
+                    SetProjectionTransform(Rendering_pipeline.p, ref mesh.Vertices[i].v);
                 }
             }
             GeometricStage._smallStage = CutOut_Stage.instance;
@@ -36,8 +36,8 @@ namespace LinHowe_CSharp_Render.Render
 
             vertex.onePerZ = 1 / vertex.position.w;
             
-            vertex.u *= vertex.onePerZ;
-            vertex.v *= vertex.onePerZ;
+            //vertex.u *= vertex.onePerZ;
+            //vertex.v *= vertex.onePerZ;
 
 
             //vertex.lightingColor *= vertex.onePerZ;

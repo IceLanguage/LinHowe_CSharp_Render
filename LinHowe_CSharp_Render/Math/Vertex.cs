@@ -16,11 +16,11 @@ namespace LinHowe_CSharp_Render.Math
         /// </summary>
         public float onePerZ;
 
-        /// <summary>
-        /// 纹理坐标
-        /// </summary>
-        public float u;
-        public float v;
+        ///// <summary>
+        ///// 纹理坐标
+        ///// </summary>
+        //public float u;
+        //public float v;
 
         //位置
         public Vector3 position;
@@ -35,5 +35,23 @@ namespace LinHowe_CSharp_Render.Math
         /// 光照颜色
         /// </summary>
         public Color lightingColor;
+
+        public Vertex(Vector3 point, Vector3 normal, Color color)
+        {
+            this.position = point;
+            this.normal = normal;
+            onePerZ = this.position.w = 1;
+            this.color = color;
+            this.lightingColor = Color.White;
+        }
+    }
+
+    /// <summary>
+    /// 双顶点数据
+    /// </summary>
+    struct Vertex2
+    {
+        public Vertex v;
+        public Vertex save;
     }
 }
