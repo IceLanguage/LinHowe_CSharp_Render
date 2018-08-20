@@ -17,40 +17,29 @@ namespace LinHowe_CSharp_Render.Math
 
         public Color(float r, float g, float b)
         {
-            this._r = Range(r, 0, 1);
-            this._g = Range(g, 0, 1);
-            this._b = Range(b, 0, 1);
+            this._r = MathHelp.Range(r, 0, 1);
+            this._g = MathHelp.Range(g, 0, 1);
+            this._b = MathHelp.Range(b, 0, 1);
         }
 
         public float r
         {
-            get { return Range(_r, 0, 1); }
-            set { _r = Range(value, 0, 1); }
+            get { return MathHelp.Range(_r, 0, 1); }
+            set { _r = MathHelp.Range(value, 0, 1); }
         }
 
         public float g
         {
-            get { return Range(_g, 0, 1); }
-            set { _g = value; }
+            get { return MathHelp.Range(_g, 0, 1); }
+            set { _g = MathHelp.Range(value, 0, 1); }
         }
 
         public float b
         {
-            get { return Range(_b, 0, 1); }
-            set { _b = value; }
+            get { return MathHelp.Range(_b, 0, 1); }
+            set { _b = MathHelp.Range(value, 0, 1); }
         }
-        private static float Range(float v, float min, float max)
-        {
-            if (v <= min)
-            {
-                return min;
-            }
-            if (v >= max)
-            {
-                return max;
-            }
-            return v;
-        }
+        
 
         public static Color operator *(float a, Color b)
         {

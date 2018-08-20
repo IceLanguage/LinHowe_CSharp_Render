@@ -31,6 +31,17 @@ namespace LinHowe_CSharp_Render.Math
 			};
 
 		}
+		public Matrix4x4(Matrix4x4 m)
+		{
+			_m = new float[4, 4]
+			{
+				{ m[0,0],m[0,1],m[0,2],m[0,3] },
+				{ m[1,0],m[1,1],m[1,2],m[1,3] },
+				{ m[2,0],m[2,1],m[2,2],m[2,3] },
+				{ m[3,0],m[3,1],m[3,2],m[3,3] }
+			};
+			
+		}
 		public Matrix4x4(
 			float a1, float a2, float a3, float a4,
 			float b1, float b2, float b3, float b4,
@@ -86,6 +97,36 @@ namespace LinHowe_CSharp_Render.Math
 				0, 0, 1, 0,
 				x, y, z, 1
 			);
+		}
+
+		public static Matrix4x4 GetRotateY(float r)
+		{
+			Matrix4x4 rm = new Matrix4x4(Identity);
+			rm[0, 0] = (float)(System.Math.Cos(r));
+			rm[0, 2] = (float)(-System.Math.Sin(r));
+			rm[2, 0] = (float)(System.Math.Sin(r));
+			rm[2, 2] = (float)(System.Math.Cos(r));
+			return rm;
+		}
+
+		public static Matrix4x4 GetRotateX(float r)
+		{
+			Matrix4x4 rm = new Matrix4x4(Identity);		
+			rm[1, 1] = (float)(System.Math.Cos(r));
+			rm[1, 2] = (float)(System.Math.Sin(r));
+			rm[2, 1] = (float)(-System.Math.Sin(r));
+			rm[2, 2] = (float)(System.Math.Cos(r));
+			return rm;
+		}
+
+		public static Matrix4x4 GetRotateZ(float r)
+		{
+			Matrix4x4 rm = new Matrix4x4(Identity);
+			rm[0, 0] = (float)(System.Math.Cos(r));
+			rm[0, 1] = (float)(System.Math.Sin(r));
+			rm[1, 0] = (float)(-System.Math.Sin(r));
+			rm[1, 1] = (float)(System.Math.Cos(r));
+			return rm;
 		}
 	}
 }

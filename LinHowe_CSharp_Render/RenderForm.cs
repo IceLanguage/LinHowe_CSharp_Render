@@ -15,7 +15,7 @@ namespace LinHowe_CSharp_Render
     {
         
         Graphics g = null;
-        
+        float rot = 0;
         public RenderForm()
         {
             InitializeComponent();
@@ -33,6 +33,7 @@ namespace LinHowe_CSharp_Render
         }
         private void Init()
         {
+            Graphics.FromImage(Draw._frameBuff).Clear(System.Drawing.Color.Black);
             RenderStage.Render();
             RenderStage _stage = Rendering_pipeline._stage;
             ApplicationStage Astage = (ApplicationStage)_stage;
@@ -52,7 +53,8 @@ namespace LinHowe_CSharp_Render
             _camera.zf = 500f;
             Astage.AddCamera(_camera);
 
-            Rendering_pipeline.m = Matrix4x4.GetTranslate(0, 0, 10);
+            rot += 0.2f;
+            Rendering_pipeline.m = Matrix4x4.GetRotateX(rot) * Matrix4x4.GetRotateY(rot) * Matrix4x4.GetTranslate(0, 0, 10);
         }
         private void Tick(object sender, EventArgs e)
         {
@@ -60,6 +62,7 @@ namespace LinHowe_CSharp_Render
             {
                 Init();
 
+                
                 //渲染流水线
                 while (!Rendering_pipeline.RenderEnd)
                     RenderStage.Render();
@@ -69,9 +72,7 @@ namespace LinHowe_CSharp_Render
                     g = this.CreateGraphics();
                 }
 
-                //清屏
-                g.Clear(System.Drawing.Color.Black);
-
+                
                 //渲染
                 g.DrawImage(Draw._frameBuff, 0, 0);
             }
