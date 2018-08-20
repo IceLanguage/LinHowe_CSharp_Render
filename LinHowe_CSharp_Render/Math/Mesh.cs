@@ -20,7 +20,7 @@ namespace LinHowe_CSharp_Render.Math
         /// </summary>
         public Vertex[] Vertices { get; }
        
-        public Mesh(Vector3[] pointList, int[] indexs, Vector3[] normals)
+        public Mesh(Vector3[] pointList, int[] indexs, Vector3[] normals,Color[] colors)
         {
             Vertices = new Vertex[indexs.Length];
             Cuts = new bool[indexs.Length];
@@ -31,6 +31,7 @@ namespace LinHowe_CSharp_Render.Math
                 Vertices[i].position = pointList[pointIndex];
                 Vertices[i].position.w = 1;
                 Vertices[i].normal = normals[i];
+                Vertices[i].color = colors[pointIndex];
             }
         }
     }

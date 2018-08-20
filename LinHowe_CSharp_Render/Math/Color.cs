@@ -66,5 +66,17 @@ namespace LinHowe_CSharp_Render.Math
             c.b = a.b + b.b;
             return c;
         }
+
+        /// <summary>
+        /// 转换为系统的color
+        /// </summary>
+        /// <returns></returns>
+        public System.Drawing.Color TransFormToSystemColor()
+        {
+            float r = this.r * 255;
+            float g = this.g * 255;
+            float b = this.b * 255;
+            return System.Drawing.Color.FromArgb((int)r, (int)g, (int)b);
+        }
     }
 }

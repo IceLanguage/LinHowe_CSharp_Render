@@ -8,10 +8,17 @@ namespace LinHowe_CSharp_Render.Render
     {
         //帧缓冲
         public static Bitmap _frameBuff;
+        public static float[,] _zBuff;
 
+        public static void Clear()
+        {
+            Graphics.FromImage(Draw._frameBuff).Clear(System.Drawing.Color.Black);
+            Array.Clear(Draw._zBuff, 0, Draw._zBuff.Length);
+        }
         public static void Init(int width, int height)
         {
             _frameBuff = new Bitmap(width, height);
+            _zBuff = new float[width, height];
         }
         
         /// <summary>
@@ -264,7 +271,18 @@ namespace LinHowe_CSharp_Render.Render
                     {
                         lerpFactor = (x - left.position.x) / dx;
                     }
-                    _frameBuff.SetPixel(xIndex, yIndex, System.Drawing.Color.White);
+                    //1/z’与x’和y'是线性关系的
+                    float onePreZ = MathHelp.Lerp(left.onePerZ, right.onePerZ, lerpFactor);
+                    float w = 1 / onePreZ;
+
+                    if (onePreZ >= _zBuff[yIndex, xIndex])//使用1/z进行深度测试
+                    {
+                        _zBuff[yIndex, xIndex] = onePreZ;
+                        //插值顶点颜色
+                        Math.Color vertColor = MathHelp.Lerp(left.color, right.color, lerpFactor);
+                        _frameBuff.SetPixel(xIndex, yIndex, vertColor.TransFormToSystemColor());
+                    }
+                   
                 }
             }
 

@@ -33,13 +33,17 @@ namespace LinHowe_CSharp_Render
         }
         private void Init()
         {
-            Graphics.FromImage(Draw._frameBuff).Clear(System.Drawing.Color.Black);
+            Draw.Clear();
             RenderStage.Render();
             RenderStage _stage = Rendering_pipeline._stage;
             ApplicationStage Astage = (ApplicationStage)_stage;
 
             //Init Mesh
-            Mesh cubeMesh = new Mesh(CubeData.pointList, CubeData.indexs, CubeData.norlmas);
+            Mesh cubeMesh = new Mesh(
+                CubeData.pointList,
+                CubeData.indexs,
+                CubeData.norlmas,
+                CubeData.vertColors);
             Astage.AddMesh(cubeMesh);
 
             //Init Camera
