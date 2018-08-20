@@ -13,10 +13,8 @@ namespace LinHowe_CSharp_Render
     /// </summary>
     public partial class RenderForm : Form
     {
-        private RenderStage _stage = new ApplicationStage();
- 
+        
         Graphics g = null;
-
         
         public RenderForm()
         {
@@ -25,6 +23,18 @@ namespace LinHowe_CSharp_Render
             //Init buffer
             Draw.Init(MaximumSize.Width, MaximumSize.Height);
 
+            
+
+            System.Timers.Timer mainTimer = new System.Timers.Timer(1000);
+            mainTimer.Elapsed += new ElapsedEventHandler(Tick);
+            mainTimer.AutoReset = true;
+            mainTimer.Enabled = true;
+            mainTimer.Start();
+        }
+        private void Init()
+        {
+            RenderStage.Render();
+            RenderStage _stage = RenderStage._stage;
             ApplicationStage Astage = (ApplicationStage)_stage;
 
             //Init Mesh
@@ -37,22 +47,15 @@ namespace LinHowe_CSharp_Render
             _camera.lookAt = new Vector3(0, 0, 1, 1);
             _camera.up = new Vector3(0, 1, 0, 0);
             Astage.AddCamera(_camera);
-
-            System.Timers.Timer mainTimer = new System.Timers.Timer(1000);
-            mainTimer.Elapsed += new ElapsedEventHandler(Tick);
-            mainTimer.AutoReset = true;
-            mainTimer.Enabled = true;
-            mainTimer.Start();
         }
-
         private void Tick(object sender, EventArgs e)
         {
             lock (Draw._frameBuff)
             {
+                Init();
                 //渲染流水线
                 while (!RenderStage.RenderEnd)
-                    _stage.ChangeState();
-                _stage.ChangeState();
+                    RenderStage.Render();
 
                 if (g == null)
                 {

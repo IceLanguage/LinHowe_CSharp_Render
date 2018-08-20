@@ -14,7 +14,30 @@ namespace LinHowe_CSharp_Render.Render
             _frameBuff = new Bitmap(width, height);
         }
         
-        
+        /// <summary>
+        /// 光栅化
+        /// </summary>
+        public static void Rasterization()
+        {
+            foreach(Mesh mesh in RenderStage._models)
+            {
+                for (int i = 0; i + 2 < mesh.Vertices.Length; i += 3)
+                {
+                    if (mesh.Cuts[i] || mesh.Cuts[i + 1] || mesh.Cuts[i + 2])
+                        continue;
+                    DrawTriangle(mesh.Vertices[i], mesh.Vertices[i + 1], mesh.Vertices[i + 2]);
+                }
+            }
+
+        }
+
+        private static void DrawTriangle(Vertex p1, Vertex p2, Vertex p3)
+        {
+            
+            BresenhamDrawLine(p1, p2);
+            BresenhamDrawLine(p2, p3);
+            BresenhamDrawLine(p3, p1);
+        }
         /// <summary>
         /// 绘制直线，使用bresenham算法
         /// </summary>

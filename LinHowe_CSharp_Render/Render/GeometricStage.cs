@@ -56,10 +56,7 @@ namespace LinHowe_CSharp_Render.Render
     partial class CutOut_Stage:SmallStage
     {
         public static readonly CutOut_Stage instance = new CutOut_Stage();
-        public override void ChangeState()
-        {
-            GeometricStage._smallStage = Screen_Mapping_Stage.instance;
-        }
+        
     }
 
     /// <summary>

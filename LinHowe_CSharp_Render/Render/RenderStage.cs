@@ -16,24 +16,30 @@ namespace LinHowe_CSharp_Render.Render
     abstract class RenderStage
     { 
         //模型图元数据
-        protected static List<Mesh> _models = new List<Mesh>();
+        public static List<Mesh> _models = new List<Mesh>();
         public static bool RenderEnd = false;
         //摄像头
         protected static Camera _camera;
 
-        protected static RenderStage _stage;
+        public static RenderStage _stage ;
 
         //模型-世界，世界-视图,投影
-        protected static Matrix4x4 m = new Matrix4x4(), v, p
-            ;
-        public virtual void ChangeState()
+        protected static Matrix4x4 m = new Matrix4x4(), v, p;
+
+        public static void Render()
         {
             if (null == _stage)
             {
                 _stage = ApplicationStage.instance;
-                RenderEnd = true;
-                //Console.WriteLine("进入应用程序阶段");
+                RenderEnd = false;
             }
+            else
+            {
+                _stage.ChangeState();
+            }
+        }
+        public virtual void ChangeState()
+        {
                 
         }
     }
@@ -69,9 +75,10 @@ namespace LinHowe_CSharp_Render.Render
         public static readonly RasterizationStage instance = new RasterizationStage();
         public override void ChangeState()
         {
-            _stage = ApplicationStage.instance;
+            Draw.Rasterization();
+            _stage = null;
             RenderEnd = true;
-            //Console.WriteLine("进入应用程序阶段");
+           
         }
     }
 
