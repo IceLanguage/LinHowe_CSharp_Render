@@ -37,6 +37,8 @@ namespace LinHowe_CSharp_Render.Render
                 {
                     if (mesh.Cuts[i] || mesh.Cuts[i + 1] || mesh.Cuts[i + 2])
                         continue;
+                    if (mesh.Blankings[i / 3])
+                        continue;
                     DrawTriangle(mesh.Vertices[i], mesh.Vertices[i + 1], mesh.Vertices[i + 2],mesh);
                 }
             }

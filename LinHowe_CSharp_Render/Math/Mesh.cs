@@ -15,6 +15,11 @@ namespace LinHowe_CSharp_Render.Math
         /// 是否裁剪
         /// </summary>
         public bool[] Cuts { get; set; }
+        
+        /// <summary>
+        /// 是否消隐
+        /// </summary>
+        public bool[] Blankings { get; set; }
         /// <summary>
         /// 顶点数组
         /// </summary>
@@ -28,6 +33,7 @@ namespace LinHowe_CSharp_Render.Math
         {
             Vertices = new Vertex2[indexs.Length];
             Cuts = new bool[indexs.Length];
+            Blankings = new bool[indexs.Length / 3];
             for (int i = 0; i < indexs.Length; i++)
             {
                 int pointIndex = indexs[i];

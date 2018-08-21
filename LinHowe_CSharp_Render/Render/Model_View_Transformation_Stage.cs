@@ -12,6 +12,7 @@ namespace LinHowe_CSharp_Render.Render
     {
         public override void ChangeState()
         {
+            //模型视图变换
             Rendering_pipeline.v = GetView();
             foreach(Mesh mesh in Rendering_pipeline._models)
             {
@@ -23,6 +24,19 @@ namespace LinHowe_CSharp_Render.Render
                 }
                 
             }
+
+            //背面消隐 
+            foreach (Mesh mesh in Rendering_pipeline._models)
+            {
+                for (int i = 0; i + 2 < mesh.Vertices.Length; i += 3)
+                {
+                    if(!BackFaceCulling(mesh.Vertices[i].v,mesh.Vertices[i + 1].v, mesh.Vertices[i + 2].v))
+                    {
+                        mesh.Blankings[i/3] = true;
+                    }
+                }
+            }
+
             GeometricStage._smallStage = Vertex_Coloring_Stage.instance;
         }
         /// <summary>
@@ -69,6 +83,25 @@ namespace LinHowe_CSharp_Render.Render
         private static void SetMVTransform(Matrix4x4 m, Matrix4x4 v, ref Vertex vertex)
         {
             vertex.position = vertex.position * m ;
+        }
+
+        /// <summary>
+        /// 背面消隐
+        /// 原理 https://blog.csdn.net/sixdaycoder/article/details/72637527
+        /// </summary>
+        /// <returns>是否通关背面消隐测试</returns>
+        private bool BackFaceCulling(Vertex p1, Vertex p2, Vertex p3)
+        {
+            Vector3 v1 = p2.position - p1.position;
+            Vector3 v2 = p3.position - p2.position;
+            Vector3 normal = Vector3.Cross(v1, v2);
+            //由于在视空间中，所以相机点就是（0,0,0）
+            Vector3 viewDir = p1.position - Vector3.zero;
+            if (Vector3.Dot(normal, viewDir) > 0)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
