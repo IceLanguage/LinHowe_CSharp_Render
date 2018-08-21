@@ -298,7 +298,7 @@ namespace LinHowe_CSharp_Render.Render
                         //插值顶点颜色
                         Math.Color vertColor = MathHelp.Lerp(left.v.color, right.v.color, lerpFactor);
                         Math.Color lightColor = MathHelp.Lerp(left.v.lightingColor, right.v.lightingColor, lerpFactor);
-                        _frameBuff.SetPixel(xIndex, yIndex, (lightColor * vertColor).TransFormToSystemColor());
+                        _frameBuff.SetPixel(xIndex, yIndex, (lightColor * vertColor ).TransFormToSystemColor());
                     }
                    
                 }
@@ -396,9 +396,10 @@ namespace LinHowe_CSharp_Render.Render
             //
             v.v.lightingColor = MathHelp.Lerp(v1.v.lightingColor, v2.v.lightingColor, t);
             v.save = v.v;
-            v.save.position.x = MathHelp.Lerp(v1.save.position.x, v2.save.position.x, t);
-            v.save.position.y = MathHelp.Lerp(v1.save.position.y, v2.save.position.y, t);
-            v.save.position.z = MathHelp.Lerp(v1.save.position.z, v2.save.position.z, t);
+            v.save.position = MathHelp.Lerp(v1.save.position, v2.save.position, t);
+            v.save.normal = MathHelp.Lerp(v1.save.normal, v2.save.normal, t);
+            v.save.color = v.v.color;
+            v.save.lightingColor = v.v.lightingColor;
         }
 
       

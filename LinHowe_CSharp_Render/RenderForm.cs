@@ -59,15 +59,15 @@ namespace LinHowe_CSharp_Render
             Astage.AddCamera(_camera);
 
             //Init Light
-            Light light = new Light(new Vector3(50, 0, 0), new Math.Color(1, 1, 1));
+            Light light = new Light(new Vector3(50, 1, 1), new Math.Color(1, 1, 1));
             Astage.AddLight(light);
            
             rot += 0.2f;
             Rendering_pipeline.m = 
                 Matrix4x4.GetRotateX(rot) * 
                 Matrix4x4.GetRotateY(rot) *
-                //Matrix4x4.GetRotateZ(rot) *
-                Matrix4x4.GetTranslate(0, 0, 10);
+                Matrix4x4.GetRotateZ(rot) *
+                Matrix4x4.GetTranslate(0, 0, 8);
         }
         private void Tick(object sender, EventArgs e)
         {

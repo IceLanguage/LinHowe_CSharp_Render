@@ -49,9 +49,15 @@ namespace LinHowe_CSharp_Render.Math
     /// <summary>
     /// 双顶点数据
     /// </summary>
-    struct Vertex2
+    class Vertex2
     {
+        /// <summary>
+        /// 用于差值和坐标变换
+        /// </summary>
         public Vertex v;
+        /// <summary>
+        /// 用于着色器
+        /// </summary>
         public Vertex save;
     }
 }

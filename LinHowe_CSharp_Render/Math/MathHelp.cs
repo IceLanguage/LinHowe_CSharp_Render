@@ -44,6 +44,15 @@ namespace LinHowe_CSharp_Render.Math
             }
         }
 
+        public static Vector3 Lerp(Vector3 a, Vector3 b, float t)
+        {
+            Vector3 res  = Vector3.zero;
+            res.x = Lerp(a.x, b.x, t);
+            res.y = Lerp(a.y, b.y, t);
+            res.z = Lerp(a.z, b.z, t);
+            res.w = Lerp(a.w, b.w, t);
+            return res;
+        }
         /// <summary>
         /// 颜色插值
         /// </summary>

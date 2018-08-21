@@ -73,29 +73,10 @@ namespace LinHowe_CSharp_Render.Test
 
         };
 
-        //public static Color[] vertColors = {
-        //                                     new Color( 0, 1, 0), new Color( 0, 0, 1), new Color( 1, 0, 0),
-        //                                       new Color( 0, 1, 0), new Color( 1, 0, 0), new Color( 0, 0, 1),
-        //                                       //
-        //                                        new Color( 0, 1, 0), new Color( 0, 0, 1), new Color( 1, 0, 0),
-        //                                       new Color( 0, 1, 0), new Color( 1, 0, 0), new Color( 0, 0, 1),
-        //                                       //
-        //                                        new Color( 0, 1, 0), new Color( 0, 0, 1), new Color( 1, 0, 0),
-        //                                       new Color( 0, 1, 0), new Color( 1, 0, 0), new Color( 0, 0, 1),
-        //                                       //
-        //                                        new Color( 0, 1, 0), new Color( 0, 0, 1), new Color( 1, 0, 0),
-        //                                       new Color( 0, 1, 0), new Color( 1, 0, 0), new Color( 0, 0, 1),
-        //                                       //
-        //                                        new Color( 0, 1, 0), new Color( 0, 0, 1), new Color( 1, 0, 0),
-        //                                       new Color( 0, 1, 0), new Color( 1, 0, 0), new Color( 0, 0, 1),
-        //                                       //
-        //                                        new Color( 0, 1, 0), new Color( 0, 0, 1), new Color( 1, 0, 0),
-        //                                       new Color( 0, 1, 0), new Color( 1, 0, 0), new Color( 0, 0, 1)
-        //                                 };
         public static Material mat = new Material
         (
             new Color(0, 0, 0f),
-            0.3f,
+            0.1f,
             new Color(0.3f,0.3f, 0.3f),
             new Color(1, 1, 1),
             99

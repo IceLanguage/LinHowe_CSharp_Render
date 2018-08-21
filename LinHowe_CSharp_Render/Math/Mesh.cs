@@ -31,6 +31,7 @@ namespace LinHowe_CSharp_Render.Math
             for (int i = 0; i < indexs.Length; i++)
             {
                 int pointIndex = indexs[i];
+                Vertices[i] = new Vertex2();
                 Vertices[i].v = new Vertex(pointList[pointIndex], normals[i], colors[pointIndex]);
                 Vertices[i].save = Vertices[i].v;
             }
