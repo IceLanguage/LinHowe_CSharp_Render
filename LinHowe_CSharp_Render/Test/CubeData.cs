@@ -1,4 +1,5 @@
 ﻿using LinHowe_CSharp_Render.Math;
+using System;
 
 namespace LinHowe_CSharp_Render.Test
 {
@@ -73,6 +74,9 @@ namespace LinHowe_CSharp_Render.Test
 
         };
 
+        /// <summary>
+        /// 材质
+        /// </summary>
         public static Material mat = new Material
         (
             new Color(0, 0, 0f),
@@ -81,5 +85,23 @@ namespace LinHowe_CSharp_Render.Test
             new Color(1, 1, 1),
             99
         );
+
+        /// <summary>
+        /// uv坐标
+        /// </summary>
+        public static Tuple<float,float>[] uvs ={
+            new Tuple<float,float>(0, 0),new Tuple<float,float>(0, 1),new Tuple<float,float>(1, 1),
+            new Tuple<float,float>(0, 0),new Tuple<float,float>(1, 1),new Tuple<float,float>(1, 0),
+            new Tuple<float,float>(0, 0),new Tuple<float,float>(0, 1),new Tuple<float,float>(1, 1),
+            new Tuple<float,float>(0, 0),new Tuple<float,float>(1, 1),new Tuple<float,float>(1, 0),
+            new Tuple<float,float>(0, 0),new Tuple<float,float>(0, 1),new Tuple<float,float>(1, 1),
+            new Tuple<float,float>(0, 0),new Tuple<float,float>(1, 1),new Tuple<float,float>(1, 0),
+            new Tuple<float,float>(0, 0),new Tuple<float,float>(0, 1),new Tuple<float,float>(1, 1),
+            new Tuple<float,float>(0, 0),new Tuple<float,float>(1, 1),new Tuple<float,float>(1, 0),
+            new Tuple<float,float>(0, 0),new Tuple<float,float>(0, 1),new Tuple<float,float>(1, 1),
+            new Tuple<float,float>(0, 0),new Tuple<float,float>(1, 1),new Tuple<float,float>(1, 0),
+            new Tuple<float,float>(0, 0),new Tuple<float,float>(0, 1),new Tuple<float,float>(1, 1),
+            new Tuple<float,float>(0, 0),new Tuple<float,float>(1, 1),new Tuple<float,float>(1, 0)
+        };
     }
 }

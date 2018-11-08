@@ -390,10 +390,10 @@ namespace LinHowe_CSharp_Render.Render
         {
             
             v.v.onePerZ = MathHelp.Lerp(v1.v.onePerZ, v2.v.onePerZ, t);
-            //
-            //v.u = MathHelp.Lerp(v1.u, v2.u, t);
-            //v.v = MathHelp.Lerp(v1.v, v2.v, t);
-            //
+
+            v.v.u = MathHelp.Lerp(v1.v.u, v2.v.u, t);
+            v.v.v = MathHelp.Lerp(v1.v.v, v2.v.v, t);
+
             v.v.color = MathHelp.Lerp(v1.v.color, v2.v.color, t);
             //
             v.v.lightingColor = MathHelp.Lerp(v1.v.lightingColor, v2.v.lightingColor, t);
@@ -402,6 +402,8 @@ namespace LinHowe_CSharp_Render.Render
             v.save.normal = MathHelp.Lerp(v1.save.normal, v2.save.normal, t);
             v.save.color = v.v.color;
             v.save.lightingColor = v.v.lightingColor;
+            v.save.u = v.v.u;
+            v.save.v = v.v.v;
         }
 
       

@@ -29,7 +29,7 @@ namespace LinHowe_CSharp_Render.Math
         /// 材质
         /// </summary>
         public Material material { get; private set; }
-        public Mesh(Vector3[] pointList, int[] indexs, Vector3[] normals,Color[] colors,Material mat)
+        public Mesh(Vector3[] pointList, int[] indexs, Vector3[] normals,Color[] colors,Material mat,Tuple<float,float>[] uvs)
         {
             Vertices = new Vertex2[indexs.Length];
             Cuts = new bool[indexs.Length];
@@ -38,7 +38,7 @@ namespace LinHowe_CSharp_Render.Math
             {
                 int pointIndex = indexs[i];
                 Vertices[i] = new Vertex2();
-                Vertices[i].v = new Vertex(pointList[pointIndex], normals[i], colors[pointIndex]);
+                Vertices[i].v = new Vertex(pointList[pointIndex], normals[i], colors[pointIndex],uvs[i]);
                 Vertices[i].save = Vertices[i].v;
             }
             material = mat;

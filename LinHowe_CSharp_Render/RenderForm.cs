@@ -44,7 +44,8 @@ namespace LinHowe_CSharp_Render
                 CubeData.indexs,
                 CubeData.norlmas,
                 CubeData.vertColors,
-                CubeData.mat);
+                CubeData.mat,
+                CubeData.uvs);
             Astage.AddMesh(cubeMesh);
 
             //Init Camera
