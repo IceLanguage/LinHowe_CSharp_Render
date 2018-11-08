@@ -1,10 +1,4 @@
-﻿using LinHowe_CSharp_Render.Math;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace LinHowe_CSharp_Render.Render
 {
     partial class Screen_Mapping_Stage
@@ -18,12 +12,9 @@ namespace LinHowe_CSharp_Render.Render
                 {
                     TransformToScreen( ref mesh.Vertices[i].v);
                 }
-
             }
-
             GeometricStage._smallStage = Model_View_Transformation_Stage.instance;
             Rendering_pipeline._stage = RasterizationStage.instance;
-            //Console.WriteLine("进入光栅化阶段");
         }
 
         /// <summary>

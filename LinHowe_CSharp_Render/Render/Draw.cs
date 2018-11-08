@@ -48,9 +48,6 @@ namespace LinHowe_CSharp_Render.Render
         private static void DrawTriangle(Vertex2 p1, Vertex2 p2, Vertex2 p3,Mesh mesh)
         {
             RasterizationTriangle(p1, p2, p3,mesh);
-            //BresenhamDrawLine(p1, p2);
-            //BresenhamDrawLine(p2, p3);
-            //BresenhamDrawLine(p3, p1);
         }
 
         /// <summary>
@@ -298,8 +295,8 @@ namespace LinHowe_CSharp_Render.Render
                     {
                         _zBuff[xIndex, yIndex] = onePreZ;
                         //插值顶点颜色
-                        Math.Color vertColor = MathHelp.Lerp(left.v.color, right.v.color, lerpFactor);
-                        Math.Color lightColor = MathHelp.Lerp(left.v.lightingColor, right.v.lightingColor, lerpFactor);
+                        Color vertColor = MathHelp.Lerp(left.v.color, right.v.color, lerpFactor);
+                        Color lightColor = MathHelp.Lerp(left.v.lightingColor, right.v.lightingColor, lerpFactor);
                         _frameBuff.SetPixel(xIndex, yIndex, (lightColor * vertColor ).TransFormToSystemColor());
                     }
                    

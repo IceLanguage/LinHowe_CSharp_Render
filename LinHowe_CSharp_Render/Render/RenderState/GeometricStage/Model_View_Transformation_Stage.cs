@@ -1,9 +1,4 @@
 ﻿using LinHowe_CSharp_Render.Math;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LinHowe_CSharp_Render.Render
 {
@@ -54,8 +49,8 @@ namespace LinHowe_CSharp_Render.Render
             Vector3 up = _camera.up;
 
             //视线方向
-            Vector3 dir = lookAt - pos;
-            Vector3 right = Vector3.Cross(up, dir);
+            Vector3 viewdir = lookAt - pos;
+            Vector3 right = Vector3.Cross(up, viewdir);
       
             right.Normalize();
             //平移部分
@@ -69,9 +64,9 @@ namespace LinHowe_CSharp_Render.Render
             //旋转部分
             Matrix4x4 r = new Matrix4x4
             (
-                right.x, up.x, dir.x, 0,
-                right.y, up.y, dir.y, 0,
-                right.z, up.z, dir.z, 0,
+                right.x, up.x, viewdir.x, 0,
+                right.y, up.y, viewdir.y, 0,
+                right.z, up.z, viewdir.z, 0,
                 0, 0, 0, 1
             );
             return t * r;
@@ -82,18 +77,18 @@ namespace LinHowe_CSharp_Render.Render
         /// </summary>
         private static void SetMVTransform(Matrix4x4 m, Matrix4x4 v, ref Vertex vertex)
         {
-            vertex.position = vertex.position * m ;
+            vertex.position = vertex.position * m * v;
         }
 
         /// <summary>
         /// 背面消隐
         /// 原理 https://blog.csdn.net/sixdaycoder/article/details/72637527
         /// </summary>
-        /// <returns>是否通关背面消隐测试</returns>
+        /// <returns>是否通过背面消隐测试</returns>
         private bool BackFaceCulling(Vertex p1, Vertex p2, Vertex p3)
         {
             Vector3 v1 = p2.position - p1.position;
-            Vector3 v2 = p3.position - p2.position;
+            Vector3 v2 = p3.position - p1.position;
             Vector3 normal = Vector3.Cross(v1, v2);
             //由于在视空间中，所以相机点就是（0,0,0）
             Vector3 viewDir = p1.position - Vector3.zero;

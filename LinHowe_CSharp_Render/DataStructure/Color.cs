@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using LinHowe_CSharp_Render.Math;
 
-namespace LinHowe_CSharp_Render.Math
+namespace LinHowe_CSharp_Render
 {
     /// <summary>
     /// 颜色
@@ -23,19 +19,19 @@ namespace LinHowe_CSharp_Render.Math
             this._b = MathHelp.Range(b, 0, 1);
         }
 
-        public float r
+        public float R
         {
             get { return MathHelp.Range(_r, 0, 1); }
             set { _r = MathHelp.Range(value, 0, 1); }
         }
 
-        public float g
+        public float G
         {
             get { return MathHelp.Range(_g, 0, 1); }
             set { _g = MathHelp.Range(value, 0, 1); }
         }
 
-        public float b
+        public float B
         {
             get { return MathHelp.Range(_b, 0, 1); }
             set { _b = MathHelp.Range(value, 0, 1); }
@@ -46,9 +42,9 @@ namespace LinHowe_CSharp_Render.Math
         {
             Color c = new Color
             {
-                r = a * b.r,
-                g = a * b.g,
-                b = a * b.b
+                R = a * b.R,
+                G = a * b.G,
+                B = a * b.B
             };
             return c;
         }
@@ -56,9 +52,9 @@ namespace LinHowe_CSharp_Render.Math
         {
             Color c = new Color
             {
-                r = a.r * b,
-                g = a.g * b,
-                b = a.b * b
+                R = a.R * b,
+                G = a.G * b,
+                B = a.B * b
             };
             return c;
         }
@@ -67,9 +63,9 @@ namespace LinHowe_CSharp_Render.Math
         {
             Color c = new Color
             {
-                r = a.r + b.r,
-                g = a.g + b.g,
-                b = a.b + b.b
+                R = a.R + b.R,
+                G = a.G + b.G,
+                B = a.B + b.B
             };
             return c;
         }
@@ -80,9 +76,9 @@ namespace LinHowe_CSharp_Render.Math
         /// <returns></returns>
         public System.Drawing.Color TransFormToSystemColor()
         {
-            float r = this.r * 255;
-            float g = this.g * 255;
-            float b = this.b * 255;
+            float r = this.R * 255;
+            float g = this.G * 255;
+            float b = this.B * 255;
             return System.Drawing.Color.FromArgb((int)r, (int)g, (int)b);
         }
 
@@ -96,9 +92,9 @@ namespace LinHowe_CSharp_Render.Math
         {
             Color c = new Color
             {
-                r = a.r * b.r,
-                g = a.g * b.g,
-                b = a.b * b.b
+                R = a.R * b.R,
+                G = a.G * b.G,
+                B = a.B * b.B
             };
             return c;
         }

@@ -29,8 +29,8 @@ namespace LinHowe_CSharp_Render.Render
             //原因 https://blog.csdn.net/christina123y/article/details/5963679
             Vector3 normal = (v.normal * m.Inverse().Transpose()).Normalize();
 
-            Math.Color emissiveColor = mesh.material.emissive;// v.color;//自发光
-            Math.Color ambientColor = Rendering_pipeline._ambientColor * mesh.material.ka;//环境光 
+            Color emissiveColor = mesh.material.emissive;// v.color;//自发光
+            Color ambientColor = Rendering_pipeline._ambientColor * mesh.material.ka;//环境光 
 
             foreach (Light light in Rendering_pipeline._lights)
             {

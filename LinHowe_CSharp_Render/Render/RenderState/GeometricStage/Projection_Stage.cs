@@ -1,9 +1,4 @@
 ﻿using LinHowe_CSharp_Render.Math;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LinHowe_CSharp_Render.Render
 {

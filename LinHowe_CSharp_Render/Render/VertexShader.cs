@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using LinHowe_CSharp_Render.Math;
 
 namespace LinHowe_CSharp_Render.Render

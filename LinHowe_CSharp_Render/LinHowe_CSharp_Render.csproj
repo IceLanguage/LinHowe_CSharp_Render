@@ -45,14 +45,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Math\Color.cs" />
-    <Compile Include="Math\Light.cs" />
-    <Compile Include="Math\Material.cs" />
+    <Compile Include="DataStructure\Color.cs" />
+    <Compile Include="DataStructure\Light.cs" />
+    <Compile Include="DataStructure\Material.cs" />
     <Compile Include="Math\MathHelp.cs" />
     <Compile Include="Math\Matrix4x4.cs" />
-    <Compile Include="Math\Mesh.cs" />
+    <Compile Include="DataStructure\Mesh.cs" />
     <Compile Include="Math\Vector3.cs" />
-    <Compile Include="Math\Vertex.cs" />
+    <Compile Include="DataStructure\Vertex.cs" />
     <Compile Include="RenderForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -61,19 +61,20 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Render\ApplicationStage.cs" />
-    <Compile Include="Math\Camera.cs" />
-    <Compile Include="Render\CutOut_Stage.cs" />
+    <Compile Include="Render\RenderState\ApplicationStage.cs" />
+    <Compile Include="DataStructure\Camera.cs" />
+    <Compile Include="Render\RenderState\GeometricStage\CutOut_Stage.cs" />
     <Compile Include="Render\Draw.cs" />
-    <Compile Include="Render\GeometricStage.cs" />
-    <Compile Include="Render\Model_View_Transformation_Stage.cs" />
+    <Compile Include="Render\RenderState\GeometricStage.cs" />
+    <Compile Include="Render\RenderState\GeometricStage\Model_View_Transformation_Stage.cs" />
     <Compile Include="Render\PixelShader.cs" />
-    <Compile Include="Render\Projection_Stage.cs" />
+    <Compile Include="Render\RenderState\GeometricStage\Projection_Stage.cs" />
     <Compile Include="Render\Rendering_pipeline.cs" />
-    <Compile Include="Render\RenderStage.cs" />
-    <Compile Include="Render\Screen_Mapping_Stage.cs" />
+    <Compile Include="Render\RenderState\RasterizationStage.cs" />
+    <Compile Include="Render\RenderState\RenderStage.cs" />
+    <Compile Include="Render\RenderState\GeometricStage\Screen_Mapping_Stage.cs" />
     <Compile Include="Render\VertexShader.cs" />
-    <Compile Include="Render\Vertex_Coloring_Stage.cs" />
+    <Compile Include="Render\RenderState\GeometricStage\Vertex_Coloring_Stage.cs" />
     <Compile Include="Test\CubeData.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -1,10 +1,4 @@
-﻿using LinHowe_CSharp_Render.Math;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace LinHowe_CSharp_Render.Render
 {
     /// <summary>
@@ -40,7 +34,6 @@ namespace LinHowe_CSharp_Render.Render
             VertexShader.Init(Rendering_pipeline._models);
 
             Rendering_pipeline._stage = GeometricStage.instance;
-            //Console.WriteLine("进入几何阶段");
         }
     }
 }

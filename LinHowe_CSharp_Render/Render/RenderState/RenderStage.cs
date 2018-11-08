@@ -1,21 +1,11 @@
-﻿using LinHowe_CSharp_Render.Math;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace LinHowe_CSharp_Render.Render
 {
-
-    
     /// <summary>
     /// 渲染阶段
     /// </summary>
     abstract class RenderStage
     { 
-
         public static void Render()
         {
             if (null == Rendering_pipeline. _stage)
@@ -29,10 +19,7 @@ namespace LinHowe_CSharp_Render.Render
                 Rendering_pipeline._stage.ChangeState();
             }
         }
-        public virtual void ChangeState()
-        {
-                
-        }
+        public abstract void ChangeState();
     }
 
     /// <summary>
@@ -59,13 +46,7 @@ namespace LinHowe_CSharp_Render.Render
     partial class RasterizationStage :RenderStage
     {
         public static readonly RasterizationStage instance = new RasterizationStage();
-        public override void ChangeState()
-        {
-            Draw.Rasterization();
-            Rendering_pipeline._stage = null;
-            Rendering_pipeline.RenderEnd = true;
-           
-        }
+        
     }
 
     /// <summary>

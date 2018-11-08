@@ -1,10 +1,10 @@
-﻿using LinHowe_CSharp_Render.Math;
-using LinHowe_CSharp_Render.Render;
-using LinHowe_CSharp_Render.Test;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Timers;
 using System.Windows.Forms;
+using LinHowe_CSharp_Render.Math;
+using LinHowe_CSharp_Render.Render;
+using LinHowe_CSharp_Render.Test;
 
 namespace LinHowe_CSharp_Render
 {
@@ -34,7 +34,7 @@ namespace LinHowe_CSharp_Render
         private void Init()
         {
             Draw.Clear();
-            RenderStage.Render();
+            Rendering_pipeline.Render();
             RenderStage _stage = Rendering_pipeline._stage;
             ApplicationStage Astage = (ApplicationStage)_stage;
 
@@ -49,18 +49,20 @@ namespace LinHowe_CSharp_Render
             Astage.AddMesh(cubeMesh);
 
             //Init Camera
-            Camera _camera = new Camera();
-            _camera.pos = new Vector3(0, 0, 0, 1);
-            _camera.lookAt = new Vector3(0, 0, 1, 1);
-            _camera.up = new Vector3(0, 1, 0, 0);
-            _camera.fov = (float)System.Math.PI / 4f;
-            _camera.aspect = this.MaximumSize.Width / (float)this.MaximumSize.Height;
-            _camera.zn = 1f;
-            _camera.zf = 500f;
+            Camera _camera = new Camera
+            {
+                pos = new Vector3(0, 0, 0, 1),
+                lookAt = new Vector3(0, 0, 1, 1),
+                up = new Vector3(0, 1, 0, 0),
+                fov = (float)System.Math.PI / 4f,
+                aspect = MaximumSize.Width / (float)MaximumSize.Height,
+                zn = 1f,
+                zf = 500f
+            };
             Astage.AddCamera(_camera);
 
             //Init Light
-            Light light = new Light(new Vector3(50, 1, 1), new Math.Color(1, 1, 1));
+            Light light = new Light(new Vector3(50, 1, 1), new Color(1, 1, 1));
             Astage.AddLight(light);
            
             rot += 0.2f;
@@ -76,10 +78,9 @@ namespace LinHowe_CSharp_Render
             {
                 Init();
 
-                
                 //渲染流水线
                 while (!Rendering_pipeline.RenderEnd)
-                    RenderStage.Render();
+                    Rendering_pipeline.Render();
 
                 if (g == null)
                 {

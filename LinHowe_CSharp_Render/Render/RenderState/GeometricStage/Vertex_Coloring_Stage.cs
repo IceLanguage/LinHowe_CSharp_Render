@@ -1,6 +1,4 @@
-﻿using LinHowe_CSharp_Render.Math;
-
-
+﻿
 namespace LinHowe_CSharp_Render.Render
 {
     partial class Vertex_Coloring_Stage

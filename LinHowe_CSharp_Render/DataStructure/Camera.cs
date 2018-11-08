@@ -1,6 +1,6 @@
 ﻿using LinHowe_CSharp_Render.Math;
 
-namespace LinHowe_CSharp_Render.Math
+namespace LinHowe_CSharp_Render
 {
     struct Camera
     {

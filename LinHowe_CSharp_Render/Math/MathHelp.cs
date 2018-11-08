@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace LinHowe_CSharp_Render.Math
 {
     static class MathHelp
@@ -60,7 +55,7 @@ namespace LinHowe_CSharp_Render.Math
         /// <param name="b"></param>
         /// <param name="t"></param>
         /// <returns></returns>
-        public static Math.Color Lerp(Math.Color a, Math.Color b, float t)
+        public static Color Lerp(Color a, Color b, float t)
         {
             if (t <= 0)
             {

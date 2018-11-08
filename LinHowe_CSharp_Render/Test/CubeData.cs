@@ -79,11 +79,11 @@ namespace LinHowe_CSharp_Render.Test
         /// </summary>
         public static Material mat = new Material
         (
-            new Color(0, 0, 0f),
-            0.1f,
-            new Color(0.3f,0.3f, 0.3f),
-            new Color(1, 1, 1),
-            99
+            emissive : new Color(0, 0, 0f),
+            ka : 0.1f,
+            diffuse : new Color(0.3f,0.3f, 0.3f),
+            specular : new Color(1, 1, 1),
+            shininess : 99
         );
 
         /// <summary>

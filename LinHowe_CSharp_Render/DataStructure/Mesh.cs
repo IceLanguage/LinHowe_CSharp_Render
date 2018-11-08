@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using LinHowe_CSharp_Render.Math;
 
-namespace LinHowe_CSharp_Render.Math
+namespace LinHowe_CSharp_Render
 {
     /// <summary>
     /// 网格
@@ -37,8 +34,11 @@ namespace LinHowe_CSharp_Render.Math
             for (int i = 0; i < indexs.Length; i++)
             {
                 int pointIndex = indexs[i];
-                Vertices[i] = new Vertex2();
-                Vertices[i].v = new Vertex(pointList[pointIndex], normals[i], colors[pointIndex],uvs[i]);
+                Vertices[i] = new Vertex2
+                {
+                    v = new Vertex(pointList[pointIndex],
+                    normals[i], colors[pointIndex], uvs[i])
+                };
                 Vertices[i].save = Vertices[i].v;
             }
             material = mat;
