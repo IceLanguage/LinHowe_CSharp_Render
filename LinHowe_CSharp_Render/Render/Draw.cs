@@ -45,7 +45,7 @@ namespace LinHowe_CSharp_Render.Render
 
         }
 
-        private static void DrawTriangle(Vertex2 p1, Vertex2 p2, Vertex2 p3,Mesh mesh)
+        private static void DrawTriangle(Point p1, Point p2, Point p3,Mesh mesh)
         {
             RasterizationTriangle(p1, p2, p3,mesh);
         }
@@ -56,7 +56,7 @@ namespace LinHowe_CSharp_Render.Render
         /// <param name="p1"></param>
         /// <param name="p2"></param>
         /// <param name="p3"></param>
-        private static void RasterizationTriangle(Vertex2 p1, Vertex2 p2, Vertex2 p3,Mesh mesh)
+        private static void RasterizationTriangle(Point p1, Point p2, Point p3,Mesh mesh)
         {
             if (p1.v.position.y == p2.v.position.y)
             {
@@ -93,10 +93,10 @@ namespace LinHowe_CSharp_Render.Render
             }
             else
             {//分割三角形
-                Vertex2 top;
+                Point top;
 
-                Vertex2 bottom;
-                Vertex2 middle;
+                Point bottom;
+                Point middle;
                 if (p1.v.position.y > p2.v.position.y && p2.v.position.y > p3.v.position.y)
                 {
                     top = p3;
@@ -148,7 +148,7 @@ namespace LinHowe_CSharp_Render.Render
                 float dy = middle.v.position.y - top.v.position.y;
                 float t = dy / (bottom.v.position.y - top.v.position.y);
                 //插值生成左右顶点
-                Vertex2 newMiddle = new Vertex2();
+                Point newMiddle = new Point();
               
                 newMiddle.v.position.x = middlex;
                 newMiddle.v.position.y = middle.v.position.y;
@@ -168,7 +168,7 @@ namespace LinHowe_CSharp_Render.Render
         /// <param name="p1"></param>
         /// <param name="p2"></param>
         /// <param name="p3"></param>
-        private static void DrawTriangleTop(Vertex2 p1, Vertex2 p2, Vertex2 p3,Mesh mesh)
+        private static void DrawTriangleTop(Point p1, Point p2, Point p3,Mesh mesh)
         {
             for (float y = p1.v.position.y; y <= p3.v.position.y; y += 0.5f)
             {
@@ -187,12 +187,12 @@ namespace LinHowe_CSharp_Render.Render
                     float dy = y - p1.v.position.y;
                     float t = dy / (p3.v.position.y - p1.v.position.y);
                     //插值生成左右顶点
-                    Vertex2 new1 = new Vertex2();
+                    Point new1 = new Point();
                     new1.v.position.x = xl;
                     new1.v.position.y = y;
                     ScreenSpaceLerpVertex(ref new1, p1, p3, t);
                     //
-                    Vertex2 new2 = new Vertex2();
+                    Point new2 = new Point();
                     new2.v.position.x = xr;
                     new2.v.position.y = y;
                     ScreenSpaceLerpVertex(ref new2, p2, p3, t);
@@ -215,7 +215,7 @@ namespace LinHowe_CSharp_Render.Render
         /// <param name="p2"></param>
         /// <param name="p3"></param>
 
-        private static void DrawTriangleBottom(Vertex2 p1, Vertex2 p2, Vertex2 p3, Mesh mesh)
+        private static void DrawTriangleBottom(Point p1, Point p2, Point p3, Mesh mesh)
         {
             for (float y = p1.v.position.y; y <= p2.v.position.y; y += 0.5f)
             {
@@ -234,12 +234,12 @@ namespace LinHowe_CSharp_Render.Render
                     float dy = y - p1.v.position.y;
                     float t = dy / (p2.v.position.y - p1.v.position.y);
                     //插值生成左右顶点
-                    Vertex2 new1 = new Vertex2();
+                    Point new1 = new Point();
                     new1.v.position.x = xl;
                     new1.v.position.y = y;
                     ScreenSpaceLerpVertex(ref new1, p1, p2, t);
                     //
-                    Vertex2 new2 = new Vertex2();
+                    Point new2 = new Point();
                     new2.v.position.x = xr;
                     new2.v.position.y = y;
                     ScreenSpaceLerpVertex(ref new2, p1, p3, t);
@@ -261,7 +261,7 @@ namespace LinHowe_CSharp_Render.Render
         /// </summary>
         /// <param name="left">左端点，值已经经过插值</param>
         /// <param name="right">右端点，值已经经过插值</param>
-        private static void ScanlineFill(Vertex2 left, Vertex2 right, int yIndex,Mesh mesh)
+        private static void ScanlineFill(Point left, Point right, int yIndex,Mesh mesh)
         {
             PixelShader.Lighting(mesh, Rendering_pipeline._camera.pos, ref left.save);
             left.v.lightingColor = left.save.lightingColor;
@@ -383,7 +383,7 @@ namespace LinHowe_CSharp_Render.Render
         /// <param name="v2"></param>
         /// <param name="t"></param>
         /// <returns></returns>
-        public static void ScreenSpaceLerpVertex(ref Vertex2 v, Vertex2 v1, Vertex2 v2, float t)
+        public static void ScreenSpaceLerpVertex(ref Point v, Point v1, Point v2, float t)
         {
             
             v.v.onePerZ = MathHelp.Lerp(v1.v.onePerZ, v2.v.onePerZ, t);
@@ -392,7 +392,7 @@ namespace LinHowe_CSharp_Render.Render
             v.v.v = MathHelp.Lerp(v1.v.v, v2.v.v, t);
 
             v.v.color = MathHelp.Lerp(v1.v.color, v2.v.color, t);
-            //
+            
             v.v.lightingColor = MathHelp.Lerp(v1.v.lightingColor, v2.v.lightingColor, t);
             v.save = v.v;
             v.save.position = MathHelp.Lerp(v1.save.position, v2.save.position, t);

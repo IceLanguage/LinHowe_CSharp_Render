@@ -9,7 +9,7 @@ namespace LinHowe_CSharp_Render
     class Mesh
     {
         /// <summary>
-        /// 是否裁剪
+        /// 是否裁剪 
         /// </summary>
         public bool[] Cuts { get; set; }
         
@@ -20,7 +20,7 @@ namespace LinHowe_CSharp_Render
         /// <summary>
         /// 顶点数组
         /// </summary>
-        public Vertex2[] Vertices { get; private set; }
+        public Point[] Vertices { get; private set; }
 
         /// <summary>
         /// 材质
@@ -28,17 +28,23 @@ namespace LinHowe_CSharp_Render
         public Material material { get; private set; }
         public Mesh(Vector3[] pointList, int[] indexs, Vector3[] normals,Color[] colors,Material mat,Tuple<float,float>[] uvs)
         {
-            Vertices = new Vertex2[indexs.Length];
+            Vertices = new Point[indexs.Length];
             Cuts = new bool[indexs.Length];
             Blankings = new bool[indexs.Length / 3];
             for (int i = 0; i < indexs.Length; i++)
             {
                 int pointIndex = indexs[i];
-                Vertices[i] = new Vertex2
-                {
-                    v = new Vertex(pointList[pointIndex],
-                    normals[i], colors[pointIndex], uvs[i])
-                };
+                Vertices[i] = new Point
+                    (
+                        new Vertex
+                        (
+                            pointList[pointIndex],
+                            normals[i], 
+                            colors[pointIndex], 
+                            uvs[i]
+                        )
+                    );
+               
                 Vertices[i].save = Vertices[i].v;
             }
             material = mat;

@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataStructure\Color.cs" />
+    <Compile Include="DataStructure\GameObject.cs" />
     <Compile Include="DataStructure\Light.cs" />
     <Compile Include="DataStructure\Material.cs" />
     <Compile Include="Math\MathHelp.cs" />

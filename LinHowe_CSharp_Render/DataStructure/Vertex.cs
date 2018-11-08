@@ -46,9 +46,9 @@ namespace LinHowe_CSharp_Render
     }
 
     /// <summary>
-    /// 双顶点数据
+    /// 点数据
     /// </summary>
-    class Vertex2
+    struct Point
     {
         /// <summary>
         /// 用于差值和坐标变换
@@ -58,5 +58,10 @@ namespace LinHowe_CSharp_Render
         /// 用于着色器
         /// </summary>
         public Vertex save;
+
+        public Point(Vertex v)
+        {
+            save = this.v = v;
+        }
     }
 }
