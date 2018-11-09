@@ -24,12 +24,9 @@ namespace LinHowe_CSharp_Render.Render
                     SetMTransform(go.ObjectToWorldMatrix,
                         ref mesh.Vertices[i].v_trans.position);
 
-                    //计算物体包围球的最大半径
-                    go.max_radius = System.Math.Max(go.max_radius, 
-                        Vector3.DistanceSquare(SphereCenterPos, mesh.Vertices[i].v_trans.position));
+             
                 }
 
-                go.max_radius = (float)System.Math.Sqrt(go.max_radius);
                 //物体剔除-包围球测试             
                 if (CullObject(go, SphereCenterPos))
                     return;

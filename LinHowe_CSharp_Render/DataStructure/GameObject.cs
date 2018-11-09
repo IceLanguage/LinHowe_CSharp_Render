@@ -13,10 +13,23 @@ namespace LinHowe_CSharp_Render
         {
             this.mesh = mesh;
             this.position = position;
+            CalculateMaxRadius();
         }
-        public GameObject(Mesh mesh)
+        /// <summary>
+        /// 计算半径
+        /// </summary>
+        private void CalculateMaxRadius()
         {
-            this.mesh = mesh;
+            int size = mesh.Vertices.Length;
+            for (int i = 0; i < size; ++i)
+            {
+                //计算物体包围球的最大半径
+                max_radius = System.Math.Max(max_radius,
+                    Vector3.DistanceSquare(position, mesh.Vertices[i].m_vertex.position));
+            }
+            max_radius = (float)System.Math.Sqrt(max_radius);
         }
+
+
     }
 }
