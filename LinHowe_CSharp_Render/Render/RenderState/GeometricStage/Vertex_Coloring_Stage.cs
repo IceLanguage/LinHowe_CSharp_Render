@@ -13,8 +13,8 @@ namespace LinHowe_CSharp_Render.Render
                 for (int j = 0; j < size; ++j)
                 {
                    
-                    VertexShader.Lighting(mesh, Rendering_pipeline._camera.pos, ref mesh.Vertices[j].save);
-                    mesh.Vertices[j].v.lightingColor = mesh.Vertices[j].save.lightingColor;
+                    VertexShader.Lighting(mesh, Rendering_pipeline._camera.pos, ref mesh.Vertices[j].v_shader);
+                    mesh.Vertices[j].v_trans.lightingColor = mesh.Vertices[j].v_shader.lightingColor;
                 }
 
             }

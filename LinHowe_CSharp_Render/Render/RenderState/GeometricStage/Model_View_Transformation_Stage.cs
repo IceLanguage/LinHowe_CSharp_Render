@@ -14,7 +14,7 @@ namespace LinHowe_CSharp_Render.Render
                 int size = mesh.Vertices.Length;
                 for (int i = 0;i < size;++i)
                 {
-                    SetMVTransform(Rendering_pipeline.m, Rendering_pipeline.v, ref mesh.Vertices[i].v);
+                    SetMVTransform(Rendering_pipeline.m, Rendering_pipeline.v, ref mesh.Vertices[i].v_trans);
                    
                 }
                 
@@ -25,7 +25,7 @@ namespace LinHowe_CSharp_Render.Render
             {
                 for (int i = 0; i + 2 < mesh.Vertices.Length; i += 3)
                 {
-                    if(!BackFaceCulling(mesh.Vertices[i].v,mesh.Vertices[i + 1].v, mesh.Vertices[i + 2].v))
+                    if(!BackFaceCulling(mesh.Vertices[i].v_trans, mesh.Vertices[i + 1].v_trans, mesh.Vertices[i + 2].v_trans))
                     {
                         mesh.Blankings[i/3] = true;
                     }

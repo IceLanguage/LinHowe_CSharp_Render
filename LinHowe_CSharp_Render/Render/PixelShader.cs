@@ -14,6 +14,7 @@ namespace LinHowe_CSharp_Render.Render
         public static void Lighting(Mesh mesh, Vector3 worldEyePositon, ref Vertex v)
         {
             ProgrammableShader(mesh, worldEyePositon, ref v);
+            
         }
     }
 
@@ -37,7 +38,6 @@ namespace LinHowe_CSharp_Render.Render
                 Vector3 inLightDir = (light.worldPosition * m- worldPoint).Normalize();
 
                 //漫反射
-                //float diffuse = System.Math.Max(Vector3.Dot(normal, inLightDir),0);
                 float halftemp = Vector3.Dot(normal, inLightDir) * 0.5f + 0.5f;
                 Color diffuseColor = mesh.material.diffuse * halftemp * light.lightColor;
 

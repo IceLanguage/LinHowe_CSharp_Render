@@ -11,7 +11,7 @@ namespace LinHowe_CSharp_Render.Test
         /// <summary>
         /// 法线
         /// </summary>
-        public static Vector3[] norlmas = 
+        public static readonly Vector3[] norlmas = 
         {
             new Vector3( 0, 0,-1), new Vector3( 0, 0,-1), new Vector3( 0, 0,-1),
             new Vector3( 0, 0,-1), new Vector3( 0, 0,-1), new Vector3( 0, 0,-1),
@@ -30,7 +30,7 @@ namespace LinHowe_CSharp_Render.Test
         /// <summary>
         /// 三角形顶点索引 12个面
         /// </summary>
-        public static int[] indexs =
+        public static readonly int[] indexs =
         {
             0,1,2,
             0,2,3,
@@ -49,7 +49,7 @@ namespace LinHowe_CSharp_Render.Test
         /// <summary>
         /// 顶点坐标
         /// </summary>
-        public static Vector3[] pointList =
+        public static readonly Vector3[] pointList =
         {
             new Vector3(-1, 1,-1),
             new Vector3(-1,-1,-1),
@@ -65,7 +65,7 @@ namespace LinHowe_CSharp_Render.Test
         /// <summary>
         /// 顶点颜色
         /// </summary>
-        public static Color[] vertColors =
+        public static readonly Color[] vertColors =
         {
             new Color( 0, 1, 0), new Color( 0, 0, 1),
             new Color( 1, 0, 0), new Color( 1, 1, 0),
@@ -77,7 +77,7 @@ namespace LinHowe_CSharp_Render.Test
         /// <summary>
         /// 材质
         /// </summary>
-        public static Material mat = new Material
+        public static readonly Material mat = new Material
         (
             emissive : new Color(0, 0, 0f),
             ka : 0.1f,
@@ -89,7 +89,7 @@ namespace LinHowe_CSharp_Render.Test
         /// <summary>
         /// uv坐标
         /// </summary>
-        public static Tuple<float,float>[] uvs ={
+        public static readonly Tuple<float,float>[] uvs ={
             new Tuple<float,float>(0, 0),new Tuple<float,float>(0, 1),new Tuple<float,float>(1, 1),
             new Tuple<float,float>(0, 0),new Tuple<float,float>(1, 1),new Tuple<float,float>(1, 0),
             new Tuple<float,float>(0, 0),new Tuple<float,float>(0, 1),new Tuple<float,float>(1, 1),

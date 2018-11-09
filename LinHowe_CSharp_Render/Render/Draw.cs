@@ -17,8 +17,8 @@ namespace LinHowe_CSharp_Render.Render
         {
             Graphics.FromImage(Draw._frameBuff).Clear(System.Drawing.Color.Black);
             Array.Clear(Draw._zBuff, 0, Draw._zBuff.Length);
-            Rendering_pipeline._models.Clear();
-            Rendering_pipeline._lights.Clear();
+            //Rendering_pipeline._models.Clear();
+            //Rendering_pipeline._lights.Clear();
         }
         public static void Init(int width, int height)
         {
@@ -58,9 +58,9 @@ namespace LinHowe_CSharp_Render.Render
         /// <param name="p3"></param>
         private static void RasterizationTriangle(Point p1, Point p2, Point p3,Mesh mesh)
         {
-            if (p1.v.position.y == p2.v.position.y)
+            if (p1.v_trans.position.y == p2.v_trans.position.y)
             {
-                if (p1.v.position.y < p3.v.position.y)
+                if (p1.v_trans.position.y < p3.v_trans.position.y)
                 {//平顶
                     DrawTriangleTop(p1, p2, p3,mesh);
                 }
@@ -69,9 +69,9 @@ namespace LinHowe_CSharp_Render.Render
                     DrawTriangleBottom(p3, p1, p2, mesh);
                 }
             }
-            else if (p1.v.position.y == p3.v.position.y)
+            else if (p1.v_trans.position.y == p3.v_trans.position.y)
             {
-                if (p1.v.position.y < p2.v.position.y)
+                if (p1.v_trans.position.y < p2.v_trans.position.y)
                 {//平顶
                     DrawTriangleTop(p1, p3, p2, mesh);
                 }
@@ -80,9 +80,9 @@ namespace LinHowe_CSharp_Render.Render
                     DrawTriangleBottom(p2, p1, p3, mesh);
                 }
             }
-            else if (p2.v.position.y == p3.v.position.y)
+            else if (p2.v_trans.position.y == p3.v_trans.position.y)
             {
-                if (p2.v.position.y < p1.v.position.y)
+                if (p2.v_trans.position.y < p1.v_trans.position.y)
                 {//平顶
                     DrawTriangleTop(p2, p3, p1, mesh);
                 }
@@ -97,37 +97,37 @@ namespace LinHowe_CSharp_Render.Render
 
                 Point bottom;
                 Point middle;
-                if (p1.v.position.y > p2.v.position.y && p2.v.position.y > p3.v.position.y)
+                if (p1.v_trans.position.y > p2.v_trans.position.y && p2.v_trans.position.y > p3.v_trans.position.y)
                 {
                     top = p3;
                     middle = p2;
                     bottom = p1;
                 }
-                else if (p3.v.position.y > p2.v.position.y && p2.v.position.y > p1.v.position.y)
+                else if (p3.v_trans.position.y > p2.v_trans.position.y && p2.v_trans.position.y > p1.v_trans.position.y)
                 {
                     top = p1;
                     middle = p2;
                     bottom = p3;
                 }
-                else if (p2.v.position.y > p1.v.position.y && p1.v.position.y > p3.v.position.y)
+                else if (p2.v_trans.position.y > p1.v_trans.position.y && p1.v_trans.position.y > p3.v_trans.position.y)
                 {
                     top = p3;
                     middle = p1;
                     bottom = p2;
                 }
-                else if (p3.v.position.y > p1.v.position.y && p1.v.position.y > p2.v.position.y)
+                else if (p3.v_trans.position.y > p1.v_trans.position.y && p1.v_trans.position.y > p2.v_trans.position.y)
                 {
                     top = p2;
                     middle = p1;
                     bottom = p3;
                 }
-                else if (p1.v.position.y > p3.v.position.y && p3.v.position.y > p2.v.position.y)
+                else if (p1.v_trans.position.y > p3.v_trans.position.y && p3.v_trans.position.y > p2.v_trans.position.y)
                 {
                     top = p2;
                     middle = p3;
                     bottom = p1;
                 }
-                else if (p2.v.position.y > p3.v.position.y && p3.v.position.y > p1.v.position.y)
+                else if (p2.v_trans.position.y > p3.v_trans.position.y && p3.v_trans.position.y > p1.v_trans.position.y)
                 {
                     top = p1;
                     middle = p3;
@@ -140,18 +140,18 @@ namespace LinHowe_CSharp_Render.Render
                 }
                 //插值求中间点x
                 float middlex = 
-                    (middle.v.position.y - top.v.position.y) * 
-                    (bottom.v.position.x - top.v.position.x) /
-                    (bottom.v.position.y - top.v.position.y) + top.v.position.x;
+                    (middle.v_trans.position.y - top.v_trans.position.y) * 
+                    (bottom.v_trans.position.x - top.v_trans.position.x) /
+                    (bottom.v_trans.position.y - top.v_trans.position.y) + top.v_trans.position.x;
 
                 
-                float dy = middle.v.position.y - top.v.position.y;
-                float t = dy / (bottom.v.position.y - top.v.position.y);
+                float dy = middle.v_trans.position.y - top.v_trans.position.y;
+                float t = dy / (bottom.v_trans.position.y - top.v_trans.position.y);
                 //插值生成左右顶点
                 Point newMiddle = new Point();
               
-                newMiddle.v.position.x = middlex;
-                newMiddle.v.position.y = middle.v.position.y;
+                newMiddle.v_trans.position.x = middlex;
+                newMiddle.v_trans.position.y = middle.v_trans.position.y;
                 
                 ScreenSpaceLerpVertex(ref newMiddle, top, bottom, t);
 
@@ -170,34 +170,34 @@ namespace LinHowe_CSharp_Render.Render
         /// <param name="p3"></param>
         private static void DrawTriangleTop(Point p1, Point p2, Point p3,Mesh mesh)
         {
-            for (float y = p1.v.position.y; y <= p3.v.position.y; y += 0.5f)
+            for (float y = p1.v_trans.position.y; y <= p3.v_trans.position.y; y += 0.5f)
             {
                 int yIndex = (int)(System.Math.Round(y, MidpointRounding.AwayFromZero));
                 if (yIndex >= 0 && yIndex < _frameBuff.Height)
                 {
                     float xl = 
-                        (y - p1.v.position.y) * 
-                        (p3.v.position.x - p1.v.position.x) / 
-                        (p3.v.position.y - p1.v.position.y) + p1.v.position.x;
+                        (y - p1.v_trans.position.y) * 
+                        (p3.v_trans.position.x - p1.v_trans.position.x) / 
+                        (p3.v_trans.position.y - p1.v_trans.position.y) + p1.v_trans.position.x;
                     float xr = 
-                        (y - p2.v.position.y) *
-                        (p3.v.position.x - p2.v.position.x) /
-                        (p3.v.position.y - p2.v.position.y) + p2.v.position.x;
+                        (y - p2.v_trans.position.y) *
+                        (p3.v_trans.position.x - p2.v_trans.position.x) /
+                        (p3.v_trans.position.y - p2.v_trans.position.y) + p2.v_trans.position.x;
 
-                    float dy = y - p1.v.position.y;
-                    float t = dy / (p3.v.position.y - p1.v.position.y);
+                    float dy = y - p1.v_trans.position.y;
+                    float t = dy / (p3.v_trans.position.y - p1.v_trans.position.y);
                     //插值生成左右顶点
                     Point new1 = new Point();
-                    new1.v.position.x = xl;
-                    new1.v.position.y = y;
+                    new1.v_trans.position.x = xl;
+                    new1.v_trans.position.y = y;
                     ScreenSpaceLerpVertex(ref new1, p1, p3, t);
                     //
                     Point new2 = new Point();
-                    new2.v.position.x = xr;
-                    new2.v.position.y = y;
+                    new2.v_trans.position.x = xr;
+                    new2.v_trans.position.y = y;
                     ScreenSpaceLerpVertex(ref new2, p2, p3, t);
                     //扫描线填充
-                    if (new1.v.position.x < new2.v.position.x)
+                    if (new1.v_trans.position.x < new2.v_trans.position.x)
                     {
                         ScanlineFill(new1, new2, yIndex, mesh);
                     }
@@ -217,34 +217,34 @@ namespace LinHowe_CSharp_Render.Render
 
         private static void DrawTriangleBottom(Point p1, Point p2, Point p3, Mesh mesh)
         {
-            for (float y = p1.v.position.y; y <= p2.v.position.y; y += 0.5f)
+            for (float y = p1.v_trans.position.y; y <= p2.v_trans.position.y; y += 0.5f)
             {
                 int yIndex = (int)(System.Math.Round(y, MidpointRounding.AwayFromZero));
                 if (yIndex >= 0 && yIndex < _frameBuff.Height)
                 {
                     float xl = 
-                        (y - p1.v.position.y) * 
-                        (p2.v.position.x - p1.v.position.x) / 
-                        (p2.v.position.y - p1.v.position.y) + p1.v.position.x;
+                        (y - p1.v_trans.position.y) * 
+                        (p2.v_trans.position.x - p1.v_trans.position.x) / 
+                        (p2.v_trans.position.y - p1.v_trans.position.y) + p1.v_trans.position.x;
                     float xr = 
-                        (y - p1.v.position.y) * 
-                        (p3.v.position.x - p1.v.position.x) / 
-                        (p3.v.position.y - p1.v.position.y) + p1.v.position.x;
+                        (y - p1.v_trans.position.y) * 
+                        (p3.v_trans.position.x - p1.v_trans.position.x) / 
+                        (p3.v_trans.position.y - p1.v_trans.position.y) + p1.v_trans.position.x;
 
-                    float dy = y - p1.v.position.y;
-                    float t = dy / (p2.v.position.y - p1.v.position.y);
+                    float dy = y - p1.v_trans.position.y;
+                    float t = dy / (p2.v_trans.position.y - p1.v_trans.position.y);
                     //插值生成左右顶点
                     Point new1 = new Point();
-                    new1.v.position.x = xl;
-                    new1.v.position.y = y;
+                    new1.v_trans.position.x = xl;
+                    new1.v_trans.position.y = y;
                     ScreenSpaceLerpVertex(ref new1, p1, p2, t);
                     //
                     Point new2 = new Point();
-                    new2.v.position.x = xr;
-                    new2.v.position.y = y;
+                    new2.v_trans.position.x = xr;
+                    new2.v_trans.position.y = y;
                     ScreenSpaceLerpVertex(ref new2, p1, p3, t);
                     //扫描线填充
-                    if (new1.v.position.x < new2.v.position.x)
+                    if (new1.v_trans.position.x < new2.v_trans.position.x)
                     {
                         ScanlineFill(new1, new2, yIndex,mesh);
                     }
@@ -263,29 +263,29 @@ namespace LinHowe_CSharp_Render.Render
         /// <param name="right">右端点，值已经经过插值</param>
         private static void ScanlineFill(Point left, Point right, int yIndex,Mesh mesh)
         {
-            PixelShader.Lighting(mesh, Rendering_pipeline._camera.pos, ref left.save);
-            left.v.lightingColor = left.save.lightingColor;
-            PixelShader.Lighting(mesh, Rendering_pipeline._camera.pos, ref right.save);
-            right.v.lightingColor = right.save.lightingColor;
 
-            float dx = right.v.position.x - left.v.position.x;
+            Vertex leftV = left.v_trans;
+            Vertex rightV = right.v_trans;
+
+            float dx = rightV.position.x - leftV.position.x;
             float step = 1;
             if (dx != 0)
             {
                 step = 1 / dx;
             }
-            for (float x = left.v.position.x; x <= right.v.position.x; x += 0.5f)
+            for (float x = leftV.position.x; x <= rightV.position.x; x += 0.5f)
             {
                 int xIndex = (int)(x + 0.5f);
+               
                 if (xIndex >= 0 && xIndex < _frameBuff.Width)
                 {
                     float lerpFactor = 0;
                     if (dx != 0)
                     {
-                        lerpFactor = (x - left.v.position.x) / dx;
+                        lerpFactor = (x - leftV.position.x) / dx;
                     }
                     //1/z’与x’和y'是线性关系的
-                    float onePreZ = MathHelp.Lerp(left.v.onePerZ, right.v.onePerZ, lerpFactor);
+                    float onePreZ = MathHelp.Lerp(leftV.onePerZ, rightV.onePerZ, lerpFactor);
                     float w = 1 / onePreZ;
 
                     if (yIndex < 0 || yIndex >= _frameBuff.Height || xIndex < 0 || xIndex >= _frameBuff.Width)
@@ -295,13 +295,18 @@ namespace LinHowe_CSharp_Render.Render
                     {
                         _zBuff[xIndex, yIndex] = onePreZ;
                         //插值顶点颜色
-                        Color vertColor = MathHelp.Lerp(left.v.color, right.v.color, lerpFactor);
-                        Color lightColor = MathHelp.Lerp(left.v.lightingColor, right.v.lightingColor, lerpFactor);
-                        _frameBuff.SetPixel(xIndex, yIndex, (lightColor * vertColor ).TransFormToSystemColor());
+                        Color vertColor = MathHelp.Lerp(leftV.color, rightV.color, lerpFactor);
+                        
+                        _frameBuff.SetPixel(xIndex, yIndex, vertColor.TransFormToSystemColor());
                     }
                    
                 }
             }
+
+        }
+
+        private static void DrawPoint()
+        {
 
         }
         /// <summary>
@@ -386,21 +391,21 @@ namespace LinHowe_CSharp_Render.Render
         public static void ScreenSpaceLerpVertex(ref Point v, Point v1, Point v2, float t)
         {
             
-            v.v.onePerZ = MathHelp.Lerp(v1.v.onePerZ, v2.v.onePerZ, t);
+            v.v_trans.onePerZ = MathHelp.Lerp(v1.v_trans.onePerZ, v2.v_trans.onePerZ, t);
 
-            v.v.u = MathHelp.Lerp(v1.v.u, v2.v.u, t);
-            v.v.v = MathHelp.Lerp(v1.v.v, v2.v.v, t);
+            v.v_trans.u = MathHelp.Lerp(v1.v_trans.u, v2.v_trans.u, t);
+            v.v_trans.v = MathHelp.Lerp(v1.v_trans.v, v2.v_trans.v, t);
 
-            v.v.color = MathHelp.Lerp(v1.v.color, v2.v.color, t);
+            v.v_trans.color = MathHelp.Lerp(v1.v_trans.color, v2.v_trans.color, t);
             
-            v.v.lightingColor = MathHelp.Lerp(v1.v.lightingColor, v2.v.lightingColor, t);
-            v.save = v.v;
-            v.save.position = MathHelp.Lerp(v1.save.position, v2.save.position, t);
-            v.save.normal = MathHelp.Lerp(v1.save.normal, v2.save.normal, t);
-            v.save.color = v.v.color;
-            v.save.lightingColor = v.v.lightingColor;
-            v.save.u = v.v.u;
-            v.save.v = v.v.v;
+            v.v_trans.lightingColor = MathHelp.Lerp(v1.v_trans.lightingColor, v2.v_trans.lightingColor, t);
+            v.v_shader = v.v_trans;
+            v.v_shader.position = MathHelp.Lerp(v1.v_shader.position, v2.v_shader.position, t);
+            v.v_shader.normal = MathHelp.Lerp(v1.v_shader.normal, v2.v_shader.normal, t);
+            v.v_shader.color = v.v_trans.color;
+            v.v_shader.lightingColor = v.v_trans.lightingColor;
+            v.v_shader.u = v.v_trans.u;
+            v.v_shader.v = v.v_trans.v;
         }
 
       

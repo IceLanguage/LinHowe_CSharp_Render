@@ -12,6 +12,7 @@ namespace LinHowe_CSharp_Render.Render
         /// <param name="newmesh"></param>
         public void AddMesh(Mesh newmesh)
         {
+            Rendering_pipeline._models.Clear();
             Rendering_pipeline._models.Add(newmesh);
         }
 

@@ -16,6 +16,7 @@ namespace LinHowe_CSharp_Render
         
         Graphics g = null;
         float rot = 0;
+        bool isInit = false;
         public RenderForm()
         {
             InitializeComponent();
@@ -25,16 +26,38 @@ namespace LinHowe_CSharp_Render
 
             
 
-            System.Timers.Timer mainTimer = new System.Timers.Timer(1000);
+            System.Timers.Timer mainTimer = new System.Timers.Timer(1000/60);
             mainTimer.Elapsed += new ElapsedEventHandler(Tick);
             mainTimer.AutoReset = true;
             mainTimer.Enabled = true;
             mainTimer.Start();
         }
-        private void Init()
+
+        private void UpdateScene()
         {
             Draw.Clear();
             Rendering_pipeline.Render();
+
+            foreach (Mesh mesh in Rendering_pipeline._models)
+            {
+                mesh.Reset();               
+            }
+
+            if (!isInit)
+            {
+                isInit = true;
+                Init();
+            }
+
+            rot += 0.2f;
+            Rendering_pipeline.m =
+                Matrix4x4.GetRotateX(rot) *
+                Matrix4x4.GetRotateY(rot) *
+                Matrix4x4.GetRotateZ(rot) *
+                Matrix4x4.GetTranslate(0, 0, 8);
+        }
+        private void Init()
+        {
             RenderStage _stage = Rendering_pipeline._stage;
             ApplicationStage Astage = (ApplicationStage)_stage;
 
@@ -65,18 +88,15 @@ namespace LinHowe_CSharp_Render
             Light light = new Light(new Vector3(50, 1, 1), new Color(1, 1, 1));
             Astage.AddLight(light);
            
-            rot += 0.2f;
-            Rendering_pipeline.m = 
-                Matrix4x4.GetRotateX(rot) * 
-                Matrix4x4.GetRotateY(rot) *
-                Matrix4x4.GetRotateZ(rot) *
-                Matrix4x4.GetTranslate(0, 0, 8);
+            
         }
+
+        
         private void Tick(object sender, EventArgs e)
         {
             lock (Draw._frameBuff)
             {
-                Init();
+                UpdateScene();
 
                 //渲染流水线
                 while (!Rendering_pipeline.RenderEnd)
@@ -87,7 +107,6 @@ namespace LinHowe_CSharp_Render
                     g = this.CreateGraphics();
                 }
 
-                
                 //渲染
                 g.DrawImage(Draw._frameBuff, 0, 0);
             }

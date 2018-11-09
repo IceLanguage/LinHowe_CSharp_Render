@@ -26,6 +26,21 @@ namespace LinHowe_CSharp_Render
         /// 材质
         /// </summary>
         public Material material { get; private set; }
+        public void Reset()
+        {
+            int len = Vertices.Length;
+            for(int i = 0;i < len;++i)
+            {
+                Cuts[i] = false;       
+                Vertices[i].Reset();
+            }
+            len = Blankings.Length;
+            for(int i = 0;i < len;++i)
+            {
+                Blankings[i] = false;
+            }
+      
+        }
         public Mesh(Vector3[] pointList, int[] indexs, Vector3[] normals,Color[] colors,Material mat,Tuple<float,float>[] uvs)
         {
             Vertices = new Point[indexs.Length];
@@ -45,7 +60,7 @@ namespace LinHowe_CSharp_Render
                         )
                     );
                
-                Vertices[i].save = Vertices[i].v;
+                Vertices[i].v_shader = Vertices[i].v_trans;
             }
             material = mat;
         }

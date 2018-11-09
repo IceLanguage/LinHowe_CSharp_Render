@@ -70,5 +70,20 @@ namespace LinHowe_CSharp_Render.Math
                 return t * b + (1 - t) * a;
             }
         }
+
+        public static Vertex Lerp(Vertex a,Vertex b,float t)
+        {
+            Vertex res = new Vertex();
+
+            res.u = MathHelp.Lerp(a.u, b.u, t);
+            res.v = MathHelp.Lerp(a.v, b.v, t);
+
+            res.color = MathHelp.Lerp(a.color, b.color, t);
+
+            res.lightingColor = MathHelp.Lerp(a.lightingColor, b.lightingColor, t);
+            res.position = MathHelp.Lerp(a.position, b.position, t);
+            res.normal = MathHelp.Lerp(a.normal, b.normal, t);
+            return res;
+        }
     }
 }

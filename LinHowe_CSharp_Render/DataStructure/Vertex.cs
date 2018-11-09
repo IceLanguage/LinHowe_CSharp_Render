@@ -48,20 +48,29 @@ namespace LinHowe_CSharp_Render
     /// <summary>
     /// 点数据
     /// </summary>
-    struct Point
+    class Point
     {
+        public readonly Vertex m_vertex;
         /// <summary>
         /// 用于差值和坐标变换
         /// </summary>
-        public Vertex v;
+        public Vertex v_trans;
         /// <summary>
         /// 用于着色器
         /// </summary>
-        public Vertex save;
+        public Vertex v_shader;
 
         public Point(Vertex v)
         {
-            save = this.v = v;
+            m_vertex = v_shader = v_trans = v;
+        }
+        public Point()
+        {
+
+        }
+        public void Reset()
+        {
+            v_shader = v_trans = m_vertex;
         }
     }
 }

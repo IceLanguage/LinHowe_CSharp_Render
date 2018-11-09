@@ -25,7 +25,7 @@ namespace LinHowe_CSharp_Render.Render
                 
                 for (int j = 0; j < size; ++j)
                 {
-                    meshs[i].Vertices[j].save.lightingColor = Color.Black;
+                    meshs[i].Vertices[j].v_shader.lightingColor = Color.Black;
                 }
                
             }
