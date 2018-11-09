@@ -9,7 +9,7 @@ namespace LinHowe_CSharp_Render.Render
             int count = Rendering_pipeline._models.Count;
             for(int i = 0;i < count;++i)
             {
-                Mesh mesh = Rendering_pipeline._models[i];
+                Mesh mesh = Rendering_pipeline._models[i].mesh;
                 if (mesh.CullFlag)
                     continue;
                 
@@ -17,7 +17,7 @@ namespace LinHowe_CSharp_Render.Render
                 for (int j = 0; j < size; ++j)
                 {
                     
-                    VertexShader.Lighting(mesh, Rendering_pipeline._camera.pos, ref mesh.Vertices[j].v_shader);
+                    VertexShader.Lighting(mesh, Rendering_pipeline.MainCamera.pos, ref mesh.Vertices[j].v_shader);
                 }
             }
             GeometricStage._smallStage = Projection_Stage.instance;

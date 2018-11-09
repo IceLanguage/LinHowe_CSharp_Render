@@ -77,6 +77,11 @@ namespace LinHowe_CSharp_Render.Math
 			return res;
 		}
 
+		
+		public static Matrix4x4 GetTranslate(Vector3 pos)
+		{
+			return GetTranslate(pos.x, pos.y, pos.z);
+		}
 		/// <summary>
 		/// 获取平移矩阵
 		/// </summary>
@@ -94,7 +99,6 @@ namespace LinHowe_CSharp_Render.Math
 				x, y, z, 1
 			);
 		}
-
 		public static Matrix4x4 GetRotateY(float r)
 		{
 			Matrix4x4 rm = new Matrix4x4(Identity);

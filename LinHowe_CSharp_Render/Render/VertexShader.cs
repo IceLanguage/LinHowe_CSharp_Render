@@ -13,19 +13,19 @@ namespace LinHowe_CSharp_Render.Render
         {
             ProgrammableShader(mesh, worldEyePositon, ref v);
         }
-        public static void Init(List<Mesh> meshs)
+        public static void Init(List<GameObject> models)
         {
-            int count = meshs.Count;
+            int count = models.Count;
 
             
             for (int i = 0; i < count; ++i)
             {
-                int size = meshs[i].Vertices.Length;
+                int size = models[i].mesh.Vertices.Length;
           
                 
                 for (int j = 0; j < size; ++j)
                 {
-                    meshs[i].Vertices[j].v_shader.lightingColor = Color.Black;
+                    models[i].mesh.Vertices[j].v_shader.lightingColor = Color.Black;
                 }
                
             }

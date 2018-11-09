@@ -28,7 +28,7 @@ namespace LinHowe_CSharp_Render
         /// <summary>
         /// 世界-视图,视图-投影 4x4矩阵
         /// </summary>
-        public Matrix4x4 v, p;
+        public Matrix4x4 WorldToViewMatrix, ViewToProjectionMatrix;
 
     }
 }

@@ -8,20 +8,22 @@ namespace LinHowe_CSharp_Render.Render
         public override void ChangeState()
         {
             //模型视图变换
-            Rendering_pipeline._camera.v = GetView();
-            foreach(Mesh mesh in Rendering_pipeline._models)
+            Rendering_pipeline.MainCamera.WorldToViewMatrix = GetView();
+            foreach(GameObject go in Rendering_pipeline._models)
             {
+                Mesh mesh = go.mesh;
                 int size = mesh.Vertices.Length;
                 for (int i = 0;i < size;++i)
                 {
-                    SetMVTransform(Rendering_pipeline.m, Rendering_pipeline._camera.v, ref mesh.Vertices[i].v_trans);      
+                    SetMVTransform(go.ObjectToWorldMatrix, Rendering_pipeline.MainCamera.WorldToViewMatrix, ref mesh.Vertices[i].v_trans);      
                 }
                 
             }
 
             //背面消隐 
-            foreach (Mesh mesh in Rendering_pipeline._models)
+            foreach (GameObject go in Rendering_pipeline._models)
             {
+                Mesh mesh = go.mesh;
                 for (int i = 0; i + 2 < mesh.Vertices.Length; i += 3)
                 {
                     if(!BackFaceCulling(mesh.Vertices[i].v_trans, mesh.Vertices[i + 1].v_trans, mesh.Vertices[i + 2].v_trans))
@@ -42,10 +44,10 @@ namespace LinHowe_CSharp_Render.Render
         /// <returns></returns>
         private static Matrix4x4 GetView()
         {
-            Camera _camera = Rendering_pipeline._camera;
-            Vector3 pos = _camera.pos;
-            Vector3 lookAt = _camera.lookAt;
-            Vector3 up = _camera.up;
+            Camera MainCamera = Rendering_pipeline.MainCamera;
+            Vector3 pos = MainCamera.pos;
+            Vector3 lookAt = MainCamera.lookAt;
+            Vector3 up = MainCamera.up;
 
             //视线方向
             Vector3 viewdir = lookAt - pos;

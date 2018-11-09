@@ -10,9 +10,9 @@ namespace LinHowe_CSharp_Render.Render
         /// 输入模型图元
         /// </summary>
         /// <param name="newmesh"></param>
-        public void AddMesh(Mesh newmesh)
+        public void AddGameObject(GameObject go)
         {
-            Rendering_pipeline._models.Add(newmesh);
+            Rendering_pipeline._models.Add(go);
         }
 
         /// <summary>
@@ -21,7 +21,7 @@ namespace LinHowe_CSharp_Render.Render
         /// <param name="camera"></param>
         public void AddCamera(Camera camera)
         {
-            Rendering_pipeline._camera = camera;
+            Rendering_pipeline.MainCamera = camera;
         }
 
         public void AddLight(Light light)

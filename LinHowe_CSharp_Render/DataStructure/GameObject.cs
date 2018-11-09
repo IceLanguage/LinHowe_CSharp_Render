@@ -4,11 +4,19 @@ namespace LinHowe_CSharp_Render
 {
     class GameObject
     {
-        public int id;
-        public float avg_radius, max_radius;//平均半径，最大半径
-        public string name;
+        public float max_radius = 0;//最大半径
         public Mesh mesh;//网格
-        public Vector3 position;//坐标
-        public Vector3 ux, uy, uz;//局部坐标轴
+        public Vector3 position = Vector3.zero;//坐标
+        public Vector3 rotation = Vector3.zero;
+        public Matrix4x4 ObjectToWorldMatrix;//模型-世界矩阵
+        public GameObject(Mesh mesh,Vector3 position)
+        {
+            this.mesh = mesh;
+            this.position = position;
+        }
+        public GameObject(Mesh mesh)
+        {
+            this.mesh = mesh;
+        }
     }
 }

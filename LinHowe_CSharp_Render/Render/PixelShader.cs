@@ -11,18 +11,19 @@ namespace LinHowe_CSharp_Render.Render
     static partial class PixelShader
     {
 
-        public static void Lighting(Mesh mesh, Vector3 worldEyePositon, ref Vertex v)
+        public static void Lighting(GameObject go, Vector3 worldEyePositon, ref Vertex v)
         {
-            ProgrammableShader(mesh, worldEyePositon, ref v);
+            ProgrammableShader(go, worldEyePositon, ref v);
             
         }
     }
 
     partial class PixelShader
     {
-        private static void ProgrammableShader(Mesh mesh, Vector3 worldEyePositon, ref Vertex v)
+        private static void ProgrammableShader(GameObject go, Vector3 worldEyePositon, ref Vertex v)
         {
-            Matrix4x4 m = Rendering_pipeline.m;
+            Mesh mesh = go.mesh;
+            Matrix4x4 m = go.ObjectToWorldMatrix;
 
             Vector3 worldPoint = v.position * m;//世界空间顶点位置
 

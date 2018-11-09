@@ -29,8 +29,9 @@ namespace LinHowe_CSharp_Render.Render
         /// </summary>
         public static void Rasterization()
         {
-            foreach(Mesh mesh in Rendering_pipeline._models)
+            foreach(GameObject go in Rendering_pipeline._models)
             {
+                Mesh mesh = go.mesh;
                 if (mesh.CullFlag)
                     continue;
                 for (int i = 0; i + 2 < mesh.Vertices.Length; i += 3)

@@ -5,8 +5,9 @@ namespace LinHowe_CSharp_Render.Render
     {
         public override void ChangeState()
         {
-            foreach (Mesh mesh in Rendering_pipeline._models)
+            foreach (GameObject go in Rendering_pipeline._models)
             {
+                Mesh mesh = go.mesh;
                 if (mesh.CullFlag)
                     continue;
                 int size = mesh.Vertices.Length;

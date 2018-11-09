@@ -23,7 +23,7 @@ namespace LinHowe_CSharp_Render
                 return g;
             }
         }
-        float rot = 0;
+        
         bool isInit = false;
         public RenderForm()
         {
@@ -49,9 +49,9 @@ namespace LinHowe_CSharp_Render
             Draw.Clear();
             Rendering_pipeline.Render();
 
-            foreach (Mesh mesh in Rendering_pipeline._models)
+            foreach (GameObject go in Rendering_pipeline._models)
             {
-                mesh.Reset();               
+                go.mesh.Reset();               
             }
 
             if (!isInit)
@@ -60,12 +60,19 @@ namespace LinHowe_CSharp_Render
                 Init();
             }
 
-            rot += 0.2f;
-            Rendering_pipeline.m =
-                Matrix4x4.GetRotateX(rot) *
-                Matrix4x4.GetRotateY(rot) *
-                Matrix4x4.GetRotateZ(rot) *
-                Matrix4x4.GetTranslate(0, 0, 8);
+            //旋转
+            foreach(GameObject go in Rendering_pipeline._models)
+            {
+                go.rotation.x += 0.5f;
+                go.rotation.y += 0.5f;
+                go.rotation.z += 0.5f;
+                go.ObjectToWorldMatrix = 
+                    Matrix4x4.GetRotateX(go.rotation.x) *
+                    Matrix4x4.GetRotateY(go.rotation.y) *
+                    Matrix4x4.GetRotateZ(go.rotation.z) *
+                    Matrix4x4.GetTranslate(go.position);
+            }
+
         }
         private void Init()
         {
@@ -80,10 +87,12 @@ namespace LinHowe_CSharp_Render
                 CubeData.vertColors,
                 CubeData.mat,
                 CubeData.uvs);
-            Astage.AddMesh(cubeMesh);
+
+            GameObject cubeGameObject = new GameObject(cubeMesh, new Vector3(0, 0, 8));
+            Astage.AddGameObject(cubeGameObject);
 
             //Init Camera
-            Camera _camera = new Camera
+            Camera MainCamera = new Camera
             {
                 pos = new Vector3(0, 0, 0, 1),
                 lookAt = new Vector3(0, 0, 1, 1),
@@ -93,7 +102,7 @@ namespace LinHowe_CSharp_Render
                 zn = 1f,
                 zf = 500f
             };
-            Astage.AddCamera(_camera);
+            Astage.AddCamera(MainCamera);
 
             //Init Light
             Light light = new Light(new Vector3(50, 1, 1), new Color(1, 1, 1));

@@ -8,9 +8,10 @@ namespace LinHowe_CSharp_Render.Render
 
         public override void ChangeState()
         {
-            GetProjection(ref Rendering_pipeline._camera);
-            foreach (Mesh mesh in Rendering_pipeline._models)
+            GetProjection(ref Rendering_pipeline.MainCamera);
+            foreach (GameObject go in Rendering_pipeline._models)
             {
+                Mesh mesh = go.mesh;
                 if (mesh.CullFlag)
                     continue;
 
@@ -18,7 +19,7 @@ namespace LinHowe_CSharp_Render.Render
                 for (int i = 0; i < size; ++i)
                 {
 
-                    SetProjectionTransform(Rendering_pipeline._camera.p, ref mesh.Vertices[i].v_trans);
+                    SetProjectionTransform(Rendering_pipeline.MainCamera.ViewToProjectionMatrix, ref mesh.Vertices[i].v_trans);
                 }
             }
             GeometricStage._smallStage = CutOut_Stage.instance;
@@ -63,7 +64,7 @@ namespace LinHowe_CSharp_Render.Render
             p[2, 2] = zf / (zf - zn);
             p[2, 3] = 1f;
             p[3, 2] = (zn * zf) / (zn - zf);
-            camera.p = p;
+            camera.ViewToProjectionMatrix = p;
         }
     }
 }

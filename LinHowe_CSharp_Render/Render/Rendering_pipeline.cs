@@ -9,7 +9,7 @@ namespace LinHowe_CSharp_Render.Render
     static class Rendering_pipeline
     {
         //模型图元数据
-        public static List<Mesh> _models = new List<Mesh>();
+        public static List<GameObject> _models = new List<GameObject>();
 
         //光源
         public static List<Light> _lights = new List<Light>();
@@ -20,11 +20,8 @@ namespace LinHowe_CSharp_Render.Render
         //渲染阶段
         public static RenderStage _stage;
 
-        //模型-世界  4x4矩阵
-        public static Matrix4x4 m = Matrix4x4.Identity;
-
         //摄像头
-        public static Camera _camera;
+        public static Camera MainCamera;
 
         //环境光
         public static Color _ambientColor = Color.White;

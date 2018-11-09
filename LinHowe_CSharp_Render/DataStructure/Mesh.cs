@@ -49,10 +49,11 @@ namespace LinHowe_CSharp_Render
         }
         public Mesh(Vector3[] pointList, int[] indexs, Vector3[] normals,Color[] colors,Material mat,Tuple<float,float>[] uvs)
         {
-            Vertices = new Point[indexs.Length];
-            Cuts = new bool[indexs.Length];
-            //Blankings = new bool[indexs.Length / 3];
-            for (int i = 0; i < indexs.Length; i++)
+            int len = indexs.Length;
+            Vertices = new Point[len];
+            Cuts = new bool[len];
+            //Blankings = new bool[len/ 3];
+            for (int i = 0; i < len; i++)
             {
                 int pointIndex = indexs[i];
                 Vertices[i] = new Point
@@ -65,8 +66,6 @@ namespace LinHowe_CSharp_Render
                             uvs[i]
                         )
                     );
-               
-                Vertices[i].v_shader = Vertices[i].v_trans;
             }
             Mat = mat;
         }
