@@ -93,5 +93,13 @@ namespace LinHowe_CSharp_Render.Math
             float z = lhs.x * rhs.y - lhs.y * rhs.x;
             return new Vector3(x, y, z, 0);
         }
+
+        public static float DistanceSquare(Vector3 lhs, Vector3 rhs)
+        {
+            return
+                (lhs.x - rhs.x) * (lhs.x - rhs.x) +
+                (lhs.y - rhs.y) * (lhs.y - rhs.y) +
+                (lhs.z - rhs.z) * (lhs.z - rhs.z);
+        }
     }
 }

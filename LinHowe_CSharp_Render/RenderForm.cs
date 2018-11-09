@@ -100,7 +100,8 @@ namespace LinHowe_CSharp_Render
                 fov = (float)System.Math.PI / 4f,
                 aspect = MaximumSize.Width / (float)MaximumSize.Height,
                 zn = 1f,
-                zf = 500f
+                zf = 500f,
+                ScreenHeight = MaximumSize.Height
             };
             Astage.AddCamera(MainCamera);
 
