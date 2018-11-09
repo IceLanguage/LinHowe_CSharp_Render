@@ -17,8 +17,6 @@ namespace LinHowe_CSharp_Render.Render
         {
             Graphics.FromImage(Draw._frameBuff).Clear(System.Drawing.Color.Black);
             Array.Clear(Draw._zBuff, 0, Draw._zBuff.Length);
-            //Rendering_pipeline._models.Clear();
-            //Rendering_pipeline._lights.Clear();
         }
         public static void Init(int width, int height)
         {

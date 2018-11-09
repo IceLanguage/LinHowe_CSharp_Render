@@ -8,14 +8,13 @@ namespace LinHowe_CSharp_Render.Render
 
         public override void ChangeState()
         {
-            Camera _camera = Rendering_pipeline._camera;
-            Rendering_pipeline.p = GetProjection(_camera.fov, _camera.aspect, _camera.zn, _camera.zf);
+            GetProjection(ref Rendering_pipeline._camera);
             foreach (Mesh mesh in Rendering_pipeline._models)
             {
                 int size = mesh.Vertices.Length;
                 for (int i = 0; i < size; ++i)
                 {
-                    SetProjectionTransform(Rendering_pipeline.p, ref mesh.Vertices[i].v_trans);
+                    SetProjectionTransform(Rendering_pipeline._camera.p, ref mesh.Vertices[i].v_trans);
                 }
             }
             GeometricStage._smallStage = CutOut_Stage.instance;
@@ -46,8 +45,13 @@ namespace LinHowe_CSharp_Render.Render
         /// <param name="zn">近裁z</param>
         /// <param name="zf">远裁z</param>
         /// <returns></returns>
-        public static Matrix4x4 GetProjection(float fov, float aspect, float zn, float zf)
+        public static void GetProjection(ref Camera camera)
         {
+            float fov = camera.fov;
+            float aspect = camera.aspect;
+            float zn = camera.zn;
+            float zf = camera.zf;
+
             Matrix4x4 p = new Matrix4x4();
 
             p[0, 0] = (float)(1 / (System.Math.Tan(fov * 0.5f) * aspect));
@@ -55,7 +59,7 @@ namespace LinHowe_CSharp_Render.Render
             p[2, 2] = zf / (zf - zn);
             p[2, 3] = 1f;
             p[3, 2] = (zn * zf) / (zn - zf);
-            return p;
+            camera.p = p;
         }
     }
 }

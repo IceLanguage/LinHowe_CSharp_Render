@@ -30,8 +30,8 @@ namespace LinHowe_CSharp_Render.Render
             //原因 https://blog.csdn.net/christina123y/article/details/5963679
             Vector3 normal = (v.normal * m.Inverse().Transpose()).Normalize();
 
-            Color emissiveColor = mesh.material.emissive;// v.color;//自发光
-            Color ambientColor = Rendering_pipeline._ambientColor * mesh.material.ka;//环境光 
+            Color emissiveColor = mesh.Mat.emissive;// v.color;//自发光
+            Color ambientColor = Rendering_pipeline._ambientColor * mesh.Mat.ka;//环境光 
 
             foreach (Light light in Rendering_pipeline._lights)
             {
@@ -39,12 +39,12 @@ namespace LinHowe_CSharp_Render.Render
 
                 //漫反射
                 float halftemp = Vector3.Dot(normal, inLightDir) * 0.5f + 0.5f;
-                Color diffuseColor = mesh.material.diffuse * halftemp * light.lightColor;
+                Color diffuseColor = mesh.Mat.diffuse * halftemp * light.lightColor;
 
                 Vector3 inViewDir = (worldEyePositon - worldPoint).Normalize();
                 Vector3 h = (inViewDir + inLightDir).Normalize();
-                float specular = (float)System.Math.Pow(System.Math.Max(Vector3.Dot(h, normal), 0), mesh.material.shininess);
-                Color specularColor = mesh.material.specular * specular * light.lightColor;//镜面高光
+                float specular = (float)System.Math.Pow(System.Math.Max(Vector3.Dot(h, normal), 0), mesh.Mat.shininess);
+                Color specularColor = mesh.Mat.specular * specular * light.lightColor;//镜面高光
 
                 v.lightingColor += emissiveColor + ambientColor + diffuseColor + specularColor;
 

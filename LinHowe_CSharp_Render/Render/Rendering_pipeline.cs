@@ -20,8 +20,8 @@ namespace LinHowe_CSharp_Render.Render
         //渲染阶段
         public static RenderStage _stage;
 
-        //模型-世界，世界-视图,投影 4x4矩阵
-        public static Matrix4x4 m = Matrix4x4.Identity, v, p;
+        //模型-世界  4x4矩阵
+        public static Matrix4x4 m = Matrix4x4.Identity;
 
         //摄像头
         public static Camera _camera;

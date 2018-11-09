@@ -8,14 +8,13 @@ namespace LinHowe_CSharp_Render.Render
         public override void ChangeState()
         {
             //模型视图变换
-            Rendering_pipeline.v = GetView();
+            Rendering_pipeline._camera.v = GetView();
             foreach(Mesh mesh in Rendering_pipeline._models)
             {
                 int size = mesh.Vertices.Length;
                 for (int i = 0;i < size;++i)
                 {
-                    SetMVTransform(Rendering_pipeline.m, Rendering_pipeline.v, ref mesh.Vertices[i].v_trans);
-                   
+                    SetMVTransform(Rendering_pipeline.m, Rendering_pipeline._camera.v, ref mesh.Vertices[i].v_trans);      
                 }
                 
             }

@@ -33,6 +33,9 @@ namespace LinHowe_CSharp_Render
             mainTimer.Start();
         }
 
+        /// <summary>
+        /// 场景更新
+        /// </summary>
         private void UpdateScene()
         {
             Draw.Clear();
