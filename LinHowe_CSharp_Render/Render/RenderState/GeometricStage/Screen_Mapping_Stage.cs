@@ -7,10 +7,14 @@ namespace LinHowe_CSharp_Render.Render
         {
             foreach (Mesh mesh in Rendering_pipeline._models)
             {
+                if (mesh.CullFlag)
+                    continue;
                 int size = mesh.Vertices.Length;
                 for (int i = 0; i < size; ++i)
                 {
-                    TransformToScreen( ref mesh.Vertices[i].v_trans);
+                    if (mesh.Cuts[i])
+                        continue;
+                    TransformToScreen(ref mesh.Vertices[i].v_trans);
                 }
             }
             GeometricStage._smallStage = Model_View_Transformation_Stage.instance;

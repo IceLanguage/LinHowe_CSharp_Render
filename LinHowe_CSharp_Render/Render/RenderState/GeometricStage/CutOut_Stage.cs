@@ -7,6 +7,8 @@ namespace LinHowe_CSharp_Render.Render
         {
             foreach (Mesh mesh in Rendering_pipeline._models)
             {
+                if (mesh.CullFlag)
+                    continue;
                 int size = mesh.Vertices.Length;
                 for (int i = 0; i < size; ++i)
                 {
@@ -14,6 +16,7 @@ namespace LinHowe_CSharp_Render.Render
 
                     if (mesh.Cuts[i])
                         continue;
+                    
                     if (v.position.x >= -v.position.w && v.position.x <= v.position.w &&
                         v.position.y >= -v.position.w && v.position.y <= v.position.w &&
                         v.position.z >= 0f && v.position.z <= v.position.w)

@@ -12,11 +12,17 @@ namespace LinHowe_CSharp_Render
         /// 是否裁剪 
         /// </summary>
         public bool[] Cuts { get; set; }
-        
+
+        /// <summary>
+        /// 是否剔除
+        /// </summary>
+        public bool CullFlag = false;
+
         /// <summary>
         /// 是否消隐
         /// </summary>
-        public bool[] Blankings { get; set; }
+        //public bool[] Blankings { get; set; }
+
         /// <summary>
         /// 顶点数组
         /// </summary>
@@ -28,21 +34,24 @@ namespace LinHowe_CSharp_Render
         public Material Mat { get; private set; }
         public void Reset()
         {
+            CullFlag = false;
+
             int len = Vertices.Length;
             Array.Clear(Cuts, 0, len);
+
             for (int i = 0;i < len;++i)
             {    
                 Vertices[i].Reset();
             }
-            len = Blankings.Length;
-            Array.Clear(Blankings, 0, len);
+            //len = Blankings.Length;
+            //Array.Clear(Blankings, 0, len);
       
         }
         public Mesh(Vector3[] pointList, int[] indexs, Vector3[] normals,Color[] colors,Material mat,Tuple<float,float>[] uvs)
         {
             Vertices = new Point[indexs.Length];
             Cuts = new bool[indexs.Length];
-            Blankings = new bool[indexs.Length / 3];
+            //Blankings = new bool[indexs.Length / 3];
             for (int i = 0; i < indexs.Length; i++)
             {
                 int pointIndex = indexs[i];

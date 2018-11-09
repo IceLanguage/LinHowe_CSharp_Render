@@ -15,6 +15,14 @@ namespace LinHowe_CSharp_Render
     {
         
         Graphics g = null;
+        Graphics G
+        {
+            get
+            {
+                if(null == g) g = CreateGraphics();
+                return g;
+            }
+        }
         float rot = 0;
         bool isInit = false;
         public RenderForm()
@@ -105,13 +113,8 @@ namespace LinHowe_CSharp_Render
                 while (!Rendering_pipeline.RenderEnd)
                     Rendering_pipeline.Render();
 
-                if (g == null)
-                {
-                    g = this.CreateGraphics();
-                }
-
                 //渲染
-                g.DrawImage(Draw._frameBuff, 0, 0);
+                G.DrawImage(Draw._frameBuff, 0, 0);
             }
         }
 

@@ -11,9 +11,13 @@ namespace LinHowe_CSharp_Render.Render
             GetProjection(ref Rendering_pipeline._camera);
             foreach (Mesh mesh in Rendering_pipeline._models)
             {
+                if (mesh.CullFlag)
+                    continue;
+
                 int size = mesh.Vertices.Length;
                 for (int i = 0; i < size; ++i)
                 {
+
                     SetProjectionTransform(Rendering_pipeline._camera.p, ref mesh.Vertices[i].v_trans);
                 }
             }

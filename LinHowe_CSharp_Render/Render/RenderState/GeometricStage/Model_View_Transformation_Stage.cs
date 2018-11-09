@@ -26,7 +26,7 @@ namespace LinHowe_CSharp_Render.Render
                 {
                     if(!BackFaceCulling(mesh.Vertices[i].v_trans, mesh.Vertices[i + 1].v_trans, mesh.Vertices[i + 2].v_trans))
                     {
-                        mesh.Blankings[i/3] = true;
+                        mesh.Cuts[i+2] = mesh.Cuts[i+1] = mesh.Cuts[i] = true;
                     }
                 }
             }
