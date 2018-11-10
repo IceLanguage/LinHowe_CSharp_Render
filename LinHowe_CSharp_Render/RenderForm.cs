@@ -23,7 +23,7 @@ namespace LinHowe_CSharp_Render
                 return g;
             }
         }
-        
+        int i = 0;
         bool isInit = false;
         public RenderForm()
         {
@@ -59,7 +59,7 @@ namespace LinHowe_CSharp_Render
                 isInit = true;
                 Init();
             }
-
+            Console.WriteLine(i++);
             //旋转
             foreach(GameObject go in Rendering_pipeline._models)
             {
@@ -88,8 +88,8 @@ namespace LinHowe_CSharp_Render
                 CubeData.mat,
                 CubeData.uvs);
 
-            GameObject cubeGameObject = new GameObject(cubeMesh, new Vector3(0, 0, 8));
-            //Astage.AddGameObject(cubeGameObject);
+            GameObject cubeGameObject = new GameObject(cubeMesh, new Vector3(-3, 0, 10));
+            Astage.AddGameObject(cubeGameObject);
 
             Mesh sphereMesh = new Mesh(
                 SphereData.pointList,
@@ -98,7 +98,7 @@ namespace LinHowe_CSharp_Render
                 SphereData.vertColors,
                 SphereData.mat,
                 SphereData.uvs);
-            GameObject sphereGameObject = new GameObject(sphereMesh, new Vector3(0, 0, 8));
+            GameObject sphereGameObject = new GameObject(sphereMesh, new Vector3(3, 0, 8));
             Astage.AddGameObject(sphereGameObject);
 
             //Init Camera

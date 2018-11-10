@@ -15,8 +15,6 @@ namespace LinHowe_CSharp_Render.Render
                 int size = mesh.Vertices.Length;
 
                 Vector3 SphereCenterPos = go.position;
-                SetMTransform(go.ObjectToWorldMatrix,
-                        ref SphereCenterPos);
 
                 //本地模型空间到世界空间
                 for (int i = 0;i < size;++i)
@@ -29,7 +27,7 @@ namespace LinHowe_CSharp_Render.Render
 
                 //物体剔除-包围球测试             
                 if (CullObject(go, SphereCenterPos))
-                    return;
+                    continue;
 
                 //世界空间到相机空间
                 for (int i = 0; i < size; ++i)
