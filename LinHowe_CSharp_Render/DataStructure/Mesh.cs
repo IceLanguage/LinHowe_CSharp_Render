@@ -27,6 +27,7 @@ namespace LinHowe_CSharp_Render
         /// 材质
         /// </summary>
         public Material Mat { get; private set; }
+
         public void Reset()
         {
             CullFlag = false;

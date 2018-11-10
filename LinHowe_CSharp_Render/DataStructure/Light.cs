@@ -14,14 +14,14 @@ namespace LinHowe_CSharp_Render
         /// <summary>
         /// 灯光颜色
         /// </summary>
-        public Color lightColor;
+        private Color lightColor;
 
         /// <summary>
         /// 灯光世界坐标
         /// </summary>
-        public Vector3 worldPosition;
+        private Vector3 worldPosition;
 
-        public Vector3 direction;
+        private Vector3 direction;
 
         /// <summary>
         /// 衰减因子

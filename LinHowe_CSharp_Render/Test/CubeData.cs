@@ -6,7 +6,7 @@ namespace LinHowe_CSharp_Render.Test
     /// <summary>
     /// 立方体网格数据
     /// </summary>
-    class CubeData
+    static class CubeData
     {
         /// <summary>
         /// 法线

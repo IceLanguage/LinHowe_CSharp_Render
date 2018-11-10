@@ -36,18 +36,7 @@ namespace LinHowe_CSharp_Render.Render
 
             foreach (Light light in Rendering_pipeline._lights)
             {
-                Vector3 inLightDir = (light.worldPosition * m- worldPoint).Normalize();
 
-                //漫反射
-                float halftemp = Vector3.Dot(normal, inLightDir) * 0.5f + 0.5f;
-                Color diffuseColor = mesh.Mat.diffuse * halftemp * light.lightColor;
-
-                Vector3 inViewDir = (worldEyePositon - worldPoint).Normalize();
-                Vector3 h = (inViewDir + inLightDir).Normalize();
-                float specular = (float)System.Math.Pow(System.Math.Max(Vector3.Dot(h, normal), 0), mesh.Mat.shininess);
-                Color specularColor = mesh.Mat.specular * specular * light.lightColor;//镜面高光
-
-                v.lightingColor += emissiveColor + ambientColor + diffuseColor + specularColor;
 
             }
         }

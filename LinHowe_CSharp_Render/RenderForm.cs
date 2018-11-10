@@ -89,7 +89,17 @@ namespace LinHowe_CSharp_Render
                 CubeData.uvs);
 
             GameObject cubeGameObject = new GameObject(cubeMesh, new Vector3(0, 0, 8));
-            Astage.AddGameObject(cubeGameObject);
+            //Astage.AddGameObject(cubeGameObject);
+
+            Mesh sphereMesh = new Mesh(
+                SphereData.pointList,
+                SphereData.indexs,
+                SphereData.norlmas,
+                SphereData.vertColors,
+                SphereData.mat,
+                SphereData.uvs);
+            GameObject sphereGameObject = new GameObject(sphereMesh, new Vector3(0, 0, 8));
+            Astage.AddGameObject(sphereGameObject);
 
             //Init Camera
             Camera MainCamera = new Camera
@@ -103,7 +113,7 @@ namespace LinHowe_CSharp_Render
                 zf = 500f,
                 ScreenHeight = MaximumSize.Height
             };
-            Astage.AddCamera(MainCamera);
+            Astage.SetMainCamera(MainCamera);
 
             //Init Light
             Light light = new Light(new Vector3(0, 3, 0), new Vector3(0.6f, 1, 0), new Color(1, 1, 1));

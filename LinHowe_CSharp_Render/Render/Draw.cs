@@ -237,7 +237,7 @@ namespace LinHowe_CSharp_Render.Render
                     new1.v_trans.position.x = xl;
                     new1.v_trans.position.y = y;
                     ScreenSpaceLerpVertex(ref new1, p1, p2, t);
-                    //
+                    
                     Point new2 = new Point();
                     new2.v_trans.position.x = xr;
                     new2.v_trans.position.y = y;
@@ -297,7 +297,7 @@ namespace LinHowe_CSharp_Render.Render
                         Color vertColor = MathHelp.Lerp(leftV.color, rightV.color, lerpFactor);
                         Color lightColor = MathHelp.Lerp(leftV.lightingColor, rightV.lightingColor, lerpFactor);
 
-                        _frameBuff.SetPixel(xIndex, yIndex, ( lightColor).TransFormToSystemColor());
+                        _frameBuff.SetPixel(xIndex, yIndex, (vertColor * lightColor).TransFormToSystemColor());
                     }
                    
                 }

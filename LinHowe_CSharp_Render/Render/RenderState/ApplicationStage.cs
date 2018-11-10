@@ -19,7 +19,7 @@ namespace LinHowe_CSharp_Render.Render
         /// 输入摄像头信息
         /// </summary>
         /// <param name="camera"></param>
-        public void AddCamera(Camera camera)
+        public void SetMainCamera(Camera camera)
         {
             Rendering_pipeline.MainCamera = camera;
         }
