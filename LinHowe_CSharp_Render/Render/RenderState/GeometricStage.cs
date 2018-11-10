@@ -7,11 +7,11 @@ namespace LinHowe_CSharp_Render.Render
     /// </summary>
     partial class GeometricStage
     {
-        public static SmallStage _smallStage = Model_View_Transformation_Stage.instance;
+        public static SmallStage CurStage = Model_View_Transformation_Stage.instance;
 
         public override void ChangeState()
         {
-            _smallStage.ChangeState();
+            CurStage.ChangeState();
         }
     }
 

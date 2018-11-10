@@ -15,12 +15,12 @@ namespace LinHowe_CSharp_Render.Render
                 
                 int size = mesh.Vertices.Length;
                 for (int j = 0; j < size; ++j)
-                {
-                    
-                    VertexShader.Lighting(mesh, Rendering_pipeline.MainCamera.pos, ref mesh.Vertices[j].v_shader);
+                {  
+                    VertexShader.Lighting(Rendering_pipeline._models[i], Rendering_pipeline.MainCamera.pos, ref mesh.Vertices[j].v_shader);
+                    mesh.Vertices[j].v_trans.lightingColor = mesh.Vertices[j].v_shader.lightingColor;
                 }
             }
-            GeometricStage._smallStage = Projection_Stage.instance;
+            GeometricStage.CurStage = Projection_Stage.instance;
         }
 
 

@@ -22,7 +22,7 @@ namespace LinHowe_CSharp_Render.Render
                     SetProjectionTransform(Rendering_pipeline.MainCamera.ViewToProjectionMatrix, ref mesh.Vertices[i].v_trans);
                 }
             }
-            GeometricStage._smallStage = CutOut_Stage.instance;
+            GeometricStage.CurStage = CutOut_Stage.instance;
         }
         /// <summary>
         /// 投影变换，从相机空间到齐次剪裁空间

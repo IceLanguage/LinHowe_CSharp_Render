@@ -106,7 +106,7 @@ namespace LinHowe_CSharp_Render
             Astage.AddCamera(MainCamera);
 
             //Init Light
-            Light light = new Light(new Vector3(50, 1, 1), new Color(1, 1, 1));
+            Light light = new Light(new Vector3(0, 10, 0), new Vector3(0.6f, 1, 0), new Color(1, 1, 1));
             Astage.AddLight(light);
            
             

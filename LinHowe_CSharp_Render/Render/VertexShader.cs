@@ -8,10 +8,9 @@ namespace LinHowe_CSharp_Render.Render
     /// </summary>
     static partial class VertexShader
     {
-        //public static List<Vertex[]> Vertices = new List<Vertex[]>();
-        public static void Lighting(Mesh mesh, Vector3 worldEyePositon, ref Vertex v)
+        public static void Lighting(GameObject go, Vector3 worldEyePositon, ref Vertex v)
         {
-            ProgrammableShader(mesh, worldEyePositon, ref v);
+            ProgrammableShader(go, worldEyePositon, ref v);
         }
         public static void Init(List<GameObject> models)
         {
@@ -34,36 +33,38 @@ namespace LinHowe_CSharp_Render.Render
 
     partial class VertexShader
     {
-        private static void ProgrammableShader(Mesh mesh, Vector3 worldEyePositon, ref Vertex v)
+        private static void ProgrammableShader(GameObject go, Vector3 worldEyePositon, ref Vertex v)
         {
-            //Matrix4x4 m = Rendering_pipeline.m;
+            Mesh mesh = go.mesh;
+            Matrix4x4 m = go.ObjectToWorldMatrix;
 
-            //Vector3 worldPoint = v.position * m;//世界空间顶点位置
+            Vector3 worldPoint = v.position * m;//世界空间顶点位置
 
-            ////模型空间法线乘以世界矩阵的逆转置得到世界空间法线
-            ////原因 https://blog.csdn.net/christina123y/article/details/5963679
-            //Vector3 normal = (v.normal * m.Inverse().Transpose()).Normalize();
+            //模型空间法线乘以世界矩阵的逆转置得到世界空间法线
+            //原因 https://blog.csdn.net/christina123y/article/details/5963679
+            Vector3 normal = (v.normal * m.Inverse().Transpose()).Normalize();
 
-            //Math.Color emissiveColor = mesh.material.emissive;// v.color;//自发光
-            //Math.Color ambientColor = Rendering_pipeline._ambientColor * mesh.material.ka;//环境光 
+            Color emissiveColor = mesh.Mat.emissive * v.color;//自发光
+            Color ambientColor = Rendering_pipeline._ambientColor * mesh.Mat.ka;//环境光 
 
-            //foreach (Light light in Rendering_pipeline._lights)
-            //{
-            //    Vector3 inLightDir = (light.worldPosition * m - worldPoint).Normalize();
+            foreach (Light light in Rendering_pipeline._lights)
+            {
+                Vector3 LightDir = Light.GetDirection(light, worldPoint);
 
-            //    //漫反射
-            //    //float diffuse = System.Math.Max(Vector3.Dot(normal, inLightDir),0);
-            //    float halftemp = Vector3.Dot(normal, inLightDir) * 0.5f + 0.5f;
-            //    Color diffuseColor = mesh.material.diffuse * halftemp * light.lightColor;
+                Color lightColor = Light.GetLightColor(light, worldPoint);
+                //漫反射
+                float diffuse = System.Math.Max(Vector3.Dot(normal, LightDir),0);
+                float halftemp = Vector3.Dot(normal, LightDir) * 0.5f + 0.5f;
+                Color diffuseColor = mesh.Mat.diffuse * diffuse * lightColor;
 
-            //    Vector3 inViewDir = (worldEyePositon - worldPoint).Normalize();
-            //    Vector3 h = (inViewDir + inLightDir).Normalize();
-            //    float specular = (float)System.Math.Pow(System.Math.Max(Vector3.Dot(h, normal), 0), mesh.material.shininess);
-            //    Color specularColor = mesh.material.specular * specular * light.lightColor;//镜面高光
+                Vector3 ViewDir = (worldEyePositon - worldPoint).Normalize();
+                Vector3 h = (ViewDir + LightDir).Normalize();
+                float specular = (float)System.Math.Pow(System.Math.Max(Vector3.Dot(h, normal), 0), mesh.Mat.shininess);
+                Color specularColor = mesh.Mat.specular * specular * lightColor;//镜面高光
 
-            //    v.lightingColor += emissiveColor + ambientColor + diffuseColor + specularColor;
+                v.lightingColor = v.lightingColor + emissiveColor + ambientColor + diffuseColor + specularColor;
 
-            //}
+            }
         }
 
     }

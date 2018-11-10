@@ -42,7 +42,7 @@ namespace LinHowe_CSharp_Render.Render
             //背面消隐 
             RemoveBackFace();
 
-            GeometricStage._smallStage = Vertex_Coloring_Stage.instance;
+            GeometricStage.CurStage = Vertex_Coloring_Stage.instance;
         }
         /// <summary>
         /// 获取视矩阵

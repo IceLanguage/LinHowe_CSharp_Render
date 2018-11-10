@@ -83,7 +83,7 @@ namespace LinHowe_CSharp_Render.Test
             ka : 0.1f,
             diffuse : new Color(0.3f,0.3f, 0.3f),
             specular : new Color(1, 1, 1),
-            shininess : 99
+            shininess : 9
         );
 
         /// <summary>

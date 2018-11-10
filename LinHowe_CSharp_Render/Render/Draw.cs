@@ -265,7 +265,7 @@ namespace LinHowe_CSharp_Render.Render
 
             Vertex leftV = left.v_trans;
             Vertex rightV = right.v_trans;
-
+          
             float dx = rightV.position.x - leftV.position.x;
             float step = 1;
             if (dx != 0)
@@ -295,8 +295,9 @@ namespace LinHowe_CSharp_Render.Render
                         _zBuff[xIndex, yIndex] = onePreZ;
                         //插值顶点颜色
                         Color vertColor = MathHelp.Lerp(leftV.color, rightV.color, lerpFactor);
-                        
-                        _frameBuff.SetPixel(xIndex, yIndex, vertColor.TransFormToSystemColor());
+                        Color lightColor = MathHelp.Lerp(leftV.lightingColor, rightV.lightingColor, lerpFactor);
+
+                        _frameBuff.SetPixel(xIndex, yIndex, (vertColor * lightColor).TransFormToSystemColor());
                     }
                    
                 }

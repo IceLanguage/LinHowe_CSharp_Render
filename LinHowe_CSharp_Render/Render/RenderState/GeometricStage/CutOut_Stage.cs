@@ -29,7 +29,7 @@ namespace LinHowe_CSharp_Render.Render
                 }
 
             }
-            GeometricStage._smallStage = Screen_Mapping_Stage.instance;
+            GeometricStage.CurStage = Screen_Mapping_Stage.instance;
         }
     }
 }

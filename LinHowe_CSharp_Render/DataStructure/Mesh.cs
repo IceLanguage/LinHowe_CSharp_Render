@@ -19,11 +19,6 @@ namespace LinHowe_CSharp_Render
         public bool CullFlag = false;
 
         /// <summary>
-        /// 是否消隐
-        /// </summary>
-        //public bool[] Blankings { get; set; }
-
-        /// <summary>
         /// 顶点数组
         /// </summary>
         public Point[] Vertices { get; private set; }
@@ -43,8 +38,6 @@ namespace LinHowe_CSharp_Render
             {    
                 Vertices[i].Reset();
             }
-            //len = Blankings.Length;
-            //Array.Clear(Blankings, 0, len);
       
         }
         public Mesh(Vector3[] pointList, int[] indexs, Vector3[] normals,Color[] colors,Material mat,Tuple<float,float>[] uvs)
@@ -52,7 +45,6 @@ namespace LinHowe_CSharp_Render
             int len = indexs.Length;
             Vertices = new Point[len];
             Cuts = new bool[len];
-            //Blankings = new bool[len/ 3];
             for (int i = 0; i < len; i++)
             {
                 int pointIndex = indexs[i];

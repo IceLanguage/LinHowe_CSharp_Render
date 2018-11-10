@@ -39,7 +39,7 @@ namespace LinHowe_CSharp_Render
             this.normal = normal;
             onePerZ = this.position.w = 1;
             this.color = color;
-            this.lightingColor = Color.White;
+            this.lightingColor = Color.Black;
             u = uv.Item1;
             v = uv.Item2;
         }

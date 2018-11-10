@@ -18,7 +18,7 @@ namespace LinHowe_CSharp_Render.Render
                     TransformToScreen(ref mesh.Vertices[i].v_trans);
                 }
             }
-            GeometricStage._smallStage = Model_View_Transformation_Stage.instance;
+            GeometricStage.CurStage = Model_View_Transformation_Stage.instance;
             Rendering_pipeline._stage = RasterizationStage.instance;
         }
 
