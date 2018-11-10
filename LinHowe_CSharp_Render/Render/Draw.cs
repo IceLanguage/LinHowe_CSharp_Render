@@ -297,16 +297,11 @@ namespace LinHowe_CSharp_Render.Render
                         Color vertColor = MathHelp.Lerp(leftV.color, rightV.color, lerpFactor);
                         Color lightColor = MathHelp.Lerp(leftV.lightingColor, rightV.lightingColor, lerpFactor);
 
-                        _frameBuff.SetPixel(xIndex, yIndex, (vertColor * lightColor).TransFormToSystemColor());
+                        _frameBuff.SetPixel(xIndex, yIndex, ( lightColor).TransFormToSystemColor());
                     }
                    
                 }
             }
-
-        }
-
-        private static void DrawPoint()
-        {
 
         }
         /// <summary>

@@ -22,13 +22,35 @@ namespace LinHowe_CSharp_Render
         public Vector3 worldPosition;
 
         public Vector3 direction;
+
+        /// <summary>
+        /// 衰减因子
+        /// </summary>
+        private float kc, kl, kq;
+        /// <summary>
+        /// 指数因子
+        /// </summary>
+        private float pr;
         public Light(Vector3 worldPosition, Vector3 direction, Color lightColor)
         {
             this.worldPosition = worldPosition;
             this.lightColor = lightColor;
             this.direction = direction.Normalize();
         }
-
+        public void SetPointLight(float kc ,float kl)
+        {
+            this.kc = kc;
+            this.kl = kl;
+            type = LightType.Point;
+        }
+        public void SetSpotLight(float kc, float kl,float kq,float pr)
+        {
+            this.kc = kc;
+            this.kl = kl;
+            this.kq = kq;
+            this.pr = pr;
+            type = LightType.Spot;
+        }
         public static Vector3 GetDirection(Light light,Vector3 worldPos)
         {
             Vector3 dir = Vector3.zero;
@@ -47,14 +69,27 @@ namespace LinHowe_CSharp_Render
         public static Color GetLightColor(Light light, Vector3 worldPos)
         {
             Color color = Color.Black;
+            float d;
             switch (light.type)
             {
                 case LightType.Directional:
                     color = light.lightColor;
                     break;
                 case LightType.Point:
+                    d = (float)System.Math.Sqrt(Vector3.DistanceSquare(worldPos, light.worldPosition));
+                    color = light.lightColor / (light.kc + light.kl * d);
                     break;
                 case LightType.Spot:
+                    d = (float)System.Math.Sqrt(Vector3.DistanceSquare(worldPos, light.worldPosition));
+                    float p = light.kc + light.kl * d + light.kq * d * d;
+                    if (p == 0)
+                        p = 1;
+                    color = light.lightColor / p;
+                    float cosAngle = Vector3.Dot(light.direction.Normalize(), (light.worldPosition - worldPos).Normalize());
+                    if (cosAngle > 0)
+                        color *= (float)System.Math.Pow(cosAngle,light.pr);
+                    else
+                        color = Color.Black;
                     break;
                 default:
                     break;

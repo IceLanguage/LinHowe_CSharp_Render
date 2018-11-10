@@ -58,7 +58,16 @@ namespace LinHowe_CSharp_Render
             };
             return c;
         }
-
+        public static Color operator /(Color a, float b)
+        {
+            Color c = new Color
+            {
+                R = a.R / b,
+                G = a.G / b,
+                B = a.B / b
+            };
+            return c;
+        }
         public static Color operator +(Color a, Color b)
         {
             Color c = new Color
