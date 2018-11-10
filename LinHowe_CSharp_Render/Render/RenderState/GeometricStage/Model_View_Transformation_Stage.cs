@@ -21,8 +21,6 @@ namespace LinHowe_CSharp_Render.Render
                 {
                     SetMTransform(go.ObjectToWorldMatrix,
                         ref mesh.Vertices[i].v_trans.position);
-
-             
                 }
 
                 //物体剔除-包围球测试             

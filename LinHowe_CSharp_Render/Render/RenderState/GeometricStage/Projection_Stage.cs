@@ -35,8 +35,8 @@ namespace LinHowe_CSharp_Render.Render
 
             vertex.onePerZ = 1 / vertex.position.w;
 
-            vertex.u *= vertex.onePerZ;
-            vertex.v *= vertex.onePerZ;
+            //vertex.u *= vertex.onePerZ;
+            //vertex.v *= vertex.onePerZ;
 
 
             //vertex.lightingColor *= vertex.onePerZ;

@@ -23,7 +23,7 @@ namespace LinHowe_CSharp_Render
                 return g;
             }
         }
-        int i = 0;
+        Bitmap texture;
         bool isInit = false;
         public RenderForm()
         {
@@ -31,8 +31,6 @@ namespace LinHowe_CSharp_Render
 
             //Init buffer
             Draw.Init(MaximumSize.Width, MaximumSize.Height);
-
-            
 
             System.Timers.Timer mainTimer = new System.Timers.Timer(1000/60);
             mainTimer.Elapsed += new ElapsedEventHandler(Tick);
@@ -59,7 +57,7 @@ namespace LinHowe_CSharp_Render
                 isInit = true;
                 Init();
             }
-            Console.WriteLine(i++);
+            
             //旋转
             foreach(GameObject go in Rendering_pipeline._models)
             {
@@ -76,10 +74,36 @@ namespace LinHowe_CSharp_Render
         }
         private void Init()
         {
+            //Init Texture
+            try
+            {
+                //texture = (Bitmap)Image.FromFile(@"../../Resource/Lh.png", true);
+                int texSize = 64;
+             
+                texture = new Bitmap(texSize, texSize);
+                for (var i = 0; i < texSize; i++)
+                    for (var j = 0; j < texSize; j++)
+                    {
+                        bool c = (((i & 0x8) == 0) ^ ((j & 0x8) == 0));
+                        if(c)
+                        {
+                            texture.SetPixel(i, j, Color.White.TransFormToSystemColor());
+                        }
+                        else
+                        {
+                            texture.SetPixel(i, j, Color.Black.TransFormToSystemColor());
+                        }
+                    }
+            }
+            catch (System.IO.FileNotFoundException)
+            {
+                MessageBox.Show("There was an error opening the bitmap." + "Please check the path.");
+            }
+
             RenderStage _stage = Rendering_pipeline._stage;
             ApplicationStage Astage = (ApplicationStage)_stage;
 
-            //Init Mesh
+            //Init GameObject
             Mesh cubeMesh = new Mesh(
                 CubeData.pointList,
                 CubeData.indexs,
@@ -87,19 +111,20 @@ namespace LinHowe_CSharp_Render
                 CubeData.vertColors,
                 CubeData.mat,
                 CubeData.uvs);
-
+            cubeMesh.Texture = texture;
             GameObject cubeGameObject = new GameObject(cubeMesh, new Vector3(-3, 0, 10));
             Astage.AddGameObject(cubeGameObject);
 
-            Mesh sphereMesh = new Mesh(
-                SphereData.pointList,
-                SphereData.indexs,
-                SphereData.norlmas,
-                SphereData.vertColors,
-                SphereData.mat,
-                SphereData.uvs);
-            GameObject sphereGameObject = new GameObject(sphereMesh, new Vector3(3, 0, 8));
-            Astage.AddGameObject(sphereGameObject);
+            //Mesh sphereMesh = new Mesh(
+            //    SphereData.pointList,
+            //    SphereData.indexs,
+            //    SphereData.norlmas,
+            //    SphereData.vertColors,
+            //    SphereData.mat,
+            //    SphereData.uvs);
+            //sphereMesh.Texture = texture;
+            //GameObject sphereGameObject = new GameObject(sphereMesh, new Vector3(3, 0, 8));
+            //Astage.AddGameObject(sphereGameObject);
 
             //Init Camera
             Camera MainCamera = new Camera
@@ -119,8 +144,10 @@ namespace LinHowe_CSharp_Render
             Light light = new Light(new Vector3(0, 3, 0), new Vector3(0.6f, 1, 0), new Color(1, 1, 1));
             light.SetPointLight(0.3f, 0.5f);
             Astage.AddLight(light);
-           
-            
+
+            Astage.EnableOrDisableRenderTexture();
+
+
         }
 
         

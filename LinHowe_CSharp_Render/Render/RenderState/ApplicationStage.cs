@@ -6,6 +6,10 @@ namespace LinHowe_CSharp_Render.Render
     /// </summary>
     partial class ApplicationStage
     {
+        public void EnableOrDisableRenderTexture()
+        {
+            Rendering_pipeline.IsRenderTexture = !Rendering_pipeline.IsRenderTexture;
+        }
         /// <summary>
         /// 输入模型图元
         /// </summary>

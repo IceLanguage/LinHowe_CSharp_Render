@@ -91,6 +91,14 @@ namespace LinHowe_CSharp_Render
             return System.Drawing.Color.FromArgb((int)r, (int)g, (int)b);
         }
 
+        public static Color TransformToRenderColor(System.Drawing.Color color)
+        {
+            float r = color.R / 255f;
+            float g = color.G / 255f;
+            float b = color.B / 255f;
+            return new Color(r, g, b);
+        }
+
         /// <summary>
         /// 颜色乘法，用于颜色混合，实际叫做Modulate（调制）
         /// </summary>

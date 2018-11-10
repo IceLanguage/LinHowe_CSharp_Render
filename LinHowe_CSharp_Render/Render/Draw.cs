@@ -182,18 +182,37 @@ namespace LinHowe_CSharp_Render.Render
                         (y - p2.v_trans.position.y) *
                         (p3.v_trans.position.x - p2.v_trans.position.x) /
                         (p3.v_trans.position.y - p2.v_trans.position.y) + p2.v_trans.position.x;
-
+                    float ul =
+                      (y - p1.v_trans.position.y) *
+                      (p3.v_trans.u - p1.v_trans.u) /
+                      (p3.v_trans.position.y - p1.v_trans.position.y) + p1.v_trans.position.x;
+                    float ur =
+                        (y - p2.v_trans.position.y) *
+                        (p3.v_trans.u - p2.v_trans.u) /
+                        (p3.v_trans.position.y - p2.v_trans.position.y) + p2.v_trans.u;
+                    float vl =
+                       (y - p1.v_trans.position.y) *
+                       (p3.v_trans.v - p1.v_trans.v) /
+                       (p3.v_trans.position.y - p1.v_trans.position.y) + p1.v_trans.v;
+                    float vr =
+                        (y - p2.v_trans.position.y) *
+                        (p3.v_trans.v - p2.v_trans.v) /
+                        (p3.v_trans.position.y - p2.v_trans.position.y) + p2.v_trans.v;
                     float dy = y - p1.v_trans.position.y;
                     float t = dy / (p3.v_trans.position.y - p1.v_trans.position.y);
                     //插值生成左右顶点
                     Point new1 = new Point();
                     new1.v_trans.position.x = xl;
                     new1.v_trans.position.y = y;
+                    new1.v_trans.u = ul;
+                    new1.v_trans.v = vl;
                     ScreenSpaceLerpVertex(ref new1, p1, p3, t);
-                    //
+                    
                     Point new2 = new Point();
                     new2.v_trans.position.x = xr;
                     new2.v_trans.position.y = y;
+                    new2.v_trans.u = ur;
+                    new2.v_trans.v = vr;
                     ScreenSpaceLerpVertex(ref new2, p2, p3, t);
                     //扫描线填充
                     if (new1.v_trans.position.x < new2.v_trans.position.x)
@@ -229,18 +248,37 @@ namespace LinHowe_CSharp_Render.Render
                         (y - p1.v_trans.position.y) * 
                         (p3.v_trans.position.x - p1.v_trans.position.x) / 
                         (p3.v_trans.position.y - p1.v_trans.position.y) + p1.v_trans.position.x;
-
+                    float ul =
+                       (y - p1.v_trans.position.y) *
+                       (p2.v_trans.u - p1.v_trans.u) /
+                       (p2.v_trans.position.y - p1.v_trans.position.y) + p1.v_trans.position.x;
+                    float ur =
+                        (y - p1.v_trans.position.y) *
+                        (p3.v_trans.u - p1.v_trans.u) /
+                        (p3.v_trans.position.y - p1.v_trans.position.y) + p1.v_trans.u;
+                    float vl =
+                       (y - p1.v_trans.position.y) *
+                       (p2.v_trans.v - p1.v_trans.v) /
+                       (p2.v_trans.position.y - p1.v_trans.position.y) + p1.v_trans.v;
+                    float vr =
+                        (y - p1.v_trans.position.y) *
+                        (p3.v_trans.v - p1.v_trans.v) /
+                        (p3.v_trans.position.y - p1.v_trans.position.y) + p1.v_trans.v;
                     float dy = y - p1.v_trans.position.y;
                     float t = dy / (p2.v_trans.position.y - p1.v_trans.position.y);
                     //插值生成左右顶点
                     Point new1 = new Point();
                     new1.v_trans.position.x = xl;
                     new1.v_trans.position.y = y;
+                    new1.v_trans.u = ul;
+                    new1.v_trans.v = vl;
                     ScreenSpaceLerpVertex(ref new1, p1, p2, t);
                     
                     Point new2 = new Point();
                     new2.v_trans.position.x = xr;
                     new2.v_trans.position.y = y;
+                    new2.v_trans.u = ur;
+                    new2.v_trans.v = vr;
                     ScreenSpaceLerpVertex(ref new2, p1, p3, t);
                     //扫描线填充
                     if (new1.v_trans.position.x < new2.v_trans.position.x)
@@ -295,6 +333,18 @@ namespace LinHowe_CSharp_Render.Render
                         _zBuff[xIndex, yIndex] = onePreZ;
                         //插值顶点颜色
                         Color vertColor = MathHelp.Lerp(leftV.color, rightV.color, lerpFactor);
+                        if (Rendering_pipeline.IsRenderTexture)
+                        {
+                            int u = (int)(MathHelp.Lerp(leftV.u, rightV.u, lerpFactor) * mesh.Texture.Width);
+                            int v = (int)(MathHelp.Lerp(leftV.v, rightV.v, lerpFactor) * mesh.Texture.Height);
+                            if (u < 0) u = 0;
+                            if (v < 0) v = 0;
+                            if (u >= mesh.Texture.Width) u = mesh.Texture.Width - 1;
+                            if (v >= mesh.Texture.Height) v = mesh.Texture.Height - 1;
+                            vertColor *= Color.TransformToRenderColor(mesh.Texture.GetPixel(u, v));
+                        }
+                            
+
                         Color lightColor = MathHelp.Lerp(leftV.lightingColor, rightV.lightingColor, lerpFactor);
 
                         _frameBuff.SetPixel(xIndex, yIndex, (vertColor * lightColor).TransFormToSystemColor());

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using LinHowe_CSharp_Render.Math;
 
 namespace LinHowe_CSharp_Render
@@ -27,7 +28,10 @@ namespace LinHowe_CSharp_Render
         /// 材质
         /// </summary>
         public Material Mat { get; private set; }
-
+        /// <summary>
+        /// 纹理
+        /// </summary>
+        public Bitmap Texture { get;set; }
         public void Reset()
         {
             CullFlag = false;
