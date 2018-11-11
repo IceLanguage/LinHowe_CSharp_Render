@@ -72,20 +72,21 @@ namespace LinHowe_CSharp_Render
             }
 
         }
-        private void Init()
+
+        private void InitTexture()
         {
             //Init Texture
             try
             {
-                
+
                 int texSize = 64;
-             
+
                 texture = new Bitmap(texSize, texSize);
                 for (var i = 0; i < texSize; i++)
                     for (var j = 0; j < texSize; j++)
                     {
                         bool c = (((i & 0x8) == 0) ^ ((j & 0x8) == 0));
-                        if(c)
+                        if (c)
                         {
                             texture.SetPixel(i, j, Color.White.TransFormToSystemColor());
                         }
@@ -101,6 +102,11 @@ namespace LinHowe_CSharp_Render
             {
                 MessageBox.Show("There was an error opening the bitmap." + "Please check the path.");
             }
+        }
+        private void Init()
+        {
+
+            InitTexture();
 
             RenderStage _stage = Rendering_pipeline._stage;
             ApplicationStage Astage = (ApplicationStage)_stage;
@@ -112,10 +118,12 @@ namespace LinHowe_CSharp_Render
                 CubeData.norlmas,
                 CubeData.vertColors,
                 CubeData.mat,
-                CubeData.uvs);
-            cubeMesh.Texture = texture;
-            cubeMesh.IsRenderTexture = true;
-           GameObject cubeGameObject = new GameObject(cubeMesh, new Vector3(-3, 0, 10));
+                CubeData.uvs)
+            {
+                Texture = texture,
+                IsRenderTexture = true
+            };
+            GameObject cubeGameObject = new GameObject(cubeMesh, new Vector3(-3, 0, 10));
             Astage.AddGameObject(cubeGameObject);
 
 
@@ -147,9 +155,6 @@ namespace LinHowe_CSharp_Render
             Light light = new Light(new Vector3(0, 3, 0), new Vector3(0.6f, 1, 0), new Color(1, 1, 1));
             light.SetPointLight(0.3f, 0.5f);
             Astage.AddLight(light);
-
-            
-
 
         }
 

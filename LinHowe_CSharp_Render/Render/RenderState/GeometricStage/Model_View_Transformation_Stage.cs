@@ -19,19 +19,20 @@ namespace LinHowe_CSharp_Render.Render
                 //本地模型空间到世界空间
                 for (int i = 0;i < size;++i)
                 {
-                    SetMTransform(go.ObjectToWorldMatrix,
-                        ref mesh.Vertices[i].v_trans.position);
+                    SetMTransform(go,ref mesh.Vertices[i].v_trans.position);
                 }
 
                 //物体剔除-包围球测试             
-                if (CullObject(go, SphereCenterPos))
-                    continue;
+                //if (CullObject(go, SphereCenterPos))
+                //    continue;
 
                 //世界空间到相机空间
                 for (int i = 0; i < size; ++i)
-                {                   
-                    SetVTransform(Rendering_pipeline.MainCamera.WorldToViewMatrix,
-                        ref mesh.Vertices[i].v_trans.position);
+                {
+                    SetVTransform(ref mesh.Vertices[i].v_trans.position);
+
+                    //裁剪算法
+                    CullObject(go);
                 }
             }
 
@@ -82,19 +83,18 @@ namespace LinHowe_CSharp_Render.Render
         /// 进行m矩阵变换，从本地模型空间到世界空间
         /// </summary>
         private static void SetMTransform(
-            Matrix4x4 m,
+            GameObject go,
             ref Vector3 pos)
         {
-            pos *= m;
+            pos *= go.ObjectToWorldMatrix;
         }
         /// <summary>
         /// 进行v矩阵变换，从世界空间到相机空间
         /// </summary>
         private static void SetVTransform(
-            Matrix4x4 v,
             ref Vector3 pos)
         {
-            pos *= v;
+            pos *= Rendering_pipeline.MainCamera.WorldToViewMatrix;
         }
         /// <summary>
         /// 背面消隐
@@ -132,7 +132,129 @@ namespace LinHowe_CSharp_Render.Render
                 }
             }
         }
+        private void CullObject(GameObject go)
+        {
+            if (go.mesh.CullFlag)
+                return ;
+            Camera camera = Rendering_pipeline.MainCamera;
 
+            Mesh mesh = go.mesh;
+            int len = mesh.Vertices.Length;
+            for (int i = 0; i + 2 < len; i += 3)
+            {
+ 
+                //左右裁剪面
+                if (Cull_LR(mesh, camera, i))
+                    continue;
+
+                //上下裁剪面
+                if (Cull_UD(mesh, camera, i))
+                    continue;
+
+                //远近裁剪面
+                if (Cull_FN(mesh, camera, i))
+                    continue;
+
+            }
+        }
+
+        /// <summary>
+        /// 远近裁剪面裁剪
+        /// 这里的裁剪算法可以增加一部分，用近裁剪面裁剪三角形，重新定义定义顶点结构,
+        /// 不过重新定义定义顶点结构这需要改动很大一部分代码，
+        /// 暂时不加人这一部分算法
+        /// 算法来源《3D游戏编程大师下》P681
+        /// </summary>
+        /// <param name="mesh"></param>
+        /// <param name="camera"></param>
+        /// <param name="i"></param>
+        /// <returns></returns>
+        private bool Cull_FN(Mesh mesh, Camera camera, int i)
+        {
+            int test = 0;
+            if (camera.zf < mesh.Vertices[i].v_trans.position.z)
+                test += 1;//远裁剪面
+            else if (camera.zn> mesh.Vertices[i].v_trans.position.y)
+                test -= 1; //近裁剪面
+            else
+                return false;
+            if (test != 1 && camera.zf < mesh.Vertices[i + 1].v_trans.position.z)
+                return false;
+            else if (test != -1 && camera.zn > mesh.Vertices[i + 1].v_trans.position.z)
+                return false;
+            if (test != 1 && camera.zf < mesh.Vertices[i + 2].v_trans.position.z)
+                return false;
+            else if (test != -1 && camera.zn > mesh.Vertices[i + 2].v_trans.position.z)
+                return false;
+            if (test != 0)
+            {
+                mesh.Cuts[i] = mesh.Cuts[i + 1] = mesh.Cuts[i + 2] = true;
+                return true;
+            }
+            return false;
+        }
+
+        //左右裁剪面裁剪
+        private bool Cull_LR(Mesh mesh,Camera camera,int i)
+        {
+            float z_factor = camera.ScreenHeight / camera.FocalLength;
+            float z_test = z_factor * mesh.Vertices[i].v_trans.position.z;
+            int test = 0;
+            if (z_test < mesh.Vertices[i].v_trans.position.y)
+                test += 1;//上裁剪面
+            else if (-z_test > mesh.Vertices[i].v_trans.position.y)
+                test -= 1; //下裁剪面
+            else
+                return false;
+            z_test = z_factor * mesh.Vertices[i + 1].v_trans.position.z;
+            if (test != 1 && z_test < mesh.Vertices[i + 1].v_trans.position.y)
+                return false;
+            else if (test != -1 && -z_test > mesh.Vertices[i + 1].v_trans.position.y)
+                return false;
+            z_test = z_factor * mesh.Vertices[i + 2].v_trans.position.z;
+            if (test != 1 && z_test < mesh.Vertices[i + 2].v_trans.position.y)
+                return false;
+            else if (test != -1 && -z_test > mesh.Vertices[i + 2].v_trans.position.y)
+                return false;
+
+            if (test != 0)
+            {
+                mesh.Cuts[i] = mesh.Cuts[i + 1] = mesh.Cuts[i + 2] = true;
+                return true;
+            }
+            return false;
+        }
+
+        //上下裁剪面裁剪
+        private bool Cull_UD(Mesh mesh, Camera camera, int i)
+        {
+            float z_factor = camera.Width / camera.FocalLength;
+            float z_test = z_factor * mesh.Vertices[i].v_trans.position.z;
+            int test = 0;
+            if (z_test < mesh.Vertices[i].v_trans.position.x)
+                test += 1;//右裁剪面
+            else if (-z_test > mesh.Vertices[i].v_trans.position.x)
+                test -= 1; //左裁剪面
+            else
+                return false;
+            z_test = z_factor * mesh.Vertices[i + 1].v_trans.position.z;
+            if (test != 1 && z_test < mesh.Vertices[i + 1].v_trans.position.x)
+                return false;
+            else if (test != -1 && -z_test > mesh.Vertices[i + 1].v_trans.position.x)
+                return false;
+            z_test = z_factor * mesh.Vertices[i + 2].v_trans.position.z;
+            if (test != 1 && z_test < mesh.Vertices[i + 2].v_trans.position.x)
+                return false;
+            else if (test != -1 && -z_test > mesh.Vertices[i + 2].v_trans.position.x)
+                return false;
+
+            if (test != 0)
+            {
+                mesh.Cuts[i] = mesh.Cuts[i + 1] = mesh.Cuts[i + 2] = true;
+                return true;
+            }
+            return false;
+        }
         /// <summary>
         /// 物体剔除-包围球测试
         /// </summary>

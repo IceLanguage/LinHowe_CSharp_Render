@@ -38,7 +38,13 @@ namespace LinHowe_CSharp_Render
         public Vector3 pos;
         public Vector3 lookAt;
         public Vector3 up;
-
+        public float Width
+        {
+            get
+            {
+                return ScreenHeight * aspect;
+            }
+        }
         /// <summary>
         /// 焦距
         /// </summary>
