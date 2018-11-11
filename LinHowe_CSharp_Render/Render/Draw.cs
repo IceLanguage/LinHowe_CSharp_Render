@@ -333,7 +333,8 @@ namespace LinHowe_CSharp_Render.Render
                         _zBuff[xIndex, yIndex] = onePreZ;
                         //插值顶点颜色
                         Color vertColor = MathHelp.Lerp(leftV.color, rightV.color, lerpFactor);
-                        if (Rendering_pipeline.IsRenderTexture)
+                        //纹理映射
+                        if (mesh.IsRenderTexture&&null!=mesh.Texture)
                         {
                             int u = (int)(MathHelp.Lerp(leftV.u, rightV.u, lerpFactor) * mesh.Texture.Width);
                             int v = (int)(MathHelp.Lerp(leftV.v, rightV.v, lerpFactor) * mesh.Texture.Height);

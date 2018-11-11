@@ -56,12 +56,12 @@ namespace LinHowe_CSharp_Render.Test
         }
         static void Tetrahedron(Vector3 a, Vector3 b, Vector3 c, Vector3 d, int n)
         {
-            DivideTriangle(a, b, c, n,1,1);
-            DivideTriangle(d, c, b, n,1,0);
-            DivideTriangle(a, d, b, n,0,0);
-            DivideTriangle(a, c, d, n,0,1);
+            DivideTriangle(a, b, c, n, new Vector3(1, 0, 1), new Vector3(1, 1, 0));
+            DivideTriangle(d, c, b, n, new Vector3(0, 1, 0), new Vector3(0, 0, 1));
+            DivideTriangle(a, d, b, n, new Vector3(1, 0, 0), new Vector3(1, 0, 1));
+            DivideTriangle(a, c, d, n, new Vector3(1, 1, 0), new Vector3(1, 0, 0));
         }
-        static void DivideTriangle(Vector3 a, Vector3 b, Vector3 c, int n,float u,float v)
+        static void DivideTriangle(Vector3 a, Vector3 b, Vector3 c, int n,Vector3 u,Vector3 v)
         {
             if (n > 0)
             {
@@ -71,17 +71,17 @@ namespace LinHowe_CSharp_Render.Test
                 Vector3 bc = MathHelp.Lerp(b, c, 0.5f).Normalize();
 
 
-                DivideTriangle(a, ab, ac, n - 1, u, v);
-                DivideTriangle(ab, b, bc, n - 1, u, v/2);
-                DivideTriangle(bc, c, ac, n - 1, u/2, v/2);
-                DivideTriangle(ab, bc, ac,n - 1, u/2, v);
+                DivideTriangle(a, ab, ac, n - 1, new Vector3(u.x, (u.x + u.y) / 2, (u.x + u.z) / 2), new Vector3(v.x, (v.x + v.y) / 2, v.x, (v.x + v.z) / 2));
+                DivideTriangle(ab, b, bc, n - 1, new Vector3((u.x + u.y) / 2, u.y, (u.z + u.y) / 2), new Vector3((v.x + v.y) / 2, v.y, (v.z + v.y) / 2));
+                DivideTriangle(bc, c, ac, n - 1, new Vector3((u.z + u.y) / 2, u.z, (u.x + u.z) / 2), new Vector3((v.z + v.y) / 2, v.z, (v.x + v.z) / 2));
+                DivideTriangle(ab, bc, ac,n - 1, new Vector3((u.x + u.y) / 2, (u.z + u.y) / 2, (u.x + u.z) / 2), new Vector3((v.x + v.y) / 2, (v.z + v.y) / 2, (v.x + v.z) / 2));
             }
             else
             {
                 Triangle(a, b, c,u,v);
             }
         }
-        static void Triangle(Vector3 a, Vector3 b, Vector3 c,float u,float v)
+        static void Triangle(Vector3 a, Vector3 b, Vector3 c, Vector3 u, Vector3 v)
         {
             pointList[index] = a;
             pointList[index+1] = b;
@@ -96,12 +96,12 @@ namespace LinHowe_CSharp_Render.Test
             indexs[index+2] = index+2;
 
             vertColors[index] = new Color(255, 255, 0);
-            vertColors[index+1] = new Color(255, 255, 0);
-            vertColors[index+2] = new Color(255, 255, 0);
+            vertColors[index+1] = new Color(255, 0, 255);
+            vertColors[index+2] = new Color(0, 255, 255);
 
-            uvs[index] = new Tuple<float, float>(u, v);
-            uvs[index+1] = new Tuple<float, float>(u/2, v);
-            uvs[index+2] = new Tuple<float, float>(u, v/2);
+            uvs[index] = new Tuple<float, float>(u.x, v.x);
+            uvs[index+1] = new Tuple<float, float>(u.y, v.y);
+            uvs[index+2] = new Tuple<float, float>(u.z, v.z);
             index += 3;
         }
     }

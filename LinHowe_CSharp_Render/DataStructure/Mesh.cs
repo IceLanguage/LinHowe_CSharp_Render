@@ -32,6 +32,8 @@ namespace LinHowe_CSharp_Render
         /// 纹理
         /// </summary>
         public Bitmap Texture { get;set; }
+
+        public bool IsRenderTexture = false;
         public void Reset()
         {
             CullFlag = false;

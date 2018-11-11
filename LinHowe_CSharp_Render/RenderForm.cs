@@ -77,7 +77,7 @@ namespace LinHowe_CSharp_Render
             //Init Texture
             try
             {
-                //texture = (Bitmap)Image.FromFile(@"../../Resource/Lh.png", true);
+                
                 int texSize = 64;
              
                 texture = new Bitmap(texSize, texSize);
@@ -94,6 +94,8 @@ namespace LinHowe_CSharp_Render
                             texture.SetPixel(i, j, Color.Black.TransFormToSystemColor());
                         }
                     }
+
+                //texture = (Bitmap)Image.FromFile(@"../../Resource/Lh.png", true);
             }
             catch (System.IO.FileNotFoundException)
             {
@@ -112,19 +114,20 @@ namespace LinHowe_CSharp_Render
                 CubeData.mat,
                 CubeData.uvs);
             cubeMesh.Texture = texture;
-            GameObject cubeGameObject = new GameObject(cubeMesh, new Vector3(-3, 0, 10));
+            cubeMesh.IsRenderTexture = true;
+           GameObject cubeGameObject = new GameObject(cubeMesh, new Vector3(-3, 0, 10));
             Astage.AddGameObject(cubeGameObject);
 
-            //Mesh sphereMesh = new Mesh(
-            //    SphereData.pointList,
-            //    SphereData.indexs,
-            //    SphereData.norlmas,
-            //    SphereData.vertColors,
-            //    SphereData.mat,
-            //    SphereData.uvs);
-            //sphereMesh.Texture = texture;
-            //GameObject sphereGameObject = new GameObject(sphereMesh, new Vector3(3, 0, 8));
-            //Astage.AddGameObject(sphereGameObject);
+
+            Mesh sphereMesh = new Mesh(
+                SphereData.pointList,
+                SphereData.indexs,
+                SphereData.norlmas,
+                SphereData.vertColors,
+                SphereData.mat,
+                SphereData.uvs);
+            GameObject sphereGameObject = new GameObject(sphereMesh, new Vector3(3, 0, 8));
+            Astage.AddGameObject(sphereGameObject);
 
             //Init Camera
             Camera MainCamera = new Camera
@@ -145,7 +148,7 @@ namespace LinHowe_CSharp_Render
             light.SetPointLight(0.3f, 0.5f);
             Astage.AddLight(light);
 
-            Astage.EnableOrDisableRenderTexture();
+            
 
 
         }

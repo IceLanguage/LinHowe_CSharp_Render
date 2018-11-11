@@ -26,7 +26,7 @@ namespace LinHowe_CSharp_Render.Render
         //环境光
         public static Color _ambientColor = Color.White;
 
-        public static bool IsRenderTexture = false;
+        
 
         public static void Render()
         {
