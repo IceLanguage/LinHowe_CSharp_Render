@@ -79,6 +79,17 @@ namespace LinHowe_CSharp_Render
             return c;
         }
 
+        public static Color operator -(Color a, Color b)
+        {
+            Color c = new Color
+            {
+                R = a.R - b.R,
+                G = a.G - b.G,
+                B = a.B - b.B
+            };
+            return c;
+        }
+
         /// <summary>
         /// 转换为系统的color
         /// </summary>

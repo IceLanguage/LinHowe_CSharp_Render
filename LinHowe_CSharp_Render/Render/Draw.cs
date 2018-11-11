@@ -174,30 +174,22 @@ namespace LinHowe_CSharp_Render.Render
                 int yIndex = (int)(System.Math.Round(y, MidpointRounding.AwayFromZero));
                 if (yIndex >= 0 && yIndex < _frameBuff.Height)
                 {
-                    float xl = 
-                        (y - p1.v_trans.position.y) * 
-                        (p3.v_trans.position.x - p1.v_trans.position.x) / 
-                        (p3.v_trans.position.y - p1.v_trans.position.y) + p1.v_trans.position.x;
-                    float xr = 
-                        (y - p2.v_trans.position.y) *
-                        (p3.v_trans.position.x - p2.v_trans.position.x) /
-                        (p3.v_trans.position.y - p2.v_trans.position.y) + p2.v_trans.position.x;
-                    float ul =
-                      (y - p1.v_trans.position.y) *
-                      (p3.v_trans.u - p1.v_trans.u) /
-                      (p3.v_trans.position.y - p1.v_trans.position.y) + p1.v_trans.position.x;
-                    float ur =
-                        (y - p2.v_trans.position.y) *
-                        (p3.v_trans.u - p2.v_trans.u) /
-                        (p3.v_trans.position.y - p2.v_trans.position.y) + p2.v_trans.u;
-                    float vl =
-                       (y - p1.v_trans.position.y) *
-                       (p3.v_trans.v - p1.v_trans.v) /
-                       (p3.v_trans.position.y - p1.v_trans.position.y) + p1.v_trans.v;
-                    float vr =
-                        (y - p2.v_trans.position.y) *
-                        (p3.v_trans.v - p2.v_trans.v) /
-                        (p3.v_trans.position.y - p2.v_trans.position.y) + p2.v_trans.v;
+                    float d31 = (y - p1.v_trans.position.y) /
+                        (p3.v_trans.position.y - p1.v_trans.position.y);
+                    float d32 = (y - p2.v_trans.position.y) /
+                        (p3.v_trans.position.y - p2.v_trans.position.y);
+                    float xl = d31 * 
+                        (p3.v_trans.position.x - p1.v_trans.position.x) + p1.v_trans.position.x;
+                    float xr = d32 *
+                        (p3.v_trans.position.x - p2.v_trans.position.x) + p2.v_trans.position.x;
+                    float ul = d31 *
+                      (p3.v_trans.u - p1.v_trans.u) + p1.v_trans.u;
+                    float ur = d32 *
+                        (p3.v_trans.u - p2.v_trans.u) + p2.v_trans.u;
+                    float vl = d31 *
+                       (p3.v_trans.v - p1.v_trans.v) + p1.v_trans.v;
+                    float vr = d32 *
+                        (p3.v_trans.v - p2.v_trans.v) + p2.v_trans.v;
                     float dy = y - p1.v_trans.position.y;
                     float t = dy / (p3.v_trans.position.y - p1.v_trans.position.y);
                     //插值生成左右顶点
@@ -240,30 +232,22 @@ namespace LinHowe_CSharp_Render.Render
                 int yIndex = (int)(System.Math.Round(y, MidpointRounding.AwayFromZero));
                 if (yIndex >= 0 && yIndex < _frameBuff.Height)
                 {
-                    float xl = 
-                        (y - p1.v_trans.position.y) * 
-                        (p2.v_trans.position.x - p1.v_trans.position.x) / 
-                        (p2.v_trans.position.y - p1.v_trans.position.y) + p1.v_trans.position.x;
-                    float xr = 
-                        (y - p1.v_trans.position.y) * 
-                        (p3.v_trans.position.x - p1.v_trans.position.x) / 
-                        (p3.v_trans.position.y - p1.v_trans.position.y) + p1.v_trans.position.x;
-                    float ul =
-                       (y - p1.v_trans.position.y) *
-                       (p2.v_trans.u - p1.v_trans.u) /
-                       (p2.v_trans.position.y - p1.v_trans.position.y) + p1.v_trans.position.x;
-                    float ur =
-                        (y - p1.v_trans.position.y) *
-                        (p3.v_trans.u - p1.v_trans.u) /
-                        (p3.v_trans.position.y - p1.v_trans.position.y) + p1.v_trans.u;
-                    float vl =
-                       (y - p1.v_trans.position.y) *
-                       (p2.v_trans.v - p1.v_trans.v) /
-                       (p2.v_trans.position.y - p1.v_trans.position.y) + p1.v_trans.v;
-                    float vr =
-                        (y - p1.v_trans.position.y) *
-                        (p3.v_trans.v - p1.v_trans.v) /
-                        (p3.v_trans.position.y - p1.v_trans.position.y) + p1.v_trans.v;
+                    float d21 = (y - p1.v_trans.position.y) /
+                        (p2.v_trans.position.y - p1.v_trans.position.y);
+                    float d31 = (y - p1.v_trans.position.y) /
+                        (p3.v_trans.position.y - p1.v_trans.position.y);
+                    float xl = d21 * 
+                        (p2.v_trans.position.x - p1.v_trans.position.x) + p1.v_trans.position.x;
+                    float xr = d31 *
+                        (p3.v_trans.position.x - p1.v_trans.position.x) + p1.v_trans.position.x;
+                    float ul = d21 *
+                      (p2.v_trans.u - p1.v_trans.u) + p1.v_trans.u;
+                    float ur = d31 *
+                        (p3.v_trans.u - p1.v_trans.u) + p1.v_trans.u;
+                    float vl = d21 *
+                       (p2.v_trans.v - p1.v_trans.v) + p1.v_trans.v;
+                    float vr = d31 *
+                        (p3.v_trans.v - p1.v_trans.v) + p1.v_trans.v;
                     float dy = y - p1.v_trans.position.y;
                     float t = dy / (p2.v_trans.position.y - p1.v_trans.position.y);
                     //插值生成左右顶点
@@ -305,15 +289,26 @@ namespace LinHowe_CSharp_Render.Render
             Vertex rightV = right.v_trans;
           
             float dx = rightV.position.x - leftV.position.x;
+            Color curColor = leftV.color;
+            Color dcolor = (rightV.color - leftV.color) / dx /2;
+            float curu = leftV.u;
+            float curv = leftV.v;
+            float du = (rightV.u - leftV.u) / dx / 2;
+            float dv = (rightV.v - leftV.v) / dx / 2;
             float step = 1;
             if (dx != 0)
             {
                 step = 1 / dx;
             }
-            for (float x = leftV.position.x; x <= rightV.position.x; x += 0.5f)
+            
+            for (
+                float x = leftV.position.x;
+                x <= rightV.position.x;
+                x += 0.5f, curColor += dcolor,curu += du,curv +=dv)
             {
                 int xIndex = (int)(x + 0.5f);
-               
+                
+
                 if (xIndex >= 0 && xIndex < _frameBuff.Width)
                 {
                     float lerpFactor = 0;
@@ -323,7 +318,7 @@ namespace LinHowe_CSharp_Render.Render
                     }
                     //1/z’与x’和y'是线性关系的
                     float onePreZ = MathHelp.Lerp(leftV.onePerZ, rightV.onePerZ, lerpFactor);
-                    float w = 1 / onePreZ;
+                    //float w = 1 / onePreZ;
 
                     if (yIndex < 0 || yIndex >= _frameBuff.Height || xIndex < 0 || xIndex >= _frameBuff.Width)
                         continue;
@@ -331,17 +326,13 @@ namespace LinHowe_CSharp_Render.Render
                     if (onePreZ >= _zBuff[xIndex, yIndex])//使用1/z进行深度测试
                     {
                         _zBuff[xIndex, yIndex] = onePreZ;
-                        //插值顶点颜色
-                        Color vertColor = MathHelp.Lerp(leftV.color, rightV.color, lerpFactor);
+                        //顶点颜色
+                        Color vertColor = curColor;// MathHelp.Lerp(leftV.color, rightV.color, lerpFactor);
                         //纹理映射
                         if (mesh.IsRenderTexture&&null!=mesh.Texture)
                         {
-                            int u = (int)(MathHelp.Lerp(leftV.u, rightV.u, lerpFactor) * mesh.Texture.Width);
-                            int v = (int)(MathHelp.Lerp(leftV.v, rightV.v, lerpFactor) * mesh.Texture.Height);
-                            if (u < 0) u = 0;
-                            if (v < 0) v = 0;
-                            if (u >= mesh.Texture.Width) u = mesh.Texture.Width - 1;
-                            if (v >= mesh.Texture.Height) v = mesh.Texture.Height - 1;
+                            int u = (int)(curu * mesh.Texture.Width - 0.5f);
+                            int v = (int)(curv * mesh.Texture.Height - 0.5f);
                             vertColor *= Color.TransformToRenderColor(mesh.Texture.GetPixel(u, v));
                         }
                             
@@ -445,13 +436,6 @@ namespace LinHowe_CSharp_Render.Render
             v.v_trans.color = MathHelp.Lerp(v1.v_trans.color, v2.v_trans.color, t);
             
             v.v_trans.lightingColor = MathHelp.Lerp(v1.v_trans.lightingColor, v2.v_trans.lightingColor, t);
-            v.v_shader = v.v_trans;
-            v.v_shader.position = MathHelp.Lerp(v1.v_shader.position, v2.v_shader.position, t);
-            v.v_shader.normal = MathHelp.Lerp(v1.v_shader.normal, v2.v_shader.normal, t);
-            v.v_shader.color = v.v_trans.color;
-            v.v_shader.lightingColor = v.v_trans.lightingColor;
-            v.v_shader.u = v.v_trans.u;
-            v.v_shader.v = v.v_trans.v;
         }
 
       
