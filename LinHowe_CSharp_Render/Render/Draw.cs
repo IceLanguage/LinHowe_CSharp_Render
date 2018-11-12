@@ -154,44 +154,46 @@ namespace LinHowe_CSharp_Render.Render
                 
                 ScreenSpaceLerpVertex(ref newMiddle, top, bottom, t);
 
-                //平底
-                DrawTriangleBottom(top, newMiddle, middle, mesh);
+               
                 //平顶
-                DrawTriangleTop(newMiddle, middle, bottom, mesh);
+                DrawTriangleTop(top, newMiddle, middle, mesh);
+
+                //平底
+                DrawTriangleBottom(newMiddle, middle, bottom, mesh);
             }
         }
 
         /// <summary>
-        /// 平顶，p1,p2,p3为下顶点
+        /// 平底，p1,p2为下顶点
         /// </summary>
         /// <param name="p1"></param>
         /// <param name="p2"></param>
         /// <param name="p3"></param>
-        private static void DrawTriangleTop(Point p1, Point p2, Point p3,Mesh mesh)
+        private static void DrawTriangleBottom(Point p1, Point p2, Point p3,Mesh mesh)
         {
-            for (float y = p1.v_trans.position.y; y <= p3.v_trans.position.y; y += 0.5f)
+            float d = 0.5f /(p3.v_trans.position.y - p1.v_trans.position.y);
+            float t = 0;
+            float xl = p1.v_trans.position.x;
+            float xr = p2.v_trans.position.x;
+            float dxl = d * (p3.v_trans.position.x - p1.v_trans.position.x);
+            float dxr = d * (p3.v_trans.position.x - p2.v_trans.position.x);
+            float ul = p1.v_trans.u;
+            float ur = p2.v_trans.u;
+            float dul = d * (p3.v_trans.u - p1.v_trans.u);
+            float dur = d * (p3.v_trans.u - p2.v_trans.u);
+            float vl = p1.v_trans.v;
+            float vr = p2.v_trans.v;
+            float dvl = d * (p3.v_trans.v - p1.v_trans.v);
+            float dvr = d * (p3.v_trans.v - p2.v_trans.v);
+            for (float y = p1.v_trans.position.y;
+                y <= p3.v_trans.position.y;
+                y += 0.5f,t += d, 
+                xl += dxl,xr += dxr,
+                ul += dul,ur += dur, vl += dvl, vr += dvr)
             {
                 int yIndex = (int)(System.Math.Round(y, MidpointRounding.AwayFromZero));
                 if (yIndex >= 0 && yIndex < _frameBuff.Height)
                 {
-                    float d31 = (y - p1.v_trans.position.y) /
-                        (p3.v_trans.position.y - p1.v_trans.position.y);
-                    float d32 = (y - p2.v_trans.position.y) /
-                        (p3.v_trans.position.y - p2.v_trans.position.y);
-                    float xl = d31 * 
-                        (p3.v_trans.position.x - p1.v_trans.position.x) + p1.v_trans.position.x;
-                    float xr = d32 *
-                        (p3.v_trans.position.x - p2.v_trans.position.x) + p2.v_trans.position.x;
-                    float ul = d31 *
-                      (p3.v_trans.u - p1.v_trans.u) + p1.v_trans.u;
-                    float ur = d32 *
-                        (p3.v_trans.u - p2.v_trans.u) + p2.v_trans.u;
-                    float vl = d31 *
-                       (p3.v_trans.v - p1.v_trans.v) + p1.v_trans.v;
-                    float vr = d32 *
-                        (p3.v_trans.v - p2.v_trans.v) + p2.v_trans.v;
-                    float dy = y - p1.v_trans.position.y;
-                    float t = dy / (p3.v_trans.position.y - p1.v_trans.position.y);
                     //插值生成左右顶点
                     Point new1 = new Point();
                     new1.v_trans.position.x = xl;
@@ -219,37 +221,39 @@ namespace LinHowe_CSharp_Render.Render
             }
         }
         /// <summary>
-        /// 平底，p1为上顶点,p2，p3
+        /// 平顶，p1为上顶点
         /// </summary>
         /// <param name="p1"></param>
         /// <param name="p2"></param>
         /// <param name="p3"></param>
 
-        private static void DrawTriangleBottom(Point p1, Point p2, Point p3, Mesh mesh)
+        private static void DrawTriangleTop(Point p1, Point p2, Point p3, Mesh mesh)
         {
-            for (float y = p1.v_trans.position.y; y <= p2.v_trans.position.y; y += 0.5f)
+            float d = 0.5f / (p3.v_trans.position.y - p1.v_trans.position.y);
+            float t = 0;
+            float xl = p1.v_trans.position.x;
+            float xr = p1.v_trans.position.x;
+            float dxl = d * (p2.v_trans.position.x - p1.v_trans.position.x);
+            float dxr = d * (p3.v_trans.position.x - p2.v_trans.position.x);
+            float ul = p1.v_trans.u;
+            float ur = p1.v_trans.u;
+            float dul = d * (p2.v_trans.u - p1.v_trans.u);
+            float dur = d * (p3.v_trans.u - p1.v_trans.u);
+            float vl = p1.v_trans.v;
+            float vr = p1.v_trans.v;
+            float dvl = d * (p2.v_trans.v - p1.v_trans.v);
+            float dvr = d * (p3.v_trans.v - p1.v_trans.v);
+            for (float y = p1.v_trans.position.y;
+                y <= p2.v_trans.position.y;
+                 y += 0.5f, t += d,
+                xl += dxl, xr += dxr,
+                ul += dul, ur += dur, vl += dvl, vr += dvr)
             {
                 int yIndex = (int)(System.Math.Round(y, MidpointRounding.AwayFromZero));
                 if (yIndex >= 0 && yIndex < _frameBuff.Height)
                 {
-                    float d21 = (y - p1.v_trans.position.y) /
-                        (p2.v_trans.position.y - p1.v_trans.position.y);
-                    float d31 = (y - p1.v_trans.position.y) /
-                        (p3.v_trans.position.y - p1.v_trans.position.y);
-                    float xl = d21 * 
-                        (p2.v_trans.position.x - p1.v_trans.position.x) + p1.v_trans.position.x;
-                    float xr = d31 *
-                        (p3.v_trans.position.x - p1.v_trans.position.x) + p1.v_trans.position.x;
-                    float ul = d21 *
-                      (p2.v_trans.u - p1.v_trans.u) + p1.v_trans.u;
-                    float ur = d31 *
-                        (p3.v_trans.u - p1.v_trans.u) + p1.v_trans.u;
-                    float vl = d21 *
-                       (p2.v_trans.v - p1.v_trans.v) + p1.v_trans.v;
-                    float vr = d31 *
-                        (p3.v_trans.v - p1.v_trans.v) + p1.v_trans.v;
-                    float dy = y - p1.v_trans.position.y;
-                    float t = dy / (p2.v_trans.position.y - p1.v_trans.position.y);
+                  
+
                     //插值生成左右顶点
                     Point new1 = new Point();
                     new1.v_trans.position.x = xl;

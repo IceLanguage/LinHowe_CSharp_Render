@@ -32,7 +32,7 @@ namespace LinHowe_CSharp_Render.Render
                     SetVTransform(ref mesh.Vertices[i].v_trans.position);
 
                     //裁剪算法
-                    CullObject(go);
+                    //CullObject(go);
                 }
             }
 
@@ -160,10 +160,10 @@ namespace LinHowe_CSharp_Render.Render
 
         /// <summary>
         /// 远近裁剪面裁剪
-        /// 这里的裁剪算法可以增加一部分，用近裁剪面裁剪三角形，重新定义定义顶点结构,
+        /// 这里的裁剪算法可以增加一部分，用裁剪面裁剪三角形，重新定义定义顶点结构,
         /// 不过重新定义定义顶点结构这需要改动很大一部分代码，
         /// 暂时不加人这一部分算法
-        /// 算法来源《3D游戏编程大师下》P681
+        /// 算法来源《3D游戏编程大师技巧下册》P681 
         /// </summary>
         /// <param name="mesh"></param>
         /// <param name="camera"></param>
