@@ -177,6 +177,10 @@ namespace LinHowe_CSharp_Render.Render
             float xr = p2.v_trans.position.x;
             float dxl = d * (p3.v_trans.position.x - p1.v_trans.position.x);
             float dxr = d * (p3.v_trans.position.x - p2.v_trans.position.x);
+            float zl = p1.v_trans.onePerZ;
+            float zr = p2.v_trans.onePerZ;
+            float dzl = d * (p3.v_trans.onePerZ - p1.v_trans.onePerZ);
+            float dzr = d * (p3.v_trans.onePerZ - p2.v_trans.onePerZ);
             float ul = p1.v_trans.u;
             float ur = p2.v_trans.u;
             float dul = d * (p3.v_trans.u - p1.v_trans.u);
@@ -185,10 +189,11 @@ namespace LinHowe_CSharp_Render.Render
             float vr = p2.v_trans.v;
             float dvl = d * (p3.v_trans.v - p1.v_trans.v);
             float dvr = d * (p3.v_trans.v - p2.v_trans.v);
+
             for (float y = p1.v_trans.position.y;
                 y <= p3.v_trans.position.y;
                 y += 0.5f, t += d,
-                xl += dxl, xr += dxr,
+                xl += dxl, xr += dxr, zl += dzl, zr += dzr,
                 ul += dul, ur += dur, vl += dvl, vr += dvr)
             {
                 int yIndex = (int)(System.Math.Round(y, MidpointRounding.AwayFromZero));
@@ -199,6 +204,7 @@ namespace LinHowe_CSharp_Render.Render
                     Point new1 = new Point();
                     new1.v_trans.position.x = xl;
                     new1.v_trans.position.y = y;
+                    new1.v_trans.onePerZ = zl;
                     new1.v_trans.u = ul;
                     new1.v_trans.v = vl;
                     ScreenSpaceLerpVertex(ref new1, p1, p3, t);
@@ -206,6 +212,7 @@ namespace LinHowe_CSharp_Render.Render
                     Point new2 = new Point();
                     new2.v_trans.position.x = xr;
                     new2.v_trans.position.y = y;
+                    new2.v_trans.onePerZ = zr;
                     new2.v_trans.u = ur;
                     new2.v_trans.v = vr;
                     ScreenSpaceLerpVertex(ref new2, p2, p3, t);
@@ -236,6 +243,10 @@ namespace LinHowe_CSharp_Render.Render
             float xr = p1.v_trans.position.x;
             float dxl = d * (p2.v_trans.position.x - p1.v_trans.position.x);
             float dxr = d * (p3.v_trans.position.x - p1.v_trans.position.x);
+            float zl = p1.v_trans.onePerZ;
+            float zr = p1.v_trans.onePerZ;
+            float dzl = d * (p2.v_trans.onePerZ - p1.v_trans.onePerZ);
+            float dzr = d * (p3.v_trans.onePerZ - p1.v_trans.onePerZ);
             float ul = p1.v_trans.u;
             float ur = p1.v_trans.u;
             float dul = d * (p2.v_trans.u - p1.v_trans.u);
@@ -247,7 +258,7 @@ namespace LinHowe_CSharp_Render.Render
             for (float y = p1.v_trans.position.y; 
                 y <= p2.v_trans.position.y;
                   y += 0.5f, t += d,
-                xl += dxl, xr += dxr,
+                xl += dxl, xr += dxr, zl += dzl, zr += dzr,
                 ul += dul, ur += dur, vl += dvl, vr += dvr)
             {
                 int yIndex = (int)(System.Math.Round(y, MidpointRounding.AwayFromZero));
@@ -258,6 +269,7 @@ namespace LinHowe_CSharp_Render.Render
                     Point new1 = new Point();
                     new1.v_trans.position.x = xl;
                     new1.v_trans.position.y = y;
+                    new1.v_trans.onePerZ = zl;
                     new1.v_trans.u = ul;
                     new1.v_trans.v = vl;
                     ScreenSpaceLerpVertex(ref new1, p1, p2, t);
@@ -265,6 +277,7 @@ namespace LinHowe_CSharp_Render.Render
                     Point new2 = new Point();
                     new2.v_trans.position.x = xr;
                     new2.v_trans.position.y = y;
+                    new2.v_trans.onePerZ = zr;
                     new2.v_trans.u = ur;
                     new2.v_trans.v = vr;
                     ScreenSpaceLerpVertex(ref new2, p1, p3, t);
