@@ -32,7 +32,7 @@ namespace LinHowe_CSharp_Render.Render
                     SetVTransform(ref mesh.Vertices[i].v_trans.position);
 
                     //裁剪算法
-                    //CullObject(go);
+                    CullObject(go);
                 }
             }
 
@@ -142,7 +142,7 @@ namespace LinHowe_CSharp_Render.Render
             int len = mesh.Vertices.Length;
             for (int i = 0; i + 2 < len; i += 3)
             {
- 
+
                 //左右裁剪面
                 if (Cull_LR(mesh, camera, i))
                     continue;
@@ -174,7 +174,7 @@ namespace LinHowe_CSharp_Render.Render
             int test = 0;
             if (camera.zf < mesh.Vertices[i].v_trans.position.z)
                 test += 1;//远裁剪面
-            else if (camera.zn> mesh.Vertices[i].v_trans.position.y)
+            else if (camera.zn> mesh.Vertices[i].v_trans.position.z)
                 test -= 1; //近裁剪面
             else
                 return false;
