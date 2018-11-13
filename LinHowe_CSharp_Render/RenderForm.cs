@@ -24,7 +24,7 @@ namespace LinHowe_CSharp_Render
             }
         }
 
-        GameObject planeGameObject;
+
         Bitmap texture;
         bool isInit = false;
         public RenderForm()
@@ -199,22 +199,7 @@ namespace LinHowe_CSharp_Render
         {
             switch(e.KeyChar)
             {
-                case 'a':
-                    if (null != planeGameObject)
-                        planeGameObject.EventFunction +=
-                            (planeGameObject) =>
-                            {
-                                planeGameObject.rotation.y += (float)System.Math.PI / 12f;
-                            };
-                    break;
-                case 's':
-                    if (null != planeGameObject)
-                        planeGameObject.EventFunction +=
-                            (planeGameObject) =>
-                            {
-                                planeGameObject.rotation.y -= (float)System.Math.PI / 12f;
-                            };
-                    break;
+                
                 default:
                     break;
             }
