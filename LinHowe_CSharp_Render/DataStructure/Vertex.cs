@@ -51,12 +51,19 @@ namespace LinHowe_CSharp_Render
     class Point
     {
         public readonly Vertex m_vertex;
+
+        /// <summary>
+        /// 透明度
+        /// </summary>
+        public float alpha = 1;
+
         /// <summary>
         /// 用于差值和坐标变换
         /// </summary>
         public Vertex v_trans;
+
         /// <summary>
-        /// 用于着色器
+        /// 用于顶点着色器和像素着色器的数据传输
         /// </summary>
         public Vertex v_shader;
 

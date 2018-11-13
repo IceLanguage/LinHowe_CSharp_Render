@@ -1,7 +1,9 @@
 ﻿using LinHowe_CSharp_Render.Math;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+
 
 namespace LinHowe_CSharp_Render.Render
 {
@@ -10,9 +12,15 @@ namespace LinHowe_CSharp_Render.Render
     /// </summary>
     static class Draw
     {
+        struct ColorWithAlpha
+        {
+            public float alpha, onePreZ;
+            public Color color;
+        }
         //帧缓冲
         public static Bitmap _frameBuff;
         public static float[,] _zBuff;
+        static List<ColorWithAlpha>[,] _alphaBuff;
         public static Bitmap BackgroundBitmap;
         static Draw()
         {
@@ -29,14 +37,26 @@ namespace LinHowe_CSharp_Render.Render
         }
         public static void Clear(Graphics g)
         {
+
             Graphics.FromImage(_frameBuff).DrawImage(BackgroundBitmap,0,0);//.Clear(System.Drawing.Color.Black);
             Array.Clear(_zBuff, 0, _zBuff.Length);
+            
         }
         public static void Init(int width, int height)
         {
             BackgroundBitmap = new Bitmap(BackgroundBitmap,width, height);
             _frameBuff = new Bitmap(width, height);
             _zBuff = new float[width, height];
+          
+            _alphaBuff = new List<ColorWithAlpha>[width, height];
+            for (int i = 0; i < width; ++i)
+            {
+                for (int j = 0; j < height; ++j)
+                {
+                    _alphaBuff[i, j] = new List<ColorWithAlpha>();
+                }
+            }
+                    
         }
 
         /// <summary>
@@ -44,6 +64,7 @@ namespace LinHowe_CSharp_Render.Render
         /// </summary>
         public static void Rasterization()
         {
+            
             foreach (GameObject go in Rendering_pipeline._models)
             {
                 Mesh mesh = go.mesh;
@@ -57,13 +78,42 @@ namespace LinHowe_CSharp_Render.Render
                 }
             }
 
+            //透明度混合
+            int width = _frameBuff.Width;
+            int height = _frameBuff.Height;
+            for(int i = 0;i < width;++i)
+            {
+                for(int j = 0;j < height;++j)
+                {
+                    
+                    int len = _alphaBuff[i, j].Count;
+                    
+                    if(len > 0)
+                    {
+                        Color color = Color.TransformToRenderColor(_frameBuff.GetPixel(i, j));
+                        //降序排序
+                        _alphaBuff[i, j].Sort((x, y) => -x.onePreZ.CompareTo(y.onePreZ));
+                        ColorWithAlpha c = _alphaBuff[i, j][len - 1];
+                        float z = _zBuff[i, j];
+                        if (c.onePreZ > z)
+                        {
+                            _zBuff[i, j] = c.onePreZ;
+                            color = c.color * c.alpha + color * (1 - c.alpha);
+                        }
+
+                        _alphaBuff[i, j].Clear();
+                        _frameBuff.SetPixel(i, j, color.TransFormToSystemColor());
+                    }
+                }
+            }
+
         }
 
         private static void DrawTriangle(Point p1, Point p2, Point p3, Mesh mesh)
         {
             RasterizationTriangle(p1, p2, p3, mesh);
         }
-
+        
         /// <summary>
         /// 光栅化三角形
         /// </summary>
@@ -204,12 +254,16 @@ namespace LinHowe_CSharp_Render.Render
             float vr = p2.v_trans.v;
             float dvl = d * (p3.v_trans.v - p1.v_trans.v);
             float dvr = d * (p3.v_trans.v - p2.v_trans.v);
-
+            float al = p1.v_trans.v;
+            float ar = p2.v_trans.v;
+            float dal = d * (p3.alpha - p1.alpha);
+            float dar = d * (p3.alpha - p2.alpha);
             for (float y = p1.v_trans.position.y;
                 y <= p3.v_trans.position.y;
                 y += 0.5f, t += d,
                 xl += dxl, xr += dxr, zl += dzl, zr += dzr,
-                ul += dul, ur += dur, vl += dvl, vr += dvr)
+                ul += dul, ur += dur, vl += dvl, vr += dvr,
+                al += dal, ar += dar)
             {
                 int yIndex = (int)(System.Math.Round(y, MidpointRounding.AwayFromZero));
                 if (yIndex >= 0 && yIndex < _frameBuff.Height)
@@ -222,6 +276,7 @@ namespace LinHowe_CSharp_Render.Render
                     new1.v_trans.onePerZ = zl;
                     new1.v_trans.u = ul;
                     new1.v_trans.v = vl;
+                    new1.alpha = al;
                     ScreenSpaceLerpVertex(ref new1, p1, p3, t);
 
                     Point new2 = new Point();
@@ -230,6 +285,7 @@ namespace LinHowe_CSharp_Render.Render
                     new2.v_trans.onePerZ = zr;
                     new2.v_trans.u = ur;
                     new2.v_trans.v = vr;
+                    new2.alpha = ar;
                     ScreenSpaceLerpVertex(ref new2, p2, p3, t);
                     //扫描线填充
                     if (new1.v_trans.position.x < new2.v_trans.position.x)
@@ -270,11 +326,16 @@ namespace LinHowe_CSharp_Render.Render
             float vr = p1.v_trans.v;
             float dvl = d * (p2.v_trans.v - p1.v_trans.v);
             float dvr = d * (p3.v_trans.v - p1.v_trans.v);
+            float al = p1.v_trans.v;
+            float ar = p1.v_trans.v;
+            float dal = d * (p2.alpha - p1.alpha);
+            float dar = d * (p3.alpha - p1.alpha);
             for (float y = p1.v_trans.position.y; 
                 y <= p2.v_trans.position.y;
                   y += 0.5f, t += d,
                 xl += dxl, xr += dxr, zl += dzl, zr += dzr,
-                ul += dul, ur += dur, vl += dvl, vr += dvr)
+                ul += dul, ur += dur, vl += dvl, vr += dvr,
+                al += dal, ar += dar)
             {
                 int yIndex = (int)(System.Math.Round(y, MidpointRounding.AwayFromZero));
                 if (yIndex >= 0 && yIndex < _frameBuff.Height)
@@ -287,6 +348,7 @@ namespace LinHowe_CSharp_Render.Render
                     new1.v_trans.onePerZ = zl;
                     new1.v_trans.u = ul;
                     new1.v_trans.v = vl;
+                    new1.alpha = al;
                     ScreenSpaceLerpVertex(ref new1, p1, p2, t);
 
                     Point new2 = new Point();
@@ -295,6 +357,7 @@ namespace LinHowe_CSharp_Render.Render
                     new2.v_trans.onePerZ = zr;
                     new2.v_trans.u = ur;
                     new2.v_trans.v = vr;
+                    new2.alpha = al;
                     ScreenSpaceLerpVertex(ref new2, p1, p3, t);
                     //扫描线填充
                     if (new1.v_trans.position.x < new2.v_trans.position.x)
@@ -323,10 +386,16 @@ namespace LinHowe_CSharp_Render.Render
             float dx = rightV.position.x - leftV.position.x;
             Color curColor = leftV.color;
             Color dcolor = (rightV.color - leftV.color) / dx / 2;
+            Color lightColor = leftV.lightingColor;
+            Color dlcolor = (rightV.lightingColor - leftV.lightingColor) / dx / 2;
             float curu = leftV.u;
             float curv = leftV.v;
             float du = (rightV.u - leftV.u) / dx / 2;
             float dv = (rightV.v - leftV.v) / dx / 2;
+            float alpha = left.alpha;
+            float da = (right.alpha - left.alpha) / dx / 2;
+            float onePreZ = leftV.onePerZ;
+            float dz = (rightV.onePerZ - leftV.onePerZ) / dx / 2;
             float step = 1;
             if (dx != 0)
             {
@@ -336,28 +405,22 @@ namespace LinHowe_CSharp_Render.Render
             for (
                 float x = leftV.position.x;
                 x <= rightV.position.x;
-                x += 0.5f, curColor += dcolor, curu += du, curv += dv)
+                x += 0.5f, curColor += dcolor, lightColor +=dlcolor,
+                curu += du, curv += dv,alpha += da,onePreZ +=dz)
             {
                 int xIndex = (int)(x + 0.5f);
 
 
                 if (xIndex >= 0 && xIndex < _frameBuff.Width)
                 {
-                    float lerpFactor = 0;
-                    if (dx != 0)
-                    {
-                        lerpFactor = (x - leftV.position.x) / dx;
-                    }
-                    //1/z’与x’和y'是线性关系的
-                    float onePreZ = MathHelp.Lerp(leftV.onePerZ, rightV.onePerZ, lerpFactor);
-                    //float w = 1 / onePreZ;
-
+                    
                     if (yIndex < 0 || yIndex >= _frameBuff.Height || xIndex < 0 || xIndex >= _frameBuff.Width)
                         continue;
 
                     if (onePreZ >= _zBuff[xIndex, yIndex])//使用1/z进行深度测试
                     {
-                        _zBuff[xIndex, yIndex] = onePreZ;
+                        if(mesh.ZWrite)
+                            _zBuff[xIndex, yIndex] = onePreZ;
                         //顶点颜色
                         Color vertColor = curColor;// MathHelp.Lerp(leftV.color, rightV.color, lerpFactor);
                         //纹理映射
@@ -368,10 +431,24 @@ namespace LinHowe_CSharp_Render.Render
                             vertColor *= Color.TransformToRenderColor(mesh.Texture.GetPixel(u, v));
                         }
 
+                        Color resColor = (vertColor * lightColor);
+                        if (mesh.flagBlendAlpha)
+                        {
+                            ColorWithAlpha c = new ColorWithAlpha
+                            {
+                                alpha = alpha,
+                                color = resColor,
+                                onePreZ = onePreZ
+                            };
 
-                        Color lightColor = MathHelp.Lerp(leftV.lightingColor, rightV.lightingColor, lerpFactor);
+                            _alphaBuff[xIndex, yIndex].Add(c);
 
-                        _frameBuff.SetPixel(xIndex, yIndex, (vertColor * lightColor).TransFormToSystemColor());
+                        }
+                        else
+                        {
+                            _frameBuff.SetPixel(xIndex, yIndex, resColor.TransFormToSystemColor());
+                        }
+                        
                     }
 
                 }
@@ -466,8 +543,9 @@ namespace LinHowe_CSharp_Render.Render
             v.v_trans.v = MathHelp.Lerp(v1.v_trans.v, v2.v_trans.v, t);
 
             v.v_trans.color = MathHelp.Lerp(v1.v_trans.color, v2.v_trans.color, t);
-
+            
             v.v_trans.lightingColor = MathHelp.Lerp(v1.v_trans.lightingColor, v2.v_trans.lightingColor, t);
+            v.alpha = MathHelp.Lerp(v1.alpha, v2.alpha, t);
         }
 
 

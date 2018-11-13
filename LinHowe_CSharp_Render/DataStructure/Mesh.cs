@@ -21,6 +21,15 @@ namespace LinHowe_CSharp_Render
         public bool CullFlag = false;
 
         /// <summary>
+        /// 是否深度写入
+        /// </summary>
+        public bool ZWrite = true;
+
+        /// <summary>
+        /// 是否进行透明度混合
+        /// </summary>
+        public bool flagBlendAlpha = false;
+        /// <summary>
         /// 顶点数组
         /// </summary>
         public Point[] Vertices { get; private set; }
@@ -47,6 +56,12 @@ namespace LinHowe_CSharp_Render
                 Vertices[i].Reset();
             }
       
+        }
+
+        public void SetAlpha(float a)
+        {
+            foreach (Point p in Vertices)
+                p.alpha = a;
         }
         public Mesh(Vector3[] pointList, int[] indexs, Vector3[] normals,Color[] colors,Material mat,Tuple<float,float>[] uvs)
         {

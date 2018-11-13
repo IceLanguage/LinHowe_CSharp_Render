@@ -129,15 +129,16 @@ namespace LinHowe_CSharp_Render
                 CubeData.uvs)
             {
                 Texture = texture,
-                IsRenderTexture = true
+                IsRenderTexture = true,
+                ZWrite = false
             };
             GameObject cubeGameObject = new GameObject(cubeMesh,
-                new Vector3(-3, 0, 10))
+                new Vector3(3, 0, 10))
             {
                 UpdateFunction = Rotate
             };
             Astage.AddGameObject(cubeGameObject);
-            
+
 
             Mesh sphereMesh = new Mesh(
                 SphereData.pointList,
@@ -145,8 +146,14 @@ namespace LinHowe_CSharp_Render
                 SphereData.norlmas,
                 SphereData.vertColors,
                 SphereData.mat,
-                SphereData.uvs);
-            GameObject sphereGameObject = new GameObject(sphereMesh, new Vector3(3, 0, 8))
+                SphereData.uvs)
+            {
+                flagBlendAlpha = true,
+                ZWrite = false
+            };
+            sphereMesh.SetAlpha(0.2f);
+            
+            GameObject sphereGameObject = new GameObject(sphereMesh, new Vector3(2, 0, 5))
             {
                 UpdateFunction = Rotate,
                 scale = new Vector3(1.4f, 1.4f, 1.4f),

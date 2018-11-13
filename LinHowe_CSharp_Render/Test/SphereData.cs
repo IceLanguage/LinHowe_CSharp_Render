@@ -98,9 +98,9 @@ namespace LinHowe_CSharp_Render.Test
             indexs[index+1] = index+1;
             indexs[index+2] = index+2;
 
-            vertColors[index] = new Color(255, 255, 255);
-            vertColors[index+1] = new Color(255, 255, 255);
-            vertColors[index+2] = new Color(255, 255, 255);
+            vertColors[index] = new Color(255, 0, 0);
+            vertColors[index+1] = new Color(255, 0, 0);
+            vertColors[index+2] = new Color(255, 0, 0);
 
             uvs[index] = new Tuple<float, float>(u.x, v.x);
             uvs[index+1] = new Tuple<float, float>(u.y, v.y);
