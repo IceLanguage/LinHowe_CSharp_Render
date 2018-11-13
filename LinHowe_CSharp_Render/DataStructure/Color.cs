@@ -60,13 +60,8 @@ namespace LinHowe_CSharp_Render
         }
         public static Color operator /(Color a, float b)
         {
-            Color c = new Color
-            {
-                R = a.R / b,
-                G = a.G / b,
-                B = a.B / b
-            };
-            return c;
+            b = 1 / b;
+            return a * b;
         }
         public static Color operator +(Color a, Color b)
         {
@@ -87,6 +82,7 @@ namespace LinHowe_CSharp_Render
                 G = a.G - b.G,
                 B = a.B - b.B
             };
+         
             return c;
         }
 

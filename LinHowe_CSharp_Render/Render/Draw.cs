@@ -22,6 +22,9 @@ namespace LinHowe_CSharp_Render.Render
         public static float[,] _zBuff;
         static List<ColorWithAlpha>[,] _alphaBuff;
         public static Bitmap BackgroundBitmap;
+        public static float Width, Height;
+        public static Color[,] _colorBuff;
+        public static bool[,] _renderBuff;
         static Draw()
         {
             try
@@ -38,7 +41,9 @@ namespace LinHowe_CSharp_Render.Render
         public static void Clear(Graphics g)
         {
             Graphics.FromImage(_frameBuff).DrawImage(BackgroundBitmap,0,0);//.Clear(System.Drawing.Color.Black);
-            Array.Clear(_zBuff, 0, _zBuff.Length);          
+            Array.Clear(_zBuff, 0, _zBuff.Length);
+            Array.Clear(_renderBuff, 0, _renderBuff.Length);
+
         }
         public static void Init(int width, int height)
         {
@@ -54,7 +59,10 @@ namespace LinHowe_CSharp_Render.Render
                     _alphaBuff[i, j] = new List<ColorWithAlpha>();
                 }
             }
-                    
+            Width = width; Height = height;
+
+            _colorBuff = new Color[width, height];
+            _renderBuff = new bool[width, height];
         }
 
         /// <summary>
@@ -85,21 +93,22 @@ namespace LinHowe_CSharp_Render.Render
             watch.Start();
 
             //透明度混合
-            int width = _frameBuff.Width;
-            int height = _frameBuff.Height;
-            for(int i = 0;i < width;++i)
+
+            for (int i = 0; i < Width; ++i)
             {
-                for(int j = 0;j < height;++j)
+                for (int j = 0; j < Height; ++j)
                 {
-                    
+
                     int len = _alphaBuff[i, j].Count;
-                    
-                    if(len > 0)
+
+                    if (len > 0)
                     {
-                        Color color = Color.TransformToRenderColor(_frameBuff.GetPixel(i, j));
+                        
+                        Color color = _colorBuff[i, j];//Color.TransformToRenderColor(_frameBuff.GetPixel(i, j));
+                        if (!_renderBuff[i, j]) color = Color.TransformToRenderColor(_frameBuff.GetPixel(i, j));
                         //降序排序
                         _alphaBuff[i, j].Sort((x, y) => -x.onePreZ.CompareTo(y.onePreZ));
-                        ColorWithAlpha c = _alphaBuff[i, j][len - 1];
+                        ColorWithAlpha c = _alphaBuff[i, j][0];
                         float z = _zBuff[i, j];
                         if (c.onePreZ > z)
                         {
@@ -256,52 +265,25 @@ namespace LinHowe_CSharp_Render.Render
             float xr = p2.v_trans.position.x;
             float dxl = d * (p3.v_trans.position.x - p1.v_trans.position.x);
             float dxr = d * (p3.v_trans.position.x - p2.v_trans.position.x);
-            float zl = p1.v_trans.onePerZ;
-            float zr = p2.v_trans.onePerZ;
-            float dzl = d * (p3.v_trans.onePerZ - p1.v_trans.onePerZ);
-            float dzr = d * (p3.v_trans.onePerZ - p2.v_trans.onePerZ);
-            float ul = p1.v_trans.u;
-            float ur = p2.v_trans.u;
-            float dul = d * (p3.v_trans.u - p1.v_trans.u);
-            float dur = d * (p3.v_trans.u - p2.v_trans.u);
-            float vl = p1.v_trans.v;
-            float vr = p2.v_trans.v;
-            float dvl = d * (p3.v_trans.v - p1.v_trans.v);
-            float dvr = d * (p3.v_trans.v - p2.v_trans.v);
-            float al = p1.v_trans.v;
-            float ar = p2.v_trans.v;
-            float dal = d * (p3.alpha - p1.alpha);
-            float dar = d * (p3.alpha - p2.alpha);
+            
             for (float y = p1.v_trans.position.y;
                 y <= p3.v_trans.position.y;
                 y += 0.5f, t += d,
-                xl += dxl, xr += dxr, zl += dzl, zr += dzr,
-                ul += dul, ur += dur, vl += dvl, vr += dvr,
-                al += dal, ar += dar)
+                xl += dxl, xr += dxr)
             {
                 int yIndex = (int)(System.Math.Round(y, MidpointRounding.AwayFromZero));
-                if (yIndex >= 0 && yIndex < _frameBuff.Height)
+                if (yIndex >= 0 && yIndex < Height)
                 {
-
-
                     //插值生成左右顶点
                     
                     new1.v_trans.position.x = xl;
                     new1.v_trans.position.y = y;
-                    new1.v_trans.onePerZ = zl;
-                    new1.v_trans.u = ul;
-                    new1.v_trans.v = vl;
-                    new1.alpha = al;
                     ScreenSpaceLerpVertex(ref new1, p1, p3, t);
 
-                    
                     new2.v_trans.position.x = xr;
                     new2.v_trans.position.y = y;
-                    new2.v_trans.onePerZ = zr;
-                    new2.v_trans.u = ur;
-                    new2.v_trans.v = vr;
-                    new2.alpha = ar;
                     ScreenSpaceLerpVertex(ref new2, p2, p3, t);
+
                     //扫描线填充
                     if (new1.v_trans.position.x < new2.v_trans.position.x)
                     {
@@ -331,50 +313,23 @@ namespace LinHowe_CSharp_Render.Render
             float xr = p1.v_trans.position.x;
             float dxl = d * (p2.v_trans.position.x - p1.v_trans.position.x);
             float dxr = d * (p3.v_trans.position.x - p1.v_trans.position.x);
-            float zl = p1.v_trans.onePerZ;
-            float zr = p1.v_trans.onePerZ;
-            float dzl = d * (p2.v_trans.onePerZ - p1.v_trans.onePerZ);
-            float dzr = d * (p3.v_trans.onePerZ - p1.v_trans.onePerZ);
-            float ul = p1.v_trans.u;
-            float ur = p1.v_trans.u;
-            float dul = d * (p2.v_trans.u - p1.v_trans.u);
-            float dur = d * (p3.v_trans.u - p1.v_trans.u);
-            float vl = p1.v_trans.v;
-            float vr = p1.v_trans.v;
-            float dvl = d * (p2.v_trans.v - p1.v_trans.v);
-            float dvr = d * (p3.v_trans.v - p1.v_trans.v);
-            float al = p1.v_trans.v;
-            float ar = p1.v_trans.v;
-            float dal = d * (p2.alpha - p1.alpha);
-            float dar = d * (p3.alpha - p1.alpha);
-            for (float y = p1.v_trans.position.y; 
+           
+            for (float y = p1.v_trans.position.y;
                 y <= p2.v_trans.position.y;
                   y += 0.5f, t += d,
-                xl += dxl, xr += dxr, zl += dzl, zr += dzr,
-                ul += dul, ur += dur, vl += dvl, vr += dvr,
-                al += dal, ar += dar)
+                xl += dxl, xr += dxr)
             {
                 int yIndex = (int)(System.Math.Round(y, MidpointRounding.AwayFromZero));
-                if (yIndex >= 0 && yIndex < _frameBuff.Height)
+                if (yIndex >= 0 && yIndex < Height)
                 {
                    
                     //插值生成左右顶点
                     
                     new1.v_trans.position.x = xl;
-                    new1.v_trans.position.y = y;
-                    new1.v_trans.onePerZ = zl;
-                    new1.v_trans.u = ul;
-                    new1.v_trans.v = vl;
-                    new1.alpha = al;
+                    new1.v_trans.position.y = y;        
                     ScreenSpaceLerpVertex(ref new1, p1, p2, t);
-
-                    
                     new2.v_trans.position.x = xr;
                     new2.v_trans.position.y = y;
-                    new2.v_trans.onePerZ = zr;
-                    new2.v_trans.u = ur;
-                    new2.v_trans.v = vr;
-                    new2.alpha = al;
                     ScreenSpaceLerpVertex(ref new2, p1, p3, t);
                     //扫描线填充
                     if (new1.v_trans.position.x < new2.v_trans.position.x)
@@ -404,69 +359,81 @@ namespace LinHowe_CSharp_Render.Render
             float step = 1;
             if (dx != 0)
             {
-                step = 1 / dx;
+                step = 1 / dx * 0.5f;
             }
             Color curColor = leftV.color;
-            Color dcolor = (rightV.color - leftV.color) * step * 0.5f;
+            Color dcolor = (rightV.color - leftV.color) * step;
             Color lightColor = leftV.lightingColor;
-            Color dlcolor = (rightV.lightingColor - leftV.lightingColor) * step * 0.5f;
+            Color dlcolor = (rightV.lightingColor - leftV.lightingColor) * step;
+           
             float curu = leftV.u;
             float curv = leftV.v;
-            float du = (rightV.u - leftV.u) * step * 0.5f;
-            float dv = (rightV.v - leftV.v) * step * 0.5f;
+            float du = (rightV.u - leftV.u) * step;
+            float dv = (rightV.v - leftV.v) * step;
             float alpha = left.alpha;
-            float da = (right.alpha - left.alpha) * step * 0.5f;
+            float da = (right.alpha - left.alpha) * step;
             float onePreZ = leftV.onePerZ;
-            float dz = (rightV.onePerZ - leftV.onePerZ) * step * 0.5f;
+            float dz = (rightV.onePerZ - leftV.onePerZ) * step;
 
-            ColorWithAlpha c = new ColorWithAlpha();
-            //for (
-            //    float x = leftV.position.x;
-            //    x <= rightV.position.x;
-            //    x += 0.5f, curColor += dcolor, lightColor += dlcolor,
-            //    curu += du, curv += dv,alpha += da,onePreZ +=dz)
-            //{
-            //    int xIndex = (int)(x + 0.5f);
+            int meshWidth = 0;
+            int meshHeight = 0;
+            if(null != mesh.Texture)
+            {
+                meshWidth = mesh.Texture.Width; 
+                meshHeight = mesh.Texture.Height;
+            }
+            for (
+                float x = leftV.position.x;
+                x <= rightV.position.x;
+                x += 0.5f, curColor += dcolor,lightColor +=dlcolor,
+                curu += du, curv += dv, alpha += da, onePreZ += dz)
+            {
+                int xIndex = (int)(x + 0.5f);
 
+               
+                if (xIndex >= 0 && xIndex < Width)
+                {
 
-            //    if (xIndex >= 0 && xIndex < _frameBuff.Width)
-            //    {
-                    
-            //        if (yIndex < 0 || yIndex >= _frameBuff.Height || xIndex < 0 || xIndex >= _frameBuff.Width)
-            //            continue;
+                    if (yIndex < 0 || yIndex >= Height || xIndex < 0 || xIndex >= Width)
+                        continue;
 
-            //        if (onePreZ >= _zBuff[xIndex, yIndex])//使用1/z进行深度测试
-            //        {
-            //            if(mesh.ZWrite)
-            //                _zBuff[xIndex, yIndex] = onePreZ;
-            //            //顶点颜色
-            //            Color vertColor = curColor;// MathHelp.Lerp(leftV.color, rightV.color, lerpFactor);
-            //            //纹理映射
-            //            if (mesh.IsRenderTexture && null != mesh.Texture)
-            //            {
-            //                int u = (int)(curu * mesh.Texture.Width - 0.5f);
-            //                int v = (int)(curv * mesh.Texture.Height - 0.5f);
-            //                vertColor *= Color.TransformToRenderColor(mesh.Texture.GetPixel(u, v));
-            //            }
+                    if (onePreZ >= _zBuff[xIndex, yIndex])//使用1/z进行深度测试
+                    {
+                        if (mesh.ZWrite)
+                            _zBuff[xIndex, yIndex] = onePreZ;
+                        //顶点颜色
+                        Color resColor = curColor;// MathHelp.Lerp(leftV.color, rightV.color, lerpFactor);
+                                                   //纹理映射
+                        if (mesh.IsRenderTexture && null != mesh.Texture)
+                        {
+                            int u = (int)(curu * meshWidth - 0.5f);
+                            int v = (int)(curv * meshHeight - 0.5f);
+                            resColor *= Color.TransformToRenderColor(mesh.Texture.GetPixel(u, v));
+                        }
 
-            //            Color resColor = (vertColor * lightColor);
-            //            if (mesh.flagBlendAlpha)
-            //            {
-            //                c.alpha = alpha;
-            //                c.color = resColor;
-            //                c.onePreZ = onePreZ;
+                        resColor = resColor * lightColor;
+                        if (mesh.flagBlendAlpha)
+                        {
+                            ColorWithAlpha c = new ColorWithAlpha
+                            {
+                                alpha = alpha,
+                                color = resColor,
+                                onePreZ = onePreZ
+                            };
 
-            //                _alphaBuff[xIndex, yIndex].Add(c);
-            //            }
-            //            else
-            //            {
-            //                _frameBuff.SetPixel(xIndex, yIndex, resColor.TransFormToSystemColor());
-            //            }
-                        
-            //        }
+                            _alphaBuff[xIndex, yIndex].Add(c);
+                        }
+                        else
+                        {
+                            _renderBuff[xIndex, yIndex] = true;
+                            _colorBuff[xIndex, yIndex] = resColor;
+                            //_frameBuff.SetPixel(xIndex, yIndex, resColor.TransFormToSystemColor());
+                        }
 
-            //    }
-            //}
+                    }
+
+                }
+            }
 
         }
         /// <summary>

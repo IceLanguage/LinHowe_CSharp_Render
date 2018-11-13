@@ -35,7 +35,7 @@ namespace LinHowe_CSharp_Render
             Draw.Init(MaximumSize.Width, MaximumSize.Height);
 
             
-            System.Timers.Timer mainTimer = new System.Timers.Timer(1000/1000);
+            System.Timers.Timer mainTimer = new System.Timers.Timer(1000f/100000f);
             mainTimer.Elapsed += new ElapsedEventHandler(Tick);
             mainTimer.AutoReset = true;
             mainTimer.Enabled = true;
