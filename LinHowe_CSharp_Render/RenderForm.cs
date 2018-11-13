@@ -13,9 +13,9 @@ namespace LinHowe_CSharp_Render
     /// </summary>
     public partial class RenderForm : Form
     {
-        
-        Graphics g = null;
-        Graphics G
+
+        static Graphics g = null;
+        public Graphics G
         {
             get
             {
@@ -45,7 +45,7 @@ namespace LinHowe_CSharp_Render
         /// </summary>
         private void UpdateScene()
         {
-            Draw.Clear();
+            Draw.Clear(G);
             Rendering_pipeline.Render();
 
             foreach (GameObject go in Rendering_pipeline._models)
@@ -62,18 +62,21 @@ namespace LinHowe_CSharp_Render
 
             foreach (GameObject go in Rendering_pipeline._models)
             {
-                go.rotation.x += 0.5f;
-                go.rotation.y += 0.5f;
-                go.rotation.z += 0.5f;
-                go.ObjectToWorldMatrix =
-                Matrix4x4.GetRotateX(go.rotation.x) *
-                Matrix4x4.GetRotateY(go.rotation.y) *
-                Matrix4x4.GetRotateZ(go.rotation.z) *
-                Matrix4x4.GetTranslate(go.position);
+                go.UpdateFunction?.Invoke(go);
             }
 
         }
-
+        private void Rotate(GameObject go)
+        {
+            go.rotation.x += 0.5f;
+            go.rotation.y += 0.5f;
+            go.rotation.z += 0.5f;
+            go.ObjectToWorldMatrix =
+            Matrix4x4.GetRotateX(go.rotation.x) *
+            Matrix4x4.GetRotateY(go.rotation.y) *
+            Matrix4x4.GetRotateZ(go.rotation.z) *
+            Matrix4x4.GetTranslate(go.position);
+        }
         private void InitTexture()
         {
             //Init Texture
@@ -124,9 +127,12 @@ namespace LinHowe_CSharp_Render
                 Texture = texture,
                 IsRenderTexture = true
             };
-            GameObject cubeGameObject = new GameObject(cubeMesh, new Vector3(-3, 0, 10));
+            GameObject cubeGameObject = new GameObject(cubeMesh, new Vector3(-3, 0, 10))
+            {
+                UpdateFunction = Rotate
+            };
             Astage.AddGameObject(cubeGameObject);
-
+            
 
             Mesh sphereMesh = new Mesh(
                 SphereData.pointList,
@@ -135,7 +141,10 @@ namespace LinHowe_CSharp_Render
                 SphereData.vertColors,
                 SphereData.mat,
                 SphereData.uvs);
-            GameObject sphereGameObject = new GameObject(sphereMesh, new Vector3(3, 0, 8));
+            GameObject sphereGameObject = new GameObject(sphereMesh, new Vector3(3, 0, 8))
+            {
+                UpdateFunction = Rotate
+            };
             Astage.AddGameObject(sphereGameObject);
 
 
@@ -150,7 +159,7 @@ namespace LinHowe_CSharp_Render
                 Texture = texture,
                 IsRenderTexture = true
             };
-            GameObject planeGameObject = new GameObject(sphereMesh, new Vector3(3, 0, 8));
+            GameObject planeGameObject = new GameObject(planeMesh, new Vector3(0, 0, 6));
             Astage.AddGameObject(planeGameObject);
             //Init Camera
             Camera MainCamera = new Camera
@@ -167,7 +176,10 @@ namespace LinHowe_CSharp_Render
             Astage.SetMainCamera(MainCamera);
 
             //Init Light
-            Light light = new Light(new Vector3(0, 3, 0), new Vector3(0.6f, 1, 0), new Color(1, 1, 1));
+            Light light = new Light(new Vector3(0, 3, 0), new Vector3(0.6f, 1, 0), new Color(1, 1, 0))
+            {
+                intensity = 5f
+            };
             light.SetPointLight(0.3f, 0.5f);
             Astage.AddLight(light);
 

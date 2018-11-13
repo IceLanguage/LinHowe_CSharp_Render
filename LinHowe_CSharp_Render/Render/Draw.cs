@@ -1,6 +1,7 @@
 ﻿using LinHowe_CSharp_Render.Math;
 using System;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace LinHowe_CSharp_Render.Render
 {
@@ -12,14 +13,28 @@ namespace LinHowe_CSharp_Render.Render
         //帧缓冲
         public static Bitmap _frameBuff;
         public static float[,] _zBuff;
-
-        public static void Clear()
+        public static Bitmap BackgroundBitmap;
+        static Draw()
         {
-            Graphics.FromImage(Draw._frameBuff).Clear(System.Drawing.Color.Black);
-            Array.Clear(Draw._zBuff, 0, Draw._zBuff.Length);
+            try
+            {
+
+                BackgroundBitmap = (Bitmap)Image.FromFile(@"../../Resource/sky.png", true);
+                
+            }
+            catch (System.IO.FileNotFoundException)
+            {
+                MessageBox.Show("There was an error opening the bitmap." + "Please check the path.");
+            }
+        }
+        public static void Clear(Graphics g)
+        {
+            Graphics.FromImage(_frameBuff).DrawImage(BackgroundBitmap,0,0);//.Clear(System.Drawing.Color.Black);
+            Array.Clear(_zBuff, 0, _zBuff.Length);
         }
         public static void Init(int width, int height)
         {
+            BackgroundBitmap = new Bitmap(BackgroundBitmap,width, height);
             _frameBuff = new Bitmap(width, height);
             _zBuff = new float[width, height];
         }

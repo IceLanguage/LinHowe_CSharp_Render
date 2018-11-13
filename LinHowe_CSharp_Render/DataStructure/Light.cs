@@ -10,6 +10,8 @@ namespace LinHowe_CSharp_Render
     }
     class Light
     {
+        //光强
+        public float intensity = 1;
         public LightType type = LightType.Directional;
         /// <summary>
         /// 灯光颜色
@@ -23,6 +25,7 @@ namespace LinHowe_CSharp_Render
 
         private Vector3 direction;
 
+        
         /// <summary>
         /// 衰减因子
         /// </summary>
@@ -94,7 +97,7 @@ namespace LinHowe_CSharp_Render
                 default:
                     break;
             }
-            return color;
+            return color * light.intensity;
         }
     }
 

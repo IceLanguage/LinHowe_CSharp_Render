@@ -32,7 +32,7 @@ namespace LinHowe_CSharp_Render.Test
         public static readonly Material mat = new Material
         (
             emissive: new Color(0, 0, 0f),
-            ka: 0.1f,
+            ka: 0.3f,
             diffuse: new Color(0.3f, 0.3f, 0.3f),
             specular: new Color(1, 1, 1),
             shininess: 9
@@ -98,9 +98,9 @@ namespace LinHowe_CSharp_Render.Test
             indexs[index+1] = index+1;
             indexs[index+2] = index+2;
 
-            vertColors[index] = new Color(255, 0, 255);
-            vertColors[index+1] = new Color(255, 0, 255);
-            vertColors[index+2] = new Color(255, 0, 255);
+            vertColors[index] = new Color(255, 255, 255);
+            vertColors[index+1] = new Color(255, 255, 255);
+            vertColors[index+2] = new Color(255, 255, 255);
 
             uvs[index] = new Tuple<float, float>(u.x, v.x);
             uvs[index+1] = new Tuple<float, float>(u.y, v.y);

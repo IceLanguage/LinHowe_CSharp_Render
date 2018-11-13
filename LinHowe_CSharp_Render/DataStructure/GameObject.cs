@@ -1,4 +1,5 @@
 ﻿using LinHowe_CSharp_Render.Math;
+using System;
 
 namespace LinHowe_CSharp_Render
 {
@@ -8,6 +9,7 @@ namespace LinHowe_CSharp_Render
         public Mesh mesh;//网格
         public Vector3 position = Vector3.zero;//坐标
         public Vector3 rotation = Vector3.zero;
+        public Vector3 scale = new Vector3(1, 1, 1);
         public Matrix4x4 ObjectToWorldMatrix = Matrix4x4.Identity;//模型-世界矩阵
         public GameObject(Mesh mesh,Vector3 position)
         {
@@ -29,6 +31,8 @@ namespace LinHowe_CSharp_Render
             }
             max_radius = (float)System.Math.Sqrt(max_radius);
         }
+
+        public Action<GameObject> UpdateFunction;
 
 
     }
