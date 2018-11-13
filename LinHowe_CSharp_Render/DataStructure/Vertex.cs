@@ -48,14 +48,14 @@ namespace LinHowe_CSharp_Render
     /// <summary>
     /// 点数据
     /// </summary>
-    class Point
+    struct Point
     {
         public readonly Vertex m_vertex;
 
         /// <summary>
         /// 透明度
         /// </summary>
-        public float alpha = 1;
+        public float alpha;
 
         /// <summary>
         /// 用于差值和坐标变换
@@ -70,11 +70,13 @@ namespace LinHowe_CSharp_Render
         public Point(Vertex v)
         {
             m_vertex = v_shader = v_trans = v;
+            alpha = 1;
         }
-        public Point()
-        {
-
-        }
+        //public Point()
+        //{
+        //    alpha = 1;
+        //    
+        //}
         public void Reset()
         {
             v_shader = v_trans = m_vertex;

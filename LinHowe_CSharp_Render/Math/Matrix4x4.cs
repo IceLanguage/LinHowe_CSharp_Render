@@ -15,7 +15,7 @@ namespace LinHowe_CSharp_Render.Math
 			0,0,1,0,
 			0,0,0,1
 		);
-
+		
 		public Matrix4x4()
 		{
 			_m = new float[4, 4] 
@@ -157,6 +157,7 @@ namespace LinHowe_CSharp_Render.Math
 		public float Determinate()
 		{
 			return Determinate(_m, 4);
+			
 		}
 
 		private float Determinate(float[,] m, int n)

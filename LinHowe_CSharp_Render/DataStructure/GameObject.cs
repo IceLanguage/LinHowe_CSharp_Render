@@ -10,7 +10,27 @@ namespace LinHowe_CSharp_Render
         public Vector3 position = Vector3.zero;//坐标
         public Vector3 rotation = Vector3.zero;
         public Vector3 scale = new Vector3(1, 1, 1);
-        public Matrix4x4 ObjectToWorldMatrix = Matrix4x4.Identity;//模型-世界矩阵
+        private Matrix4x4 _ObjectToWorldMatrix;
+        public Matrix4x4 ObjectToWorldMatrix
+        {
+            get
+            {
+                if(_ObjectToWorldMatrix == null)
+                {
+                    _ObjectToWorldMatrix = 
+                        Matrix4x4.GetRotateX(rotation.x) *
+                        Matrix4x4.GetRotateY(rotation.y) *
+                        Matrix4x4.GetRotateZ(rotation.z) *
+                        Matrix4x4.GetTranslate(position);
+                }
+                return _ObjectToWorldMatrix;
+            }
+            set
+            {
+                _ObjectToWorldMatrix = value;
+                _WorldInverseTranspose = ObjectToWorldMatrix.Inverse().Transpose();
+            }
+        }
         public GameObject(Mesh mesh,Vector3 position)
         {
             this.mesh = mesh;
@@ -42,5 +62,24 @@ namespace LinHowe_CSharp_Render
         /// </summary>
         public Action<GameObject> EventFunction;
 
+        private Matrix4x4 _WorldInverseTranspose;
+
+        private Matrix4x4 WorldInverseTranspose
+        {
+            get
+            {
+                if (_WorldInverseTranspose == null)
+                {
+                    _WorldInverseTranspose = ObjectToWorldMatrix.Inverse().Transpose();
+                }
+                return _WorldInverseTranspose;
+            }
+        }
+        //模型空间法线乘以世界矩阵的逆转置得到世界空间法线
+        //原因 https://blog.csdn.net/christina123y/article/details/5963679
+        public Vector3 GetWorldNormal(Vector3 normal)
+        {
+            return (normal * WorldInverseTranspose).Normalize();
+        }
     }
 }

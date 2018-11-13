@@ -40,9 +40,8 @@ namespace LinHowe_CSharp_Render.Render
 
             Vector3 worldPoint = v.position * m;//世界空间顶点位置
 
-            //模型空间法线乘以世界矩阵的逆转置得到世界空间法线
-            //原因 https://blog.csdn.net/christina123y/article/details/5963679
-            Vector3 normal = (v.normal * m.Inverse().Transpose()).Normalize();
+            
+            Vector3 normal = go.GetWorldNormal(v.normal);
 
             Color emissiveColor = mesh.Mat.emissive * v.color;//自发光
             Color ambientColor = Rendering_pipeline._ambientColor * mesh.Mat.ka;//环境光 

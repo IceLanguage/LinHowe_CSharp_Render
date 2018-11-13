@@ -60,8 +60,12 @@ namespace LinHowe_CSharp_Render
 
         public void SetAlpha(float a)
         {
-            foreach (Point p in Vertices)
-                p.alpha = a;
+            int len = Vertices.Length;
+            for(int i = 0;i < len;++i)
+            {
+                Vertices[i].alpha = a;
+            }
+            
         }
         public Mesh(Vector3[] pointList, int[] indexs, Vector3[] normals,Color[] colors,Material mat,Tuple<float,float>[] uvs)
         {
