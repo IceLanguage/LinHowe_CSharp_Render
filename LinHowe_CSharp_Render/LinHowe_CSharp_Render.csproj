@@ -77,6 +77,7 @@
     <Compile Include="Render\VertexShader.cs" />
     <Compile Include="Render\RenderState\GeometricStage\Vertex_Coloring_Stage.cs" />
     <Compile Include="Test\CubeData.cs" />
+    <Compile Include="Test\PlaneData.cs" />
     <Compile Include="Test\SphereData.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

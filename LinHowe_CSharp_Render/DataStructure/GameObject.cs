@@ -8,7 +8,7 @@ namespace LinHowe_CSharp_Render
         public Mesh mesh;//网格
         public Vector3 position = Vector3.zero;//坐标
         public Vector3 rotation = Vector3.zero;
-        public Matrix4x4 ObjectToWorldMatrix;//模型-世界矩阵
+        public Matrix4x4 ObjectToWorldMatrix = Matrix4x4.Identity;//模型-世界矩阵
         public GameObject(Mesh mesh,Vector3 position)
         {
             this.mesh = mesh;

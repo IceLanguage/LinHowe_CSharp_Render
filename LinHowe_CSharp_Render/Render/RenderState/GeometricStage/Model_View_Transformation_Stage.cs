@@ -30,10 +30,10 @@ namespace LinHowe_CSharp_Render.Render
                 for (int i = 0; i < size; ++i)
                 {
                     SetVTransform(ref mesh.Vertices[i].v_trans.position);
-
-                    //裁剪算法
-                    CullObject(go);
                 }
+
+                //裁剪算法
+                CullObject(go);
             }
 
             //背面消隐 

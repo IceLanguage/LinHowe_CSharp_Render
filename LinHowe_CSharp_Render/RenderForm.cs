@@ -23,6 +23,7 @@ namespace LinHowe_CSharp_Render
                 return g;
             }
         }
+        
         Bitmap texture;
         bool isInit = false;
         public RenderForm()
@@ -57,18 +58,18 @@ namespace LinHowe_CSharp_Render
                 isInit = true;
                 Init();
             }
-            
-            //旋转
-            foreach(GameObject go in Rendering_pipeline._models)
+
+
+            foreach (GameObject go in Rendering_pipeline._models)
             {
                 go.rotation.x += 0.5f;
                 go.rotation.y += 0.5f;
                 go.rotation.z += 0.5f;
-                go.ObjectToWorldMatrix = 
-                    Matrix4x4.GetRotateX(go.rotation.x) *
-                    Matrix4x4.GetRotateY(go.rotation.y) *
-                    Matrix4x4.GetRotateZ(go.rotation.z) *
-                    Matrix4x4.GetTranslate(go.position);
+                go.ObjectToWorldMatrix =
+                Matrix4x4.GetRotateX(go.rotation.x) *
+                Matrix4x4.GetRotateY(go.rotation.y) *
+                Matrix4x4.GetRotateZ(go.rotation.z) *
+                Matrix4x4.GetTranslate(go.position);
             }
 
         }
@@ -137,6 +138,20 @@ namespace LinHowe_CSharp_Render
             GameObject sphereGameObject = new GameObject(sphereMesh, new Vector3(3, 0, 8));
             Astage.AddGameObject(sphereGameObject);
 
+
+            Mesh planeMesh = new Mesh(
+                PlaneData.pointList,
+                PlaneData.indexs,
+                PlaneData.norlmas,
+                PlaneData.vertColors,
+                PlaneData.mat,
+                PlaneData.uvs)
+            {
+                Texture = texture,
+                IsRenderTexture = true
+            };
+            GameObject planeGameObject = new GameObject(sphereMesh, new Vector3(3, 0, 8));
+            Astage.AddGameObject(planeGameObject);
             //Init Camera
             Camera MainCamera = new Camera
             {

@@ -3,6 +3,9 @@ using System;
 
 namespace LinHowe_CSharp_Render.Test
 {
+    /// <summary>
+    /// 球体网格数据
+    /// </summary>
     static class SphereData
     {
         /// <summary>
