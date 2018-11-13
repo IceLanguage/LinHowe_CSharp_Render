@@ -12,6 +12,7 @@ namespace LinHowe_CSharp_Render.Math
         public float z;
         public float w;
         public readonly static Vector3 zero = new Vector3(0, 0, 0);
+        public readonly static Vector3 one = new Vector3(1, 1, 1);
         public Vector3(float x, float y, float z, float w)
         {
             this.x = x;
@@ -53,6 +54,17 @@ namespace LinHowe_CSharp_Render.Math
                 y = lhs.x * rhs[0, 1] + lhs.y * rhs[1, 1] + lhs.z * rhs[2, 1] + lhs.w * rhs[3, 1],
                 z = lhs.x * rhs[0, 2] + lhs.y * rhs[1, 2] + lhs.z * rhs[2, 2] + lhs.w * rhs[3, 2],
                 w = lhs.x * rhs[0, 3] + lhs.y * rhs[1, 3] + lhs.z * rhs[2, 3] + lhs.w * rhs[3, 3]
+            };
+            return v;
+        }
+        public static Vector3 operator *(Vector3 lhs,float rhs)
+        {
+            Vector3 v = new Vector3
+            {
+                x = lhs.x * rhs,
+                y = lhs.y * rhs,
+                z = lhs.z * rhs,
+                w = lhs.w * rhs
             };
             return v;
         }

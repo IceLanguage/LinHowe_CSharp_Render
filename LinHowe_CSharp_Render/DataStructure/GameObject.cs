@@ -32,8 +32,15 @@ namespace LinHowe_CSharp_Render
             max_radius = (float)System.Math.Sqrt(max_radius);
         }
 
+        
+        /// <summary>
+        /// 每帧的更新
+        /// </summary>
         public Action<GameObject> UpdateFunction;
-
+        /// <summary>
+        /// 触发事件的执行
+        /// </summary>
+        public Action<GameObject> EventFunction;
 
     }
 }

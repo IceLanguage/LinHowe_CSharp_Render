@@ -86,7 +86,11 @@ namespace LinHowe_CSharp_Render.Render
             GameObject go,
             ref Vector3 pos)
         {
+            pos.x *= go.scale.x;
+            pos.y *= go.scale.y;
+            pos.z *= go.scale.z;
             pos *= go.ObjectToWorldMatrix;
+           
         }
         /// <summary>
         /// 进行v矩阵变换，从世界空间到相机空间
@@ -123,7 +127,8 @@ namespace LinHowe_CSharp_Render.Render
             foreach (GameObject go in Rendering_pipeline._models)
             {
                 Mesh mesh = go.mesh;
-                for (int i = 0; i + 2 < mesh.Vertices.Length; i += 3)
+                int len = mesh.Vertices.Length;
+                for (int i = 0; i + 2 < len; i += 3)
                 {
                     if (!BackFaceCulling(mesh.Vertices[i].v_trans, mesh.Vertices[i + 1].v_trans, mesh.Vertices[i + 2].v_trans))
                     {

@@ -3,6 +3,9 @@ using System;
 
 namespace LinHowe_CSharp_Render.Test
 {
+    /// <summary>
+    /// 平面网格数据
+    /// </summary>
     static class PlaneData
     {
         /// <summary>
@@ -17,12 +20,12 @@ namespace LinHowe_CSharp_Render.Test
         };
 
         /// <summary>
-        /// 三角形顶点索引 12个面
+        /// 三角形顶点索引
         /// </summary>
         public static readonly int[] indexs =
         {
-            0,2,1,
-            0,3,2,
+            0,1,3,
+            2,3,1,
         };
 
         /// <summary>
@@ -55,7 +58,7 @@ namespace LinHowe_CSharp_Render.Test
         (
             emissive: new Color(0, 0, 0f),
             ka: 0.1f,
-            diffuse: new Color(0.3f, 0.3f, 0.3f),
+            diffuse: new Color(0.8f, 0.8f, 0.8f),
             specular: new Color(1, 1, 1),
             shininess: 9
         );
@@ -65,11 +68,11 @@ namespace LinHowe_CSharp_Render.Test
         /// </summary>
         public static readonly Tuple<float, float>[] uvs ={
             new Tuple<float,float>(0, 0),
+            new Tuple<float,float>(1, 0),
+            new Tuple<float,float>(0, 1),
             new Tuple<float,float>(1, 1),
             new Tuple<float,float>(0, 1),
-            new Tuple<float,float>(0, 0),
             new Tuple<float,float>(1, 0),
-            new Tuple<float,float>(1, 1),
         };
     }
 }

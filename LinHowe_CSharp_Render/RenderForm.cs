@@ -23,7 +23,8 @@ namespace LinHowe_CSharp_Render
                 return g;
             }
         }
-        
+
+        GameObject planeGameObject;
         Bitmap texture;
         bool isInit = false;
         public RenderForm()
@@ -33,7 +34,8 @@ namespace LinHowe_CSharp_Render
             //Init buffer
             Draw.Init(MaximumSize.Width, MaximumSize.Height);
 
-            System.Timers.Timer mainTimer = new System.Timers.Timer(1000/60);
+            
+            System.Timers.Timer mainTimer = new System.Timers.Timer(1000/100);
             mainTimer.Elapsed += new ElapsedEventHandler(Tick);
             mainTimer.AutoReset = true;
             mainTimer.Enabled = true;
@@ -62,20 +64,23 @@ namespace LinHowe_CSharp_Render
 
             foreach (GameObject go in Rendering_pipeline._models)
             {
+                go.EventFunction?.Invoke(go);
+                go.EventFunction = (a)=>{ };
                 go.UpdateFunction?.Invoke(go);
+                go.ObjectToWorldMatrix =
+                    Matrix4x4.GetRotateX(go.rotation.x) *
+                    Matrix4x4.GetRotateY(go.rotation.y) *
+                    Matrix4x4.GetRotateZ(go.rotation.z) *
+                    Matrix4x4.GetTranslate(go.position);
             }
 
         }
         private void Rotate(GameObject go)
         {
-            go.rotation.x += 0.5f;
-            go.rotation.y += 0.5f;
-            go.rotation.z += 0.5f;
-            go.ObjectToWorldMatrix =
-            Matrix4x4.GetRotateX(go.rotation.x) *
-            Matrix4x4.GetRotateY(go.rotation.y) *
-            Matrix4x4.GetRotateZ(go.rotation.z) *
-            Matrix4x4.GetTranslate(go.position);
+            go.rotation.x += 0.1f;
+            go.rotation.y += 0.1f;
+            go.rotation.z += 0.1f;
+            
         }
         private void InitTexture()
         {
@@ -109,7 +114,6 @@ namespace LinHowe_CSharp_Render
         }
         private void Init()
         {
-
             InitTexture();
 
             RenderStage _stage = Rendering_pipeline._stage;
@@ -127,7 +131,8 @@ namespace LinHowe_CSharp_Render
                 Texture = texture,
                 IsRenderTexture = true
             };
-            GameObject cubeGameObject = new GameObject(cubeMesh, new Vector3(-3, 0, 10))
+            GameObject cubeGameObject = new GameObject(cubeMesh,
+                new Vector3(-3, 0, 10))
             {
                 UpdateFunction = Rotate
             };
@@ -143,24 +148,13 @@ namespace LinHowe_CSharp_Render
                 SphereData.uvs);
             GameObject sphereGameObject = new GameObject(sphereMesh, new Vector3(3, 0, 8))
             {
-                UpdateFunction = Rotate
+                UpdateFunction = Rotate,
+                scale = new Vector3(1.4f, 1.4f, 1.4f),
             };
             Astage.AddGameObject(sphereGameObject);
 
+            
 
-            Mesh planeMesh = new Mesh(
-                PlaneData.pointList,
-                PlaneData.indexs,
-                PlaneData.norlmas,
-                PlaneData.vertColors,
-                PlaneData.mat,
-                PlaneData.uvs)
-            {
-                Texture = texture,
-                IsRenderTexture = true
-            };
-            GameObject planeGameObject = new GameObject(planeMesh, new Vector3(0, 0, 6));
-            Astage.AddGameObject(planeGameObject);
             //Init Camera
             Camera MainCamera = new Camera
             {
@@ -201,7 +195,36 @@ namespace LinHowe_CSharp_Render
             }
         }
 
+        protected override void OnKeyPress(KeyPressEventArgs e)
+        {
+            switch(e.KeyChar)
+            {
+                case 'a':
+                    if (null != planeGameObject)
+                        planeGameObject.EventFunction +=
+                            (planeGameObject) =>
+                            {
+                                planeGameObject.rotation.y += (float)System.Math.PI / 12f;
+                            };
+                    break;
+                case 's':
+                    if (null != planeGameObject)
+                        planeGameObject.EventFunction +=
+                            (planeGameObject) =>
+                            {
+                                planeGameObject.rotation.y -= (float)System.Math.PI / 12f;
+                            };
+                    break;
+                default:
+                    break;
+            }
+        }
+
         
+
+
+
+
 
     }
 }
