@@ -1,4 +1,5 @@
 ﻿using LinHowe_CSharp_Render.Math;
+using System;
 
 namespace LinHowe_CSharp_Render.Render
 {
@@ -8,6 +9,9 @@ namespace LinHowe_CSharp_Render.Render
 
         public override void ChangeState()
         {
+            System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
+            watch.Start();
+
             GetProjection(ref Rendering_pipeline.MainCamera);
             foreach (GameObject go in Rendering_pipeline._models)
             {
@@ -23,6 +27,10 @@ namespace LinHowe_CSharp_Render.Render
                 }
             }
             GeometricStage.CurStage = CutOut_Stage.instance;
+
+            watch.Stop();
+            TimeSpan timespan = watch.Elapsed;
+            System.Diagnostics.Debug.WriteLine("3-投影变换执行时间：{0}(毫秒)", timespan.TotalMilliseconds);
         }
         /// <summary>
         /// 投影变换，从相机空间到齐次剪裁空间

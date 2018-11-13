@@ -35,7 +35,7 @@ namespace LinHowe_CSharp_Render
             Draw.Init(MaximumSize.Width, MaximumSize.Height);
 
             
-            System.Timers.Timer mainTimer = new System.Timers.Timer(1000/100);
+            System.Timers.Timer mainTimer = new System.Timers.Timer(1000/1000);
             mainTimer.Elapsed += new ElapsedEventHandler(Tick);
             mainTimer.AutoReset = true;
             mainTimer.Enabled = true;
@@ -47,6 +47,9 @@ namespace LinHowe_CSharp_Render
         /// </summary>
         private void UpdateScene()
         {
+            System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
+            watch.Start();  
+
             Draw.Clear(G);
             Rendering_pipeline.Render();
 
@@ -73,6 +76,10 @@ namespace LinHowe_CSharp_Render
                     Matrix4x4.GetRotateZ(go.rotation.z) *
                     Matrix4x4.GetTranslate(go.position);
             }
+
+            watch.Stop();
+            TimeSpan timespan = watch.Elapsed;
+            System.Diagnostics.Debug.WriteLine("0-场景更新执行时间：{0}(毫秒)", timespan.TotalMilliseconds);
 
         }
         private void Rotate(GameObject go)
@@ -189,17 +196,23 @@ namespace LinHowe_CSharp_Render
         
         private void Tick(object sender, EventArgs e)
         {
+            
             lock (Draw._frameBuff)
             {
-                UpdateScene();
 
+                UpdateScene();
+                System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
+                watch.Start();
                 //渲染流水线
                 while (!Rendering_pipeline.RenderEnd)
                     Rendering_pipeline.Render();
-
+                watch.Stop();
+                TimeSpan timespan = watch.Elapsed;
+                System.Diagnostics.Debug.WriteLine("渲染管线渲染一帧执行时间：{0}(毫秒)", timespan.TotalMilliseconds);
                 //渲染
                 G.DrawImage(Draw._frameBuff, 0, 0);
             }
+            
         }
 
         protected override void OnKeyPress(KeyPressEventArgs e)

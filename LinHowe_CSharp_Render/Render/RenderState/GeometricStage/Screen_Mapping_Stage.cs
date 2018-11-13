@@ -1,10 +1,15 @@
 ﻿
+using System;
+
 namespace LinHowe_CSharp_Render.Render
 {
     partial class Screen_Mapping_Stage
     {
         public override void ChangeState()
         {
+            System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
+            watch.Start();
+
             foreach (GameObject go in Rendering_pipeline._models)
             {
                 Mesh mesh = go.mesh;
@@ -20,6 +25,10 @@ namespace LinHowe_CSharp_Render.Render
             }
             GeometricStage.CurStage = Model_View_Transformation_Stage.instance;
             Rendering_pipeline._stage = RasterizationStage.instance;
+
+            watch.Stop();
+            TimeSpan timespan = watch.Elapsed;
+            System.Diagnostics.Debug.WriteLine("5-屏幕映射执行时间：{0}(毫秒)", timespan.TotalMilliseconds);
         }
 
         /// <summary>

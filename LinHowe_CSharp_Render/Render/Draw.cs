@@ -64,7 +64,9 @@ namespace LinHowe_CSharp_Render.Render
         /// </summary>
         public static void Rasterization()
         {
-            
+            System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
+            watch.Start();
+
             foreach (GameObject go in Rendering_pipeline._models)
             {
                 Mesh mesh = go.mesh;
@@ -77,6 +79,12 @@ namespace LinHowe_CSharp_Render.Render
                     DrawTriangle(mesh.Vertices[i], mesh.Vertices[i + 1], mesh.Vertices[i + 2], mesh);
                 }
             }
+            watch.Stop();
+            TimeSpan timespan = watch.Elapsed;
+            System.Diagnostics.Debug.WriteLine("6-三角形光栅化执行时间：{0}(毫秒)", timespan.TotalMilliseconds);
+
+            watch = new System.Diagnostics.Stopwatch();
+            watch.Start();
 
             //透明度混合
             int width = _frameBuff.Width;
@@ -107,11 +115,17 @@ namespace LinHowe_CSharp_Render.Render
                 }
             }
 
+            watch.Stop();
+            timespan = watch.Elapsed;
+            System.Diagnostics.Debug.WriteLine("7-透明度混合执行时间：{0}(毫秒)", timespan.TotalMilliseconds);
+
         }
 
         private static void DrawTriangle(Point p1, Point p2, Point p3, Mesh mesh)
         {
+           
             RasterizationTriangle(p1, p2, p3, mesh);
+
         }
         
         /// <summary>
@@ -401,11 +415,11 @@ namespace LinHowe_CSharp_Render.Render
             {
                 step = 1 / dx;
             }
-
+            ColorWithAlpha c = new ColorWithAlpha();
             for (
                 float x = leftV.position.x;
                 x <= rightV.position.x;
-                x += 0.5f, curColor += dcolor, lightColor +=dlcolor,
+                x += 0.5f, curColor += dcolor, lightColor += dlcolor,
                 curu += du, curv += dv,alpha += da,onePreZ +=dz)
             {
                 int xIndex = (int)(x + 0.5f);
@@ -434,15 +448,11 @@ namespace LinHowe_CSharp_Render.Render
                         Color resColor = (vertColor * lightColor);
                         if (mesh.flagBlendAlpha)
                         {
-                            ColorWithAlpha c = new ColorWithAlpha
-                            {
-                                alpha = alpha,
-                                color = resColor,
-                                onePreZ = onePreZ
-                            };
+                            c.alpha = alpha;
+                            c.color = resColor;
+                            c.onePreZ = onePreZ;
 
                             _alphaBuff[xIndex, yIndex].Add(c);
-
                         }
                         else
                         {

@@ -1,10 +1,14 @@
 ﻿
+using System;
+
 namespace LinHowe_CSharp_Render.Render
 {
     partial class Vertex_Coloring_Stage
     {
         public override void ChangeState()
         {
+            System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
+            watch.Start();
 
             int count = Rendering_pipeline._models.Count;
             for(int i = 0;i < count;++i)
@@ -21,6 +25,10 @@ namespace LinHowe_CSharp_Render.Render
                 }
             }
             GeometricStage.CurStage = Projection_Stage.instance;
+
+            watch.Stop();
+            TimeSpan timespan = watch.Elapsed;
+            System.Diagnostics.Debug.WriteLine("2-顶点着色执行时间：{0}(毫秒)", timespan.TotalMilliseconds);
         }
 
 

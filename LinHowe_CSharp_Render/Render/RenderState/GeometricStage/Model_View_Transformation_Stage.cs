@@ -1,4 +1,5 @@
 ﻿using LinHowe_CSharp_Render.Math;
+using System;
 
 namespace LinHowe_CSharp_Render.Render
 {
@@ -7,6 +8,9 @@ namespace LinHowe_CSharp_Render.Render
     {
         public override void ChangeState()
         {
+            System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
+            watch.Start();
+
             //模型视图变换
             Rendering_pipeline.MainCamera.WorldToViewMatrix = GetView();
             foreach(GameObject go in Rendering_pipeline._models)
@@ -39,7 +43,12 @@ namespace LinHowe_CSharp_Render.Render
             //背面消隐 
             RemoveBackFace();
 
+
             GeometricStage.CurStage = Vertex_Coloring_Stage.instance;
+
+            watch.Stop();
+            TimeSpan timespan = watch.Elapsed;
+            System.Diagnostics.Debug.WriteLine("1-模型视图变换执行时间：{0}(毫秒)", timespan.TotalMilliseconds);
         }
         /// <summary>
         /// 获取视矩阵
