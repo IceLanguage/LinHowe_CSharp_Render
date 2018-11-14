@@ -44,8 +44,8 @@ namespace LinHowe_CSharp_Render.Render
                 v.position.z *= v.onePerZ;
                 v.position.w = 1;
                 //cvv到屏幕坐标
-                v.position.x = (v.position.x + 1) * 0.5f * Draw._frameBuff.Width;
-                v.position.y = (1 - v.position.y) * 0.5f * Draw._frameBuff.Height;
+                v.position.x = (v.position.x + 1) * 0.5f * Draw.Width;
+                v.position.y = (1 - v.position.y) * 0.5f * Draw.Height;
             }
 
         }

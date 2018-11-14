@@ -140,7 +140,7 @@ namespace LinHowe_CSharp_Render
                 ZWrite = false
             };
             GameObject cubeGameObject = new GameObject(cubeMesh,
-                new Vector3(3, 0, 10))
+                new Vector3(1, 0, 10))
             {
                 UpdateFunction = Rotate
             };

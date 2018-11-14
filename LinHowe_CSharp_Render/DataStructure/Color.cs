@@ -124,5 +124,14 @@ namespace LinHowe_CSharp_Render
         }
     }
 
-    
+    /// <summary>
+    /// 用于颜色混合
+    /// </summary>
+    struct BlendColor
+    {
+        public float alpha, onePreZ;
+        public Color color;
+    }
+
+
 }
