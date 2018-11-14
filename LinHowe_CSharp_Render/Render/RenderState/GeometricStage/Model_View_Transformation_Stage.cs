@@ -27,8 +27,8 @@ namespace LinHowe_CSharp_Render.Render
                 }
 
                 //物体剔除-包围球测试             
-                //if (CullObject(go, SphereCenterPos))
-                //    continue;
+                if (CullObject(go, SphereCenterPos))
+                    continue;
 
                 //世界空间到相机空间
                 for (int i = 0; i < size; ++i)

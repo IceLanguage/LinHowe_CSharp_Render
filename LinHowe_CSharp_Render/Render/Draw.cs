@@ -384,8 +384,8 @@ namespace LinHowe_CSharp_Render.Render
             alpha += da * xchange;
             onePreZ += dz * xchange;
 
-            int meshWidth = 0;
-            int meshHeight = 0;
+            int meshWidth = 1;
+            int meshHeight = 1;
             if(null != mesh.Texture)
             {
                 meshWidth = mesh.Texture.Width; 

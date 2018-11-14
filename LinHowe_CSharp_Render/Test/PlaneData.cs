@@ -41,7 +41,7 @@ namespace LinHowe_CSharp_Render.Test
         /// <summary>
         /// 法线
         /// </summary>
-        public static readonly Vector3[] norlmas =
+        public static readonly Vector3[] normals =
         {
             new Vector3(0,1,0),
             new Vector3(0,1,0),
