@@ -22,13 +22,13 @@ namespace LinHowe_CSharp_Render.Render
                         continue;
                    
                     Vertex v = mesh.Vertices[i].v_trans;
-                    if (checkCut(v))
+                    if (CheckCut(v))
                         continue;
                     v = mesh.Vertices[i + 1].v_trans;
-                    if (checkCut(v))
+                    if (CheckCut(v))
                         continue;
                     v = mesh.Vertices[i + 2].v_trans;
-                    if (checkCut(v))
+                    if (CheckCut(v))
                         continue;
                     mesh.Cuts[i] = mesh.Cuts[i + 1] = mesh.Cuts[i + 2] = true;
                 }
@@ -42,7 +42,7 @@ namespace LinHowe_CSharp_Render.Render
             System.Diagnostics.Debug.WriteLine("4-裁剪阶段执行时间：{0}(毫秒)", timespan.TotalMilliseconds);
         }
 
-        private bool checkCut(Vertex v)
+        private bool CheckCut(Vertex v)
         {
             return (v.position.x >= -v.position.w && v.position.x <= v.position.w &&
                         v.position.y >= -v.position.w && v.position.y <= v.position.w &&
