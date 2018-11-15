@@ -118,7 +118,7 @@ namespace LinHowe_CSharp_Render.Test
         //static readonly float TWOPI = (float)(System.Math.PI * 2);
         private static Tuple<float,float> GetUV(Vector3 normal)
         {
-            return new Tuple<float, float>(0,0);
+            return new Tuple<float, float>(0 ,0);
         }
         //static void DrawSphere2()
         //{

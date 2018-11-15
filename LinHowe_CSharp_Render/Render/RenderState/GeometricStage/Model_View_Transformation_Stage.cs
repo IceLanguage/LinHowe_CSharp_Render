@@ -41,7 +41,7 @@ namespace LinHowe_CSharp_Render.Render
             }
 
             //背面消隐 
-            RemoveBackFace();
+             RemoveBackFace();
 
 
             GeometricStage.CurStage = Vertex_Coloring_Stage.instance;
